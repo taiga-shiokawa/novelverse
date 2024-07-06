@@ -1,4 +1,119 @@
 
-*{
-color: red;
+
+main{
+    background-color: #F6F1DE;
+    color: #332405;
+}
+
+li{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+    color: #332405;
+}
+
+
+.container{
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    min-height: 90vh;
+    padding-top: 100px;
+}
+
+.left_container{
+    width: 30%;
+    height: 100%;
+    border: solid 1px black;
+    background-color: #fff;
+}
+
+.left_title{
+
+    background-color:#002B24;
+    color: #fff;
+    border-bottom: solid 1px black;
+    padding: 10px;
+}
+
+.right_container{
+    width: 65%;
+    height: 100%;
+}
+
+.nav_list li{
+margin-bottom: 10px;
+}
+
+.right_title{
+    padding: 10px;
+    background-color:#002B24;
+    color: #fff;
+    margin-bottom: 30px;
+}
+
+.photo_setting_title , .account_setting_title{
+    border-bottom: solid 1px black;
+    padding-left: 10px;
+    background-color:#002B24;
+    color: #fff;
+}
+
+.right_box{
+    display: flex;
+    justify-content: space-between;
+}
+
+.photo_setting{
+    background-color: #fff;
+    border: solid 1px black;
+    width: 40%;
+}
+
+.account_setting{
+    background-color: #fff;
+    border: solid 1px black;
+    width: 57%;
+}
+
+.inline_title{
+    display: inline-block;
+}
+
+form{
+padding: 20px;
+}
+
+input{
+    width: 100%;
+    max-width: 200px;
+}
+
+.password{
+    width: 120px;
+    border: none;
+}
+
+.pass_label{
+font-size: 10px;
+}
+
+.colums_label{
+font-size: 12px;
+display: inline-block;
+width: 100px;
+}
+
+
+.caption_label{
+    font-size: 8px;
+    padding: 5px;
+}
+
+.required_label{
+    color: #920000;
 }
