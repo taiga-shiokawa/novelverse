@@ -7,63 +7,99 @@
         <link rel="stylesheet" href="css/account_settings.css">
     </head>
     <body>
-        <div class="container">
-            <div class="left_container">
-                <div class="left_title">
-                    <h2>ヘルプ</h2>
-                </div>
-                <div class="nav_box">
-                    <ul>
-                        <li>ノベバとは</li>
-                        <li>利用規約</li>
-                        <li>よくある質問</li>
-                        <li>掲示板について</li>
-                    </ul>
-                </div>
-
-            </div>
-            <div class="right_container">
-                <div class="right_title">
-                    <h2>ユーザー情報</h2>
-                </div>
-                <div class="right_box">
-                    <div class="photo_setting">
-                        <div class="photo_setting_title">
-                            <h3>写真</h3>
-                            <label>任意</label>
-                        </div>
-
+        <main>
+            <div class="container">
+                <div class="left_container">
+                    <div class="left_title">
+                        <h2>ヘルプ</h2>
                     </div>
-                    <div class="account_setting">
-                        <div class="account_setting_title">
-                            <h3>ユーザー情報</h3>
-                        </div>
-                        <form>
-                            <label>ニックネーム</label><span>必須</span>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-                            
-                            <label>メールアドレス</label><span>必須</span>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
+                    <div class="nav_box">
+                        <ul class="nav_list">
+                            <li><a href="#">ノベバとは</a></li>
+                            <li><a href="#">利用規約</a></li>
+                            <li><a href="#">よくある質問</a></li>
+                            <li><a href="#">掲示板について</a></li>
+                        </ul>
+                    </div>
 
-                            <label>自己紹介</label><span>任意</span>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-            
-                            <label>生年月日</label><span>任意</span>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-                            <label>年</label>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-                            <label>月</label>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-                            <label>日</label>
-            
-                            <label>パスワード</label><span>必須</span>
-                            <input type="text" name="name" required minlength="4" maxlength="8" size="10" />
-                            <label>パスワード変更はこちら</label>
-                            <button type="submit"></button>
-                        </form>
+                </div>
+                <div class="right_container">
+                    <div class="right_title">
+                        <h2>アカウント設定</h2>
+                    </div>
+                    <div class="right_box">
+                        <div class="photo_setting">
+                            <div class="photo_setting_title">
+                                <h3 class="inline_title">写真</h3>
+                                <label class="caption_label">※任意</label>
+                            </div>
+                            <form>
+                                <input type="file" name="photo" />
+                                <button type="submit">更新</button>
+
+                            </form>
+
+                        </div>
+                        <div class="account_setting">
+                            <div class="photo_setting_title">
+                                <h3 class="inline_title">ユーザー情報</h3>
+                            </div>
+                            <form>
+                                <label class="colums_label">ニックネーム</label><span class="caption_label required_label">※必須</span>
+                                <input type="text" name="name" required />
+                                <br><br>
+                                <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
+                                <input type="text" name="name" required/>
+                                <br><br>
+                                <label class="colums_label">自己紹介</label><span class="caption_label">※任意</span>
+                                <input type="text" name="name" />
+                                <br><br>
+                                <label class="colums_label">生年月日</label><span  class="caption_label">※任意</span>
+                                <select id="year" name="year">
+                                    <option value="2024">2024</option>
+                                  </select>
+                                  <label>年</label>
+                                <select id="mouth">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <label>月</label>
+                                <select id="day">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                                <label>日</label>
+                                <br><br>
+                                <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
+                                <input type="password" class="password" value="testpass" required readonly />
+                                <label class="pass_label">パスワード変更はこちら</label>
+                                <br><br>
+                                <button type="submit">更新</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> 
+        </main>
     </body>
 </html>
