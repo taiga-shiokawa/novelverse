@@ -1,0 +1,121 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F6F1DE;
+}
+
+header {
+  display: flex;
+  align-items: center;
+}
+
+header h2 {
+  margin: 20px 20px 20px 100px;
+}
+
+header .search-form {
+  margin-left: 900px;
+}
+
+input[type="text"] {
+  padding: 5px 20px;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  background-color: #002B24;
+}
+
+.site-nav ul{
+  margin-left: 200px;
+  display: flex;
+}
+
+.site-nav ul li {
+  margin-right: 50px;
+  list-style: none;
+}
+
+.site-nav ul li a{
+  text-decoration: none;
+  color: white;
+}
+
+.mypage {
+  margin-left: 500px;
+  text-decoration: none;
+  color: white;
+}
+
+.icon {
+  color: white;
+  margin-left: 20px;
+}
+
+.content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  display: flex;
+  justify-content: space-between;
+}
+
+span {
+  margin-right: 10px;
+}
+
+span a {
+  font-size: 15px;
+}
+
+.book-list {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.book-item p {
+  margin: 0;
+  margin-right: 5px;
+  text-align: right;
+}
+
+.bookmark-button {
+  display: block;
+  margin-left: 110px;
+  border: 0;
+  padding: 5px 10px;
+  background-color: #505F00;
+  color: white;
+}
+
+.book-cover {
+  background-color: #ddd;
+  height: 200px;
+  width: 180px;
+  margin-bottom: 10px;
+}
+
+footer {
+  background-color: #002B24;
+  padding: 15px;
+}
+
+footer ul{
+  display: flex;
+  list-style: none;
+  margin-left: 200px;
+}
+
+footer ul li {
+  margin-right: 50px;
+}
+
+footer ul li a{
+  text-decoration: none;
+  color: white;
+}
