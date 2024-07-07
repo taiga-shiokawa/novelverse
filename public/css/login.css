@@ -1,0 +1,48 @@
+
+main{
+    background-color: #F6F1DE;
+    color: #332405;
+}
+
+.container{
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    padding-top: 100px;
+}
+
+.left_container{
+    width: 30%;
+    height: 100%;
+    background-color: #fff;
+}
+
+.left_container form{
+    padding: 10px;
+}
+
+.colums_label{
+    font-size: 12px;
+    display: inline-block;
+    width: 100px;
+}
+    
+.caption_label{
+    font-size: 8px;
+    padding: 5px;
+}
+
+.right_container{
+    width: 65%;
+    height: 100%;
+    background-color: #fff;
+    padding: 20px;
+}
+
+.right_container h2 ,.right_container p {
+    padding: 20px;
+}
+    
