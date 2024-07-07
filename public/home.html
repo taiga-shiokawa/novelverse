@@ -20,14 +20,51 @@
     <!-- ナビゲーション -->
     <nav class="site-nav">
       <ul>
-        <li class="home"><a href="#">ホーム</a></li>
-        <li><a href="#">ジャンル</a></li>
-        <li><a href="#">作家</a></li>
-        <li><a href="#">サイト案内</a></li>
-        <li><a href="#">掲示板</a></li>
+        <li><button class="site-nav-button"><a href="./home.html">ホーム</a></button></li>
+        <li>
+          <button class="site-nav-button" id="genreButton"><a href="#">ジャンル</a></button>
+          <div class="dropdown-content" id="genreDropdown">
+            <a href="#">純文学</a>
+            <a href="#">恋愛</a>
+            <a href="#">青春</a>
+            <a href="#">ホラー</a>
+            <a href="#">SF</a>
+          </div>
+        </li>
+        <li>
+          <button class="site-nav-button" id="writerButton"><a href="#">作家</a></button>
+          <div class="dropdown-content" id="writerDropdown">
+            <a href="#">芥川龍之介</a>
+            <a href="#">宇佐見りん</a>
+            <a href="#">江國香織</a>
+          </div>
+        </li>
+        <li>
+          <button class="site-nav-button" id="siteInformationButton"><a href="#">サイト案内</a></button>
+          <div class="dropdown-content" id="siteInfomationDropdown">
+            <a href="#">ノベバとは</a>
+            <a href="#">運営者について</a>
+          </div>
+        </li>
+        <li>
+          <button class="site-nav-button" id="boardButton"><a href="#">掲示板</a></button>
+          <div class="dropdown-content" id="boardDropdown">
+            <a href="#">掲示板とは</a>
+            <a href="#">見てみる</a>
+          </div>
+        </li>
+        <li>
+          <div class="mypage-container">
+            <button class="site-nav-button" id="mypageButton"><a href="#" class="mypage">マイページ</a></button>
+            <div class="dropdown-content" id="mypageDropdown">
+              <a href="#">アカウント設定</a>
+              <a href="#">読みたい一覧</a>
+              <a href="#">ログアウト</a>
+            </div>
+          </div>
+        </li>
       </ul>
-      <a href="#" class="mypage">マイページ</a>
-      <img src="" alt="">
+      <!-- <img src="" alt=""> -->
     </nav>
     <!-- コンテンツ -->
     <main class="content">
