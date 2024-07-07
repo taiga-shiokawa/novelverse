@@ -43,7 +43,7 @@ input[type="text"] {
 }
 
 .mypage {
-  margin-left: 500px;
+  margin-left: 400px;
   text-decoration: none;
   color: white;
 }
@@ -62,6 +62,7 @@ input[type="text"] {
 h2 {
   display: flex;
   justify-content: space-between;
+  color: #332405;
 }
 
 span {
