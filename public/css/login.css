@@ -8,41 +8,53 @@ main{
     width: 100%;
     max-width: 1200px;
     min-height: 90vh;
+    padding-top: 300px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    padding-top: 100px;
 }
+
+/* 左側*/
 
 .left_container{
-    width: 30%;
+    width: 25%;
     height: 100%;
-    background-color: #fff;
-}
-
-.left_container form{
-    padding: 10px;
-}
-
-.colums_label{
     font-size: 12px;
-    display: inline-block;
-    width: 100px;
+    margin-top: 100px;
 }
+
+.left_container form input{
+    margin-top: 5px;
+    border:none;
+    height:30px;
+    width: 100%;
+}
+
+.form_btn{
+    color: #fff;
+    background-color: #505F00;
+    border:none;
+    padding: 10px 24px;
+    letter-spacing: 2px;
+}
+
+.button_box{
+    margin: 12px auto;
+    width: 100%;
+    max-width:240px;
+    display: flex;
+    justify-content: space-between;
+}
+
     
-.caption_label{
-    font-size: 8px;
-    padding: 5px;
-}
+/* 右側 */
 
 .right_container{
     width: 65%;
     height: 100%;
-    background-color: #fff;
     padding: 20px;
 }
 
 .right_container h2 ,.right_container p {
     padding: 20px;
 }
-    
