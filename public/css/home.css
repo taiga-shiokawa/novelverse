@@ -87,15 +87,29 @@ span a {
 
 .bookmark-button {
   position: absolute;
+  bottom: 10%;
+  right: 5%;
+  left: 5%;
+  padding: 10px 15px;
+  border: none;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s ease;
   background-color: #505F00;
   color: white;
 }
 
 .book-cover {
+  position: relative;
   background-color: #ddd;
   height: 200px;
   width: 180px;
   margin-bottom: 10px;
+}
+
+.book-cover:hover .bookmark-button,
+.bookmark-button:hover {
+  opacity: 0.8;
 }
 
 footer {
