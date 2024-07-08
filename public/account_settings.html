@@ -10,9 +10,7 @@
         <main>
             <div class="container">
                 <div class="left_container">
-                    <div class="left_title">
-                        <h2>ヘルプ</h2>
-                    </div>
+                    <h2 class="left_title">ヘルプ</h2>
                     <div class="nav_box">
                         <ul class="nav_list">
                             <li><a href="#">ノベバとは</a></li>
@@ -21,7 +19,6 @@
                             <li><a href="#">掲示板について</a></li>
                         </ul>
                     </div>
-
                 </div>
                 <div class="right_container">
                     <div class="right_title">
@@ -29,77 +26,44 @@
                     </div>
                     <div class="right_box">
                         <div class="photo_setting">
-                            <div class="photo_setting_title">
-                                <h3 class="inline_title">写真</h3>
-                                <label class="caption_label">※任意</label>
-                            </div>
+                            <h3 class="section_title">写真</h3>
+                            <label class="caption_label">※任意</label>
                             <form>
-                                <input type="file" name="photo" />
-                                <button type="submit">更新</button>
-
+                                <div>
+                                    <div id="imagePreview"></div>
+                                    <input type="file" id="photoInput" name="photo" accept="image/*" onchange="handleFileUpload(event)" />
+                                </div>
+                                <button class="btn" type="submit">画像選択</button>
                             </form>
-
                         </div>
                         <div class="account_setting">
-                            <div class="photo_setting_title">
-                                <h3 class="inline_title">ユーザー情報</h3>
-                            </div>
+                            <h3 class="section_title">ユーザー情報</h3>
                             <form>
                                 <label class="colums_label">ニックネーム</label><span class="caption_label required_label">※必須</span>
                                 <input type="text" name="name" required />
                                 <br><br>
                                 <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
-                                <input type="text" name="name" required/>
+                                <input type="text" name="email" required/>
                                 <br><br>
-                                <label class="colums_label">自己紹介</label><span class="caption_label">※任意</span>
-                                <input type="text" name="name" />
-                                <br><br>
+                                <div class="ta_box">
+                                    <label class="colums_label">自己紹介</label><span class="caption_label">※任意</span>
+                                    <textarea name="self_introduction"  maxlength="140"></textarea>
+                                </div>
+                                <br>
                                 <label class="colums_label">生年月日</label><span  class="caption_label">※任意</span>
-                                <select id="year" name="year">
-                                    <option value="2024">2024</option>
-                                  </select>
-                                  <label>年</label>
-                                <select id="mouth">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                                <label>月</label>
-                                <select id="day">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                    <option value="11">11</option>
-                                    <option value="12">12</option>
-                                </select>
-                                <label>日</label>
+                                <input type="date" name="birthdate">
                                 <br><br>
                                 <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
                                 <input type="password" class="password" value="testpass" required readonly />
                                 <label class="pass_label">パスワード変更はこちら</label>
                                 <br><br>
-                                <button type="submit">更新</button>
+                                <button class="btn" type="submit">更新</button>
                             </form>
                         </div>
                     </div>
                 </div>
             </div> 
+        <script src="js/account_setting.js"></script>
         </main>
     </body>
 </html>
