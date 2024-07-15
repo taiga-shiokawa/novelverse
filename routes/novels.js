@@ -8,7 +8,7 @@ router.get("/home", (req, res) => {
 
 // 「もっと見る」以降の小説一覧
 router.get("/list", (req, res) => {
-  res.render("novels/novel_lists");
+  res.render("novels/novel-lists");
 });
 
 module.exports = router;
