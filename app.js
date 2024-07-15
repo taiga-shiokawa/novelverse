@@ -2,8 +2,9 @@ const express = require("express");
 const connectDB = require("./db/connect");      // MongoDB接続
 const path = require("path");                   // viewsフォルダのパスを指定
 const ejsMate = require("ejs-mate");            // テンプレートの共通部分の管理ライブラリ
-const novelRouter = require("./routes/novels"); // 小説ルーター
-const userRouter = require("./routes/users");   // ユーザールーター
+const novelRouter = require("./routes/novels");                                   // 小説関連ルーター
+const userAccountRouter = require("./routes/user-account");                       // ユーザーアカウント関連ルーター
+const userRegistrationAndLogin = require("./routes/user-registration-and-login"); // ユーザー登録とログインルーター
 
 const app = express();
 const PORT = 3000;
@@ -33,8 +34,11 @@ app.use(express.static(path.join(__dirname, "public")));
 // 小説関連API
 app.use("/novel", novelRouter);
 
-// ユーザー関連API
-app.use("/user", userRouter);
+// ユーザーアカウント関連API
+app.use("/user/account", userAccountRouter);
+
+// ユーザー登録とログインAPI
+app.use("/user/", userRegistrationAndLogin);
 
 // サーバー接続
 app.listen(PORT, console.log("サーバーが起動しました"));
