@@ -4,7 +4,7 @@ const path = require("path");                   // viewsフォルダのパスを
 const ejsMate = require("ejs-mate");            // テンプレートの共通部分の管理ライブラリ
 const novelRouter = require("./routes/novels");                                   // 小説関連ルーター
 const userAccountRouter = require("./routes/user-account");                       // ユーザーアカウント関連ルーター
-const userRegistrationAndLogin = require("./routes/user-registration-and-login"); // ユーザー登録とログインルーター
+const userSignupAndLogin = require("./routes/user-signup-and-login"); // ユーザー登録とログインルーター
 
 const app = express();
 const PORT = 3000;
@@ -38,7 +38,7 @@ app.use("/novel", novelRouter);
 app.use("/user/account", userAccountRouter);
 
 // ユーザー登録とログインAPI
-app.use("/user/", userRegistrationAndLogin);
+app.use("/user", userSignupAndLogin);
 
 // サーバー接続
 app.listen(PORT, console.log("サーバーが起動しました"));
