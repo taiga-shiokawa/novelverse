@@ -10,12 +10,13 @@ const novelSchema = new Schema({
   price: Number,
   novel_type: Number,
   is_recommend: false,
-  covers: [
-    {
-      url: String,
-      filename: String,
-    },
-  ],
+  covers: String, // cloudinaryを使用するまで一旦ダミー画像を使用する.
+  // covers: [
+  //   {
+  //     url: String,
+  //     filename: String,
+  //   },
+  // ],
   author: {
     type: Schema.Types.ObjectId,
     ref: "Author",
