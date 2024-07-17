@@ -9,6 +9,7 @@ const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const session = require("express-session");
 const User = require("./models/Users");
+const userLogoutRouter = require("./routes/user-logout");
 
 const app = express();
 const PORT = 3000;
@@ -72,6 +73,9 @@ app.use("/user/account", userAccountRouter);
 
 // ユーザー登録とログインAPI
 app.use("/user", userSignupAndLogin);
+
+// ユーザーログアウトAPI
+app.use("/user", userLogoutRouter);
 
 // サーバー接続
 app.listen(PORT, console.log("サーバーが起動しました"));

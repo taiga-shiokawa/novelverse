@@ -79,7 +79,9 @@
               <% if (!currentUser) { %>
               <a href="/user/login">ログイン</a>
               <% } else { %>
-              <a href="#">ログアウト</a>
+                <form action="/user/logout" method="post">
+                  <button>ログアウト</button>
+                </form>
               <% } %>
             </div>
           </div>
