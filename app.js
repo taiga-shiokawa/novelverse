@@ -10,6 +10,7 @@ const LocalStrategy = require("passport-local");
 const session = require("express-session");
 const User = require("./models/Users");
 const userLogoutRouter = require("./routes/user-logout");
+const flash = require("connect-flash");
 
 const app = express();
 const PORT = 3000;
@@ -48,6 +49,7 @@ const sessionConfig = {
 // フォームからのPOSTリクエストを受け取るためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
 app.use(session(sessionConfig));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -56,6 +58,8 @@ app.use((req, res, next) => {
   console.log(req.session);
   console.log(req.user);
   res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   next();
 });
 

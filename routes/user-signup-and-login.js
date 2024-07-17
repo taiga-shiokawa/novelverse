@@ -30,6 +30,7 @@ router.post("/signup", async (req, res) => {
       `
     });
     console.log("メール送信成功 : ", data);
+    req.flash("success", "アカウントを作成しました。ログインしてください。");
     res.redirect("/user/login");
   } catch (err) {
     console.log("メール送信エラー : ", err);
@@ -63,7 +64,6 @@ router.post("/login", (req, res, next) => {
       const redirectUrl = returnTo || "/novel/list";
       // セッションから returnTo を削除
       delete req.session.returnTo;
-      // req.flash("success", "おかえりなさい");
       console.log("Redirecting to:", redirectUrl);
       return res.redirect(redirectUrl);
     });
