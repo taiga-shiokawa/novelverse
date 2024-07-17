@@ -2,3 +2,20 @@
 
 <!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/signup.css">' %>
+
+<form action="/user/signup" method="post">
+  <div>
+    <label for="nickname">ニックネーム</label>
+    <input type="text" name="username" id="nickname">
+  </div>
+  <div>
+    <label for="email">メールアドレス</label>
+    <input type="email" name="email" id="email">
+  </div>
+  <div>
+    <label for="password">パスワード</label>
+    <input type="password" name="password" id="password">
+  </div>
+
+  <button>作成</button>
+</form>
