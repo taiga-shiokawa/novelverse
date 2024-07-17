@@ -6,10 +6,6 @@ const authorSchema = new Schema({
     type: String,
     required: true,
   },
-  furigana: {
-    type: String,
-    required: true,
-  },
 });
 
 module.exports = mongoose.model("Author", authorSchema);
