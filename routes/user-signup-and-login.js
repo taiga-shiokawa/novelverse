@@ -40,4 +40,13 @@ router.get("/login", (req, res) => {
   res.render("users/user-login");
 });
 
+// ログイン処理
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  });
+  res.redirect("/novel/home");
+});
+
 module.exports = router;

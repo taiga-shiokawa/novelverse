@@ -2,8 +2,8 @@ const express = require("express");
 const connectDB = require("./db/connect");      // MongoDB接続
 const path = require("path");                   // viewsフォルダのパスを指定
 const ejsMate = require("ejs-mate");            // テンプレートの共通部分の管理ライブラリ
-const novelRouter = require("./routes/novels");                                   // 小説関連ルーター
-const userAccountRouter = require("./routes/user-account");                       // ユーザーアカウント関連ルーター
+const novelRouter = require("./routes/novels");                       // 小説関連ルーター
+const userAccountRouter = require("./routes/user-account");           // ユーザーアカウント関連ルーター
 const userSignupAndLogin = require("./routes/user-signup-and-login"); // ユーザー登録とログインルーター
 
 const app = express();

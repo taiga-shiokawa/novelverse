@@ -17,11 +17,12 @@ header {
 }
 
 header h2 {
-  margin: 20px 20px 20px 100px;
+  margin: 0 auto;
 }
 
 header .search-form {
-  margin-left: 900px;
+  margin-left: 700px;
+  margin-right: 50px;
 }
 
 input[type="text"] {
@@ -85,7 +86,7 @@ ul li .dropdown-content a {
 }
 
 .mypage-container .site-nav-button {
-  margin-left: 400px;
+  margin-left: 280px;
 }
 
 #mypageDropdown {
