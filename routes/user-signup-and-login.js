@@ -25,7 +25,7 @@ router.post("/signup", async (req, res) => {
         <h1>メールアドレスの確認</h1>
         <p>ゴキブリが、あなたを見ているよ。</p>
         <p>以下のリンクをクリックし、認証を実行してください。</p>
-        <a href="http://localhost:8000/login">みょ〜ん</a>
+        <a href="http://localhost:8000/user/login">みょ〜ん</a>
       `
     });
     console.log("メール送信成功 : ", data);
