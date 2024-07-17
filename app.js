@@ -53,6 +53,7 @@ app.use(passport.session());
 // セッション情報
 app.use((req, res, next) => {
   console.log(req.session);
+  console.log(req.user);
   res.locals.currentUser = req.user;
   next();
 });
