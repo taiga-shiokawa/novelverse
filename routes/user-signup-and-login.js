@@ -43,11 +43,31 @@ router.get("/login", (req, res) => {
 
 // ログイン処理
 router.post("/login", (req, res, next) => {
-  passport.authenticate("local", {
-    failureFlash: true,
-    failureRedirect: "/login",
-  });
-  res.redirect("/novel/home");
+  // セッションの外で returnTo を保持
+  const returnTo = req.session.returnTo;
+  console.log("Original returnTo:", returnTo);
+
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      // req.flash("error", "Invalid username or password");
+      return res.redirect("/user/login");
+    }
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      // ここで保持していた returnTo を使用
+      const redirectUrl = returnTo || "/novel/list";
+      // セッションから returnTo を削除
+      delete req.session.returnTo;
+      // req.flash("success", "おかえりなさい");
+      console.log("Redirecting to:", redirectUrl);
+      return res.redirect(redirectUrl);
+    });
+  })(req, res, next);
 });
 
 module.exports = router;

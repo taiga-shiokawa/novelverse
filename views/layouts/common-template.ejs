@@ -74,7 +74,11 @@
             <div class="dropdown-content" id="mypageDropdown">
               <a href="#">アカウント設定</a>
               <a href="#">読みたい一覧</a>
+              <% if (!currentUser) { %>
+              <a href="/user/login">ログイン</a>
+              <% } else { %>
               <a href="#">ログアウト</a>
+              <% } %>
             </div>
           </div>
         </li>

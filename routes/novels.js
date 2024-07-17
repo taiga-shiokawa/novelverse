@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+// const { isLoggedIn } = require("../middleware");
 
 // ホーム画面へ遷移
 router.get("/home", (req, res) => {
