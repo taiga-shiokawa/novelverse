@@ -1,8 +1,9 @@
 const express = require("express");
 const User = require("../models/Users");
-const passport = require("passport");
 const { Resend } = require("resend");
 require("dotenv").config();
+const passport = require("passport");
+
 const resend = new Resend(process.env.RESEND_API_KEY);
 const router = express.Router();
 
@@ -38,6 +39,15 @@ router.post("/signup", async (req, res) => {
 // ログイン画面へ遷移
 router.get("/login", (req, res) => {
   res.render("users/user-login");
+});
+
+// ログイン処理
+router.post("/login", (req, res, next) => {
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  });
+  res.redirect("/novel/home");
 });
 
 module.exports = router;
