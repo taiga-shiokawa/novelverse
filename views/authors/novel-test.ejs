@@ -6,7 +6,7 @@
   <title>小説投稿</title>
 </head>
 <body>
-  <form action="/novel/registration" method="post">
+  <form action="/novel/registration" method="post" enctype="multipart/form-data">
     <div>
       <label for="title">タイトル</label>
       <input type="text" name="novel[title]", id="title">
@@ -36,7 +36,7 @@
     </div>
     <div>
       <label for="cover">表紙</label>
-      <input type="text" name="novel[cover]" id="cover">
+      <input type="file" name="cover" id="cover">
     </div>
     <div>
       <select name="novel[novel_type]" id="novel_type">

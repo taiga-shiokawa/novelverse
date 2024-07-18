@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
 const Novel = require("../models/Novels");
+const multer = require("multer");
+const { storage } = require("../cloudinary/cloudinary");
+const upload = multer({ storage });
 // const { isLoggedIn } = require("../middleware");
 
 // ホーム画面へ遷移
@@ -67,14 +70,17 @@ router.get("/registration", (req, res) => {
 });
 
 // 小説投稿処理
-router.post("/registration", async (req, res) => {
+router.post("/registration", upload.single("cover"), async (req, res) => {
   try {
     const novelData = req.body.novel;
 
-    // チェックボックスの値を適切に変換
+    // チェックボックスの値をMongoDBのBoolean型に合うように変換
     novelData.is_new = novelData.is_new === "on";
     novelData.is_recommend = novelData.is_recommend === "on";
     const novel = new Novel(req.body.novel);
+    if (req.file) {
+      novel.cover = { url: req.file.path, filename: req.file.filename };
+    }
     const saveNovel = await novel.save();
     console.log("小説の登録に成功しました。", saveNovel);
     res.redirect("/novel/registration");

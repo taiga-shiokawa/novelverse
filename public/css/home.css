@@ -60,6 +60,11 @@ span a {
   margin-right: 30px;
 }
 
+.book-cover img {
+  height: 200px;
+  width: 180px;
+}
+
 .book-cover:hover .bookmark-button,
 .bookmark-button:hover {
   opacity: 0.8;

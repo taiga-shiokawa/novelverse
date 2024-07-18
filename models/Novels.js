@@ -40,10 +40,12 @@ const novelSchema = new Schema({
     required: true,
     default: false,
   },
-  cover: {
-    type: String,
-    required: true,
-  }, 
+  cover: [
+    {
+      url: String,
+      filename: String,
+    },
+  ], 
   author: {
     type: Schema.Types.ObjectId,
     ref: "Author",
