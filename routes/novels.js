@@ -84,4 +84,12 @@ router.post("/registration", async (req, res) => {
   }
 });
 
+// 小説詳細画面へ遷移
+router.get("/detail/:id", async (req, res) => {
+  const id = req.params.id;
+  const novelDetails = await Novel.findById(id).populate("author").populate("genre");
+  console.log(novelDetails);
+  res.render("novels/novel-details", { novelDetails });
+});
+
 module.exports = router;

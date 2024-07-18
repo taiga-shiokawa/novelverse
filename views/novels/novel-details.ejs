@@ -1,7 +1,23 @@
 <% layout("layouts/common-template") %>
 
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/home.css">' %>
+<% head = '<link rel="stylesheet" href="/css/novel_detail.css">' %>
+
+<main class="container">
+  <div class="img-container">
+      <img src="<%= novelDetails.cover %>" alt="小説画像">
+  </div>
+  <div class="info-container">
+      <h2>タイトル: <%= novelDetails.title  %> <button class="read-button">読みたい +</button></h2>
+      <p>著者名: <%= novelDetails.author.author_name %></p>
+      <textarea placeholder="あらすじ"><%= novelDetails.summary  %></textarea>
+      <hr>
+      <p>ジャンル: <%= novelDetails.genre.genre_name  %></p>
+      <p>出版情報: <%= new Date(novelDetails.publication_date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) %> 
+        <%= novelDetails.publisher_name %></p>
+      <p>ページ数: <%= novelDetails.pages %>ページ</p>
+  </div>
+</main>
 
 
 <!-- 特定のJavaScript -->
