@@ -33,11 +33,9 @@
             <a href="#">ジャンル</a>
           </button>
           <div class="dropdown-content" id="genreDropdown">
-            <a href="#">純文学</a>
-            <a href="#">恋愛</a>
-            <a href="#">青春</a>
-            <a href="#">ホラー</a>
-            <a href="#">SF</a>
+            <% genres.forEach(genre => { %>
+            <a href="<%= genre._id %>"><%= genre.genre_name %></a>
+            <% }); %>
           </div>
         </li>
         <li>

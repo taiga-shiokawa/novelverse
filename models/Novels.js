@@ -21,6 +21,10 @@ const novelSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Author",
   },
+  genre: {
+    type: Schema.Types.ObjectId,
+    ref: "Genre",
+  },
 });
 
 module.exports = mongoose.model("Novel", novelSchema);
