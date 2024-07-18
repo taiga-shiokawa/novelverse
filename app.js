@@ -11,6 +11,7 @@ const session = require("express-session");
 const User = require("./models/Users");
 const userLogoutRouter = require("./routes/user-logout");
 const getGenreName = require("./common/genres");
+const getAuthorName = require("./common/authors");
 const flash = require("connect-flash");
 
 const app = express();
@@ -31,6 +32,16 @@ async function loadGenres() {
   try {
     const genres = await getGenreName();
     return genres;
+  } catch (err) {
+    console.log("Error loading genres:", err);
+    return [];
+  }
+}
+
+async function loadAuthors() {
+  try {
+    const authors = await getAuthorName();
+    return authors;
   } catch (err) {
     console.log("Error loading genres:", err);
     return [];
@@ -76,6 +87,9 @@ app.use(async (req, res, next) => {
   res.locals.error = req.flash("error");
   if (!res.locals.genres) {
     res.locals.genres = await loadGenres();
+  }
+  if(!res.locals.authors) {
+    res.locals.authors = await loadAuthors();
   }
   next();
 });

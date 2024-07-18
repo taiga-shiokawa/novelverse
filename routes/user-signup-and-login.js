@@ -60,7 +60,7 @@ router.post("/login", (req, res, next) => {
         return next(err);
       }
       // ここで保持していた returnTo を使用
-      const redirectUrl = returnTo || "/novel/list";
+      const redirectUrl = returnTo || "/novel/home";
       // セッションから returnTo を削除
       delete req.session.returnTo;
       console.log("Redirecting to:", redirectUrl);

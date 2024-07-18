@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const Genre = require("../models/Genres");
 
 const getGenreName = async () => {

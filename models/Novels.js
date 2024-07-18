@@ -2,21 +2,48 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const novelSchema = new Schema({
-  title: String,
-  summary: String,
-  is_new: false,
-  pages: String,
-  publication_info: String,
-  price: Number,
-  novel_type: Number,
-  is_recommend: false,
-  covers: String, // cloudinaryを使用するまで一旦ダミー画像を使用する.
-  // covers: [
-  //   {
-  //     url: String,
-  //     filename: String,
-  //   },
-  // ],
+  title: {
+    type: String,
+    required: true,
+  },
+  summary: {
+    type: String,
+    required: true,
+  },
+  is_new: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  pages: {
+    type: Number,
+    required: true,
+  },
+  publisher_name: {
+    type: String,
+    required: true,
+  },
+  publication_date: {
+    type: Date,
+    required: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+  },
+  novel_type: {
+    type: String,
+    required: true,
+  },
+  is_recommend: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
+  cover: {
+    type: String,
+    required: true,
+  }, 
   author: {
     type: Schema.Types.ObjectId,
     ref: "Author",
