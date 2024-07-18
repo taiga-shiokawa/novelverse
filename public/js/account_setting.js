@@ -29,21 +29,3 @@ function handleFileUpload(event) {
 }
 
 
-
-
-
-
-
-const pass_label = document.querySelector('.pass_label'),
-      password =document.querySelector('.password');
-
-//「開くボタン」をクリックしてモーダルを開く
-function passTypeChange() {
-  //typeを変更する
-  password.type = 'text'; 
-  password.removeAttribute('readonly');
-  //パスワード変更はこちらを消す
-  pass_label.style.display = 'none';
-}
-pass_label.addEventListener('click', passTypeChange);
-
