@@ -39,8 +39,26 @@ router.get("/home", async (req, res) => {
 });
 
 // 「もっと見る」以降の小説一覧
-router.get("/list", (req, res) => {
-  res.render("novels/novel-lists");
+router.get("/list", async (req, res) => {
+  try {
+    let query = {};
+    let pageTitle = "";
+
+    if (req.query.is_new === "true") {
+      query.is_new = true;
+      pageTitle = "注目の新作";
+    } else if (req.query.novel_type) {
+      query.novel_type = req.query.novel_type;
+      pageTitle = `おすすめの${req.query.novel_type}`;
+    } else if (req.query.is_recommend === "true") {
+      query.is_recommend = true;
+      pageTitle = "ノベルバースおすすめ";
+    }
+    const novels = await Novel.find(query).populate("author").populate("genre");
+    res.render("novels/novel-lists", { novels, pageTitle });
+  } catch (err) {
+    console.log(err);
+  }
 });
 
 // 小説投稿画面へ遷移
