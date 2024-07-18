@@ -11,6 +11,7 @@ const session = require("express-session");
 const User = require("./models/Users");
 const userLogoutRouter = require("./routes/user-logout");
 const getGenreName = require("./common/genres");
+const flash = require("connect-flash");
 
 const app = express();
 const PORT = 3000;
@@ -59,6 +60,7 @@ const sessionConfig = {
 
 // フォームからのPOSTリクエストを受け取るためのミドルウェア
 app.use(session(sessionConfig));
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -70,6 +72,8 @@ passport.deserializeUser(User.deserializeUser());
 // ジャンルとユーザー情報(セッション)を全てのルートで利用可能にするミドルウェア
 app.use(async (req, res, next) => {
   res.locals.currentUser = req.user;
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
   if (!res.locals.genres) {
     res.locals.genres = await loadGenres();
   }

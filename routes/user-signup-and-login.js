@@ -63,7 +63,6 @@ router.post("/login", (req, res, next) => {
       const redirectUrl = returnTo || "/novel/list";
       // セッションから returnTo を削除
       delete req.session.returnTo;
-      // req.flash("success", "おかえりなさい");
       console.log("Redirecting to:", redirectUrl);
       return res.redirect(redirectUrl);
     });
