@@ -1,27 +1,22 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-        <link rel="stylesheet" href="/css/account_deletion.css">
-    </head>
-    <body>
+<% layout("layouts/common-template") %>
+
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
         <main>
             <div class="container">
                 <h2 class="delet_title">アカウント削除</h2>
-                <form action="#">
+                <form action="/user/account/deletion" method="POST">
                     <label class="colums_label">削除理由</label><span class="caption_label required_label">※必須</span><br>
-                    <select name="deletion_reason" onchange="handleChange(this)">
-                        <option value="1">削除理由テキスト１</option>
-                        <option value="2">削除理由テキスト２</option>
-                        <option value="3">その他</option>
+                    <select name="reason" onchange="handleChange(this)">
+                        <option value="削除理由テキスト１">削除理由テキスト１</option>
+                        <option value="削除理由テキスト２">削除理由テキスト２</option>
+                        <option value="その他">その他</option>
                     </select><br>
                     <textarea class="other" name="other" rows="3" placeholder="その他を選んだ方は、こちらに理由を記述してください"></textarea>
                     <br>
                     <label class="colums_label">ご意見</label><span class="caption_label">任意</span><br>
                     <textarea class="opinion" name="opinion" rows="5"></textarea>
-                    <button class="btn js-modal-open">削除</button>
+                    <a class="btn js-modal-open">削除</a>
 
                     <!-- モーダル本体 -->
                     <div class="modal js-modal">
@@ -32,15 +27,13 @@
                             <div class="modal-content">
                                 <p>本当に削除しますか</p>
                                 <div class="btn_box">
-                                    <button class="modal_btn" type="submit">はい</butto>
-                                    <button class="js-modal-close-button modal_btn">いいえ</butto>
+                                    <button class="modal_btn" type="submit">はい</button>
+                                    <a class="js-modal-close-button modal_btn_a">いいえ</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </form>
             </div> 
-            <script src="js/account_deletion.js"></script>
         </main>
-    </body>
-</html>
+        <% scripts = '<script src="/js/account_deletion.js"></script>' %> 
