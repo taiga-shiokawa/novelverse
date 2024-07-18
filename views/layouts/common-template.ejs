@@ -4,16 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ノベルバース</title>
-    <link rel="stylesheet" href="/css/common_template.css">
+    <link rel="stylesheet" href="/css/common_template.css" />
     <%- head %>
   </head>
   <body>
     <!-- ヘッダー -->
     <header>
       <!-- サイトロゴとサイト説明-->
-       <div class="site-logo">
-        <img src="/images/アセット 4@2x.png" alt="">
-       </div>
+      <div class="site-logo">
+        <a href="/novel/home">
+          <img src="/images/アセット 4@2x.png" alt="" />
+        </a>
+      </div>
       <!-- <p>サイト説明</p> -->
       <!-- サイト内検索ボックス -->
       <form action="" class="search-form">
@@ -77,9 +79,9 @@
               <% if (!currentUser) { %>
               <a href="/user/login">ログイン</a>
               <% } else { %>
-                <form action="/user/logout" method="post">
-                  <button>ログアウト</button>
-                </form>
+              <form action="/user/logout" method="post">
+                <button>ログアウト</button>
+              </form>
               <% } %>
             </div>
           </div>
