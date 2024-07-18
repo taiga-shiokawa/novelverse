@@ -42,10 +42,18 @@ router.get("/login", (req, res) => {
 });
 
 // ログイン処理
-router.post("/login", (req, res, next) => {
+router.post("/login", async (req, res, next) => {
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;
   console.log("Original returnTo:", returnTo);
+
+  const email = req.body.email;
+  const user = await User.findOne({ email: email });
+
+  if (!user) {
+    req.flash("error", "ログインに失敗しました");
+    return res.redirect("/user/login");
+  }
 
   passport.authenticate("local", (err, user, info) => {
     if (err) {
