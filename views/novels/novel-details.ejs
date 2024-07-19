@@ -5,11 +5,12 @@
 
 <main class="container">
   <div class="img-container">
-      <img src="<%= novelDetails.cover %>" alt="小説画像">
+      <img src="<%= novelDetails.cover[0].url %>" alt="小説画像">
   </div>
   <div class="info-container">
       <h2>タイトル: <%= novelDetails.title  %> <button class="read-button">読みたい +</button></h2>
       <p>著者名: <%= novelDetails.author.author_name %></p>
+      <p>あらすじ: </p>
       <textarea placeholder="あらすじ"><%= novelDetails.summary  %></textarea>
       <hr>
       <p>ジャンル: <%= novelDetails.genre.genre_name  %></p>
