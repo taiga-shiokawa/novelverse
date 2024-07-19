@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Novel = require("../models/Novels");
+const Author = require("../models/Authors");
 const multer = require("multer");
 const { storage } = require("../cloudinary/cloudinary");
 const upload = multer({ storage });
@@ -93,9 +94,31 @@ router.post("/registration", upload.single("cover"), async (req, res) => {
 // 小説詳細画面へ遷移
 router.get("/detail/:id", async (req, res) => {
   const id = req.params.id;
-  const novelDetails = await Novel.findById(id).populate("author").populate("genre");
+  const novelDetails = await Novel.findById(id)
+    .populate("author")
+    .populate("genre");
   console.log(novelDetails);
   res.render("novels/novel-details", { novelDetails });
+});
+
+// 作家取得
+router.get("/author", async (req, res) => {
+  const query = req.query.q;
+  if (!query) {
+    return res.json([]);
+  }
+
+  try {
+    const suggestion = await Author.find({
+      author_name: { $regex: query, $options: "i" },
+    })
+      .limit(10)
+      .lean()
+      .exec();
+    res.json(suggestion.map((item) => item.author_name));
+  } catch (err) {
+    console.log("作家の取得に失敗しました。", err);
+  }
 });
 
 module.exports = router;

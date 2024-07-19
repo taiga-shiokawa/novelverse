@@ -47,9 +47,10 @@
           </button>
           <div class="dropdown-content" id="writerDropdown">
             <div class="writerSearch">
-              <form action="/novel/search/:id">
-                <input type="text" name="search" placeholder="作家名で検索">
+              <form action="/novel/search" method="get">
+                <input type="text" name="search" id="searchInput" placeholder="作家名で検索">
               </form>
+              <div id="suggestions" class="suggestions"></div>
             </div>
           </div>
         </li>
@@ -112,6 +113,8 @@
       </ul>
     </footer>
 
+    <script src="/js/navbar-search-input.js"></script>
+    <script src="/js/navbar.js"></script>
     <%- scripts %>
   </body>
 </html>

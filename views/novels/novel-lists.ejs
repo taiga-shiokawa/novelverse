@@ -13,8 +13,10 @@
       <% for (let novel of novels) { %>
         <div class="book-item">
           <div class="book-cover">
-            <img src="<%= novel.cover %>" alt="<%= novel.title %>の表紙">
-            <button class="bookmark-button">読みたい＋</button>
+            <img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙">
+            <form action="/user/bookmark" method="post">
+              <button class="bookmark-button">読みたい＋</button>
+            </form>
           </div>
           <p><%= novel.title %></p>
           <p><%= novel.author.author_name %></p>
