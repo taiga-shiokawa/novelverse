@@ -1,0 +1,34 @@
+<% layout("layouts/common-template") %>
+
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/home.css" />' %> 
+
+<%= success %>
+<%= messages.info %>
+
+<!-- コンテンツ -->
+<main class="content">
+  <section class="section">
+    <% if (pageTitle) { %>
+    <h2><%= pageTitle %></h2>
+    <% } %>
+    <div class="book-list">
+      <% for (let novel of results) { %>
+        <div class="book-item">
+          <div class="book-cover">
+            <img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙">
+            <form action="/user/bookmark" method="post">
+              <button class="bookmark-button">読みたい＋</button>
+            </form>
+          </div>
+          <p><%= novel.title %></p>
+          <p><%= novel.author.author_name %></p>
+        </div>
+      <% } %>
+    </div>
+  </section>
+</main>
+
+
+<!-- 特定のJavaScript -->
+<% scripts = '<script src="/js/home.js"></script>' %>

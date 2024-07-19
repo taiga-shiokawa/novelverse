@@ -112,12 +112,64 @@ router.get("/author", async (req, res) => {
     const suggestion = await Author.find({
       author_name: { $regex: query, $options: "i" },
     })
-      .limit(10)
+      .limit(50)
       .lean()
       .exec();
     res.json(suggestion.map((item) => item.author_name));
   } catch (err) {
     console.log("作家の取得に失敗しました。", err);
+  }
+});
+
+// 検索結果画面へ遷移&処理
+router.get("/search", async (req, res) => {
+  const searchQuery = req.query.search;
+  let pageTitle = "";
+
+  if (!searchQuery || searchQuery.trim() === '') {
+    req.flash("info", "検索キーワードを入力してください");
+    return res.render("novels/novel-search-result", { results: [], messages: req.flash() });
+  }
+
+  try {
+    const regex = new RegExp(searchQuery, 'i');
+    
+    // 検索クエリに一致する作家を見つける
+    const matchingAuthors = await Author.find({ author_name: regex });
+    const authorIds = matchingAuthors.map(author => author._id);
+
+    // タイトルまたは一致した作家IDで小説を検索
+    const results = await Novel.find({
+      $or: [
+        { title: regex },
+        { author: { $in: authorIds } }
+      ]
+    })
+    .populate("author")
+    .populate("genre")
+    .exec();
+
+    if (results.length < 1) {
+      req.flash("info", "検索結果がありません");
+      pageTitle = "検索結果";
+    } else {
+      pageTitle = `${searchQuery}の検索結果`;
+    }
+
+    res.render("novels/novel-search-result", { 
+      results, 
+      pageTitle, 
+      messages: req.flash() 
+    });
+
+  } catch (err) {
+    console.error("検索エラー", err);
+    req.flash("error", "検索中にエラーが発生しました");
+    res.status(500).render("novels/novel-search-result", { 
+      results: [], 
+      pageTitle: "エラー", 
+      messages: req.flash() 
+    });
   }
 });
 
