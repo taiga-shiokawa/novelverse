@@ -28,7 +28,7 @@
       <ul>
         <li>
           <button class="site-nav-button">
-            <a href="./home.html">ホーム</a>
+            <a href="/novel/home">ホーム</a>
           </button>
         </li>
         <li>
@@ -46,9 +46,11 @@
             <a href="#">作家</a>
           </button>
           <div class="dropdown-content" id="writerDropdown">
-            <a href="#">芥川龍之介</a>
-            <a href="#">宇佐見りん</a>
-            <a href="#">江國香織</a>
+            <div class="writerSearch">
+              <form action="/novel/search/:id">
+                <input type="text" name="search" placeholder="作家名で検索">
+              </form>
+            </div>
           </div>
         </li>
         <li>

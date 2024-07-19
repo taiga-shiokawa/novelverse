@@ -117,3 +117,7 @@ footer ul li a{
   text-decoration: none;
   color: white;
 }
+
+.writerSearch form{
+  padding: 10px;
+}
