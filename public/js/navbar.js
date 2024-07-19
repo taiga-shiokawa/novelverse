@@ -3,6 +3,17 @@ function setupDropdown(buttonId, dropdownId) {
   const button = document.getElementById(buttonId);
   const dropdown = document.getElementById(dropdownId);
 
+  button.addEventListener("click", function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    allDropdowns.forEach(d => {
+      if (d.id !== dropdownId) {
+        d.classList.remove('show');
+      }
+    });
+    dropdown.classList.toggle('show');
+  });
+
   button.addEventListener("mouseenter", function () {
     dropdown.classList.add("show");
   });
@@ -13,10 +24,6 @@ function setupDropdown(buttonId, dropdownId) {
         dropdown.classList.remove("show");
       }
     }, 100);
-  });
-
-  dropdown.addEventListener("mouseleave", function () {
-    dropdown.classList.remove("show");
   });
 }
 
