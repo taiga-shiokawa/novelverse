@@ -1,0 +1,31 @@
+<% layout("layouts/common-template") %>
+
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<main>
+    <h1>
+        管理者管理
+    </h1>
+    <h2>
+        管理者追加
+    </h2>
+    <form action="/admin/add_admin?_method=PUT" method="POST">
+        <input type="file" id="photoInput" name="photo" accept="image/*">
+        <label class="colums_label">管理者コード</label><span class="caption_label required_label">※必須</span>
+        <input type="text" name="admin[admin_code]" required />
+        <br><br>
+        <label class="colums_label">名前</label><span class="caption_label required_label">※必須</span>
+        <input type="text" name="admin[name]" required/>
+        <br><br>
+        <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
+        <input type="text" name="admin[email]" required/>
+        <br><br>
+        <label class="colums_label">生年月日</label><span class="caption_label required_label">※必須</span>
+        <input type="date" name="admin[birthday]" required/>
+        <br><br>
+        <label class="colums_label">パスワード</label><span class="caption_label required_label">※必須</span>
+        <input type="password" name="admin[password]" required/>
+        <button class="btn" type="submit">追加</button>
+    </form>
+</main>
+<% scripts = '<script src="/js/home.js"></script>' %> 
