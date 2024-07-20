@@ -3,6 +3,7 @@ const router = express.Router({ mergeParams : true});
 const User = require("../models/Users");
 const { isLoggedIn } = require("../middleware");
 const DeletionReason = require('../models/Deletion_reasons');
+const passport = require("passport");
 
 
 // アカウント削除画面へ遷移
@@ -46,4 +47,55 @@ router.post("/setting", isLoggedIn , async (req, res) => {
   res.redirect("/user/account/setting");
 });
 
+
+//パスワード変更
+router.get("/password_change", isLoggedIn ,  (req, res) => {
+  res.render("users/password-change");
+});
+
+// ログイン処理
+router.post("/password_change", isLoggedIn , async (req, res ,next ) => {
+  const { currentPassword, newPassword , confirmPassword } = req.body;
+
+  if (!req.isAuthenticated()) {
+          req.flash('error' , '認証されていません');
+          return res.redirect(`/user/login`);
+  }
+
+  try {
+    const user = await User.findById(req.user._id);
+    if (!user) {
+      req.flash('error' , 'ユーザーが見つかりません');
+      return res.redirect(`/user/login`);
+    }
+
+    if ( newPassword != confirmPassword) {
+      req.flash('error' , '新しいパスワードと確認用パスワードが一致しません');
+      return res.redirect("/user/account/password_change");
+    }
+
+    user.authenticate(currentPassword, async (err, user, passwordError) => {
+      if (err || passwordError) {
+        req.flash('error' , '現在のパスワードが正しくありません');
+        return res.redirect("/user/account/password_change");
+      }
+
+      await user.setPassword(newPassword);
+      await user.save();
+
+      req.login(user, (err) => {
+        if (err) {
+          console.error("Re-login error:", err);
+          req.flash('error' , 'ログインエラーが発生しました');
+          return res.redirect(`/user/login`);
+        }
+        req.flash('success' , 'パスワードが正常に更新されました');
+        return res.redirect("/user/account/password_change");
+      });
+    });
+  } catch (error) {
+    console.error("Password update error:", error);
+    res.status(500).json({ message: 'パスワードの更新中にエラーが発生しました' });
+  }
+  });
 module.exports = router;

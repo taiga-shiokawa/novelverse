@@ -44,11 +44,15 @@
                                 </div>
                                 <br>
                                 <label class="colums_label">生年月日</label><span  class="caption_label">※任意</span>
-                                <input type="date" name="user[birthday]" value="<%= new Date(loginUser.birthday).toISOString().slice(0, 10) %>">
+                                <% if(loginUser.birthday){%>
+                                    <input type="date" name="user[birthday]" value="<%= new Date(loginUser.birthday).toISOString().slice(0, 10) %>">
+                                    <% } else { %>
+                                    <input type="date" name="user[birthday]">
+                                <% } %>
                                 <br><br>
                                 <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
                                 <input type="password" class="password" value="********" required readonly />
-                                <label class="pass_label">パスワード変更はこちら</label>
+                                <label class="pass_label"><a href="/user/account/password_change">パスワード変更はこちら</a></label>
                                 <br><br>
                                 <button class="btn" type="submit">更新</button>
                             </form>
@@ -56,8 +60,5 @@
                     </div>
                 </div>
             </div> 
-        <script src="js/account_setting.js"></script>
         </main>
-    </body>
-</html>
-
+        <% scripts = '<script src="/js/account_setting.js"></script>' %> 
