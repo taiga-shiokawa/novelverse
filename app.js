@@ -1,26 +1,34 @@
+// 本番環境で実行されていない場合にdotenvモジュールを読み込み,  .envファイルから環境変数を読み込む
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
 
-const express = require("express");
-const connectDB = require("./db/connect"); // MongoDB接続
-const path = require("path"); // viewsフォルダのパスを指定
-const ejsMate = require("ejs-mate"); // テンプレートの共通部分の管理ライブラリ
-const novelRouter = require("./routes/novels"); // 小説関連ルーター
-const userAccountRouter = require("./routes/user-account"); // ユーザーアカウント関連ルーター
+// 標準モジュール
+const path = require("path"); // viewsフォルダのファイルパスを指定するためのモジュール
+
+// サードパーティ(外部のライブラリなど)モジュール
+const connectDB = require("./db/connect");        // MongoDB接続のためにconnectファイルからインポート
+const express = require("express");               // Node.jsのWEBフレームワークであるExpressパッケージをインポート
+const ejsMate = require("ejs-mate");              // テンプレートの共通部分の管理ライブラリ
+const flash = require("connect-flash");           // req,res間で一時的に保持されたメッセージを表示してユーザーにフィードバックを行う
+const LocalStrategy = require("passport-local");  // Passport.jsのローカル認証をインポート
+const passport = require("passport");             // Passportライブラリのインポート
+const session = require("express-session");       // アプリのセッション管理機能を追加するためのミドルウェアの設定
+
+// ローカルモジュール
+const getGenreName = require("./common/genres");    // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
+const getAuthorName = require("./common/authors");  // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきた作家名を表示する
+const User = require("./models/Users");             // ユーザーの認証のためUserモデルをインポート
+const userAccountRouter = require("./routes/user-account");           // ユーザーアカウント関連ルーター
+const userLogoutRouter = require("./routes/user-logout");             // ユーザーのログアウトルーター
+const novelRouter = require("./routes/novels");                       // 小説関連ルーター
 const userSignupAndLogin = require("./routes/user-signup-and-login"); // ユーザー登録とログインルーター
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const session = require("express-session");
-const User = require("./models/Users");
-const userLogoutRouter = require("./routes/user-logout");
-const getGenreName = require("./common/genres");
-const getAuthorName = require("./common/authors");
-const flash = require("connect-flash");
 
 const app = express();
 const PORT = 3000;
-const DB_URL = "mongodb://localhost:27017/novelversedb"; // MongoDB名（ローカル）
+
+// MongoDB名（ローカル）
+const DB_URL = "mongodb://localhost:27017/novelversedb";
 
 // MongoDB接続
 const start = async () => {
@@ -42,6 +50,7 @@ async function loadGenres() {
   }
 }
 
+// commonフォルダのgenres.jsから作者名を読み込み
 async function loadAuthors() {
   try {
     const authors = await getAuthorName();
@@ -53,12 +62,14 @@ async function loadAuthors() {
 }
 
 // viewエンジン
-app.engine("ejs", ejsMate);
-app.set("view engine", "ejs");
-app.set("views", path.join(__dirname, "views"));
+app.engine("ejs", ejsMate);     // ejs拡張子を指定.
+app.set("view engine", "ejs");  // このアプリでejsをViewエンジンとして使用することを宣言.
+app.set("views", path.join(__dirname, "views"));  // Viewsフォルダ配下のejsファイルの絶対パスの生成.
 
 // publicフォルダを使用するためのミドルウェア
 app.use(express.static(path.join(__dirname, "public")));
+
+// HTMLのフォーム送信によるbody部分に含まれるデータを解析しreq.bodyにパースするためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
 
 // セッション設定
@@ -68,21 +79,26 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
-    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
-    maxAge: 1000 * 60 * 60 * 24 * 7,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Cookieの有効期限を1週間後に設定
+    maxAge: 1000 * 60 * 60 * 24 * 7,               // Coolieの"最大"有効期限を1週間に設定
   },
 };
-
-// フォームからのPOSTリクエストを受け取るためのミドルウェア
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
+app.use(passport.session());    // ユーザー認証情報をセッションで維持する
 
-// 認証を, authenticateという方法でLocalStrategyを使ってやることを宣言
+// 認証を, authenticateという方法でLocalStrategy(ローカル認証)を使ってやることを宣言
 passport.use(new LocalStrategy(User.authenticate()));
+
+// ユーザーオブジェクトをシリアライズ（簡潔な形式に変換）してセッションに保存する
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+
+/**
+ * 各リクエストでセッションからユーザーIDを取得しdeserializeUserメソッドを呼び出して, そのIDに対応するユーザーオブジェクトをデータベースから取得する
+ * これにより、各リクエストに対してユーザーオブジェクトがreq.userとして利用可能になる
+ */
+passport.deserializeUser(User.deserializeUser()); 
 
 // ジャンルとユーザー情報(セッション)を全てのルートで利用可能にするミドルウェア
 app.use(async (req, res, next) => {
@@ -115,5 +131,4 @@ async function startServer() {
   await start();
   app.listen(PORT, () => console.log(`サーバーが起動しました。ポート: ${PORT}`));
 }
-
 startServer();
