@@ -27,6 +27,10 @@ const adminSchema = new Schema({
       filename: String,
     },
   ],
+  role: {
+    type: String,
+    default: "admin",
+  },
 });
 
 adminSchema.plugin(passportLocalMongoose, { usernameField: 'admin_code' });

@@ -54,9 +54,10 @@ module.exports.renderAddAdmin = ( req , res ) => {
 }
 
 module.exports.addAdmin = async (req, res) => {
+  const {admin_code , name, email, birthday , password } = req.body;
+  let role = "admin";
     try {
-        const {admin_code , name, email, birthday , password } = req.body;
-        const admin = new Admin({ admin_code , name, email , birthday});
+        const admin = new Admin({ admin_code , name, email , birthday, role});
         const registerAdmin = await Admin.register(admin, password);
         req.flash('success' , '管理者を登録しました。');
         res.render("admins/admin-add");
@@ -74,14 +75,15 @@ module.exports.renderRegistrationAdmin = ( req , res ) => {
 }
 
 module.exports.registrationAdmin = async (req, res) => {
+  const {admin_code , name, email, birthday , password } = req.body;
+  let role = "admin";
   try {
-      const {admin_code , name, email, birthday , password } = req.body;
-      console.log(`${admin_code}と${name}と${email}`)
-      const admin = new Admin({  username: admin_code, admin_code , name, email , birthday});
+      console.log(`${admin_code}と${name}と${email}と${role}`);
+      const admin = new Admin({  username: admin_code, admin_code , name, email , birthday, role});
       const registerAdmin = await Admin.register(admin, password);
       req.flash('success' , '管理者を登録しました。');
-      res.render("admins/admin-registration");
-      res.redirect('/admin/registration_admin');
+      // res.render("admins/admin-registration");
+      res.redirect('/admin/admin_login');
   }catch(err){
       console.log(err);
       req.flash('error' , '登録中にエラーが発生しました');

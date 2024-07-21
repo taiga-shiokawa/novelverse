@@ -20,6 +20,10 @@ const userSchema = new Schema({
       filename: String,
     },
   ],
+  role: {
+    type: String,
+    default: "user",
+  },
 });
 
 userSchema.plugin(passportLocalMongoose);

@@ -16,9 +16,10 @@ const goToAccountCreate = (req, res) => {
 
 // アカウント作成処理
 const accountCreate = async (req, res) => {
+  const { username, email, password } = req.body;
+  let role = "user";
   try {
-    const { username, email, password } = req.body;
-    const user = new User({ username, email });
+    const user = new User({ username, email, role });
     const registerdUser = await User.register(user, password);
     const data = await resend.emails.send({
       from: "onboarding@resend.dev",

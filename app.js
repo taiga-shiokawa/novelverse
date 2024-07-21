@@ -101,15 +101,32 @@ passport.use('admin', new LocalStrategy({
 
 
 // ユーザーオブジェクトをシリアライズ（簡潔な形式に変換）してセッションに保存する
-passport.serializeUser(User.serializeUser());
-passport.serializeUser(Admin.serializeUser());
+passport.serializeUser((user, done) => {
+  done(null, { id: user._id, role: user.role });
+});
 
 /**
  * 各リクエストでセッションからユーザーIDを取得しdeserializeUserメソッドを呼び出して, そのIDに対応するユーザーオブジェクトをデータベースから取得する
  * これにより、各リクエストに対してユーザーオブジェクトがreq.userとして利用可能になる
  */
-passport.deserializeUser(User.deserializeUser()); 
-passport.deserializeUser(Admin.deserializeUser()); 
+passport.deserializeUser(async (obj, done) => {
+  try {
+    let user;
+    if (obj.role === 'admin') {
+      user = await Admin.findById(obj.id);
+    } else {
+      user = await User.findById(obj.id);
+    }
+    
+    if (!user) {
+      return done(null, false);
+    }
+    
+    done(null, user);
+  } catch (err) {
+    done(err);
+  }
+});
 
 // ジャンルとユーザー情報(セッション)を全てのルートで利用可能にするミドルウェア
 app.use(async (req, res, next) => {
