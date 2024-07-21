@@ -1,6 +1,7 @@
 // ローカルモジュール
 const Novel = require("../models/Novels");
 const Author = require("../models/Authors");
+const Genre = require("../models/Genres");
 
 // ホーム画面へ遷移
 const goToHome = async (req, res) => {
@@ -166,6 +167,25 @@ const goToSearchResultAndSearchProcess = async (req, res) => {
   }
 };
 
+// ジャンル別小説一覧画面へ遷移&取得
+const goToByGenreNovelListAndGNovelGet = async (req, res) => {
+  const genreId = req.params.id;
+  let pageTitle = "";
+  try {
+    const genre = await Genre.findById(genreId);
+    if (genre) {
+      pageTitle = genre.genre_name;
+    }
+    const novelByGenreList = await Novel.find({ genre: genreId })
+      .populate("author")
+      .populate("genre");
+    console.log(novelByGenreList);
+    res.render("novels/novel-genre-list", { novelByGenreList, pageTitle });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   goToHome,
   seeMoreNovelList,
@@ -174,4 +194,5 @@ module.exports = {
   goToNovelDetails,
   getAuthorNames,
   goToSearchResultAndSearchProcess,
+  goToByGenreNovelListAndGNovelGet,
 };

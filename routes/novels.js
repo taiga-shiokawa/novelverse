@@ -13,6 +13,7 @@ const {
   goToNovelDetails,
   getAuthorNames,
   goToSearchResultAndSearchProcess,
+  goToByGenreNovelListAndGNovelGet,
 } = require("../controllers/novel-controllers");
 
 const router = express.Router();
@@ -40,5 +41,8 @@ router.get("/author", getAuthorNames);
 
 // 検索結果画面へ遷移&処理
 router.get("/search", goToSearchResultAndSearchProcess);
+
+// ジャンル別小説一覧画面へ遷移
+router.get("/genre/:id", goToByGenreNovelListAndGNovelGet);
 
 module.exports = router;
