@@ -15,10 +15,10 @@ router.route('/admin_login')
     .post(Admin.adminLogin )         //管理者ログイン
 
 router.route('/registration_admin')
-.get( Admin.renderRegistrationAdmin )   //管理者新規登録画面に遷移
-.post( Admin.registrationAdmin )        //管理者新規登録
+    .get( Admin.renderRegistrationAdmin )   //管理者新規登録画面に遷移
+    .post( Admin.registrationAdmin )        //管理者新規登録
 
 router.route('/dashboard_admin')
-.get( adminIsLoggedIn , Admin.renderDashboardAdmin )   //管理者新規登録画面に遷移
+    .get( adminIsLoggedIn , Admin.renderDashboardAdmin )   //管理者新規登録画面に遷移
 
 module.exports = router;

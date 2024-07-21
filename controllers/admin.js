@@ -37,7 +37,6 @@ module.exports.adminLogin = async (req, res, next) => {
         const redirectUrl = returnTo || "/admin/dashboard_admin";
         // セッションから returnTo を削除
         delete req.session.returnTo;
-        req.session.returnTo = 'sessionテスト'; 
         console.log("Redirecting to:", redirectUrl);
 
         console.log(` ログイン画面でのreq.isAuthenticated():${req.isAuthenticated()}`);
@@ -93,5 +92,7 @@ module.exports.registrationAdmin = async (req, res) => {
 
 
 module.exports.renderDashboardAdmin = ( req , res ) => {
+  console.dir('ダッシュボード' + req.session.passport.user);
+  console.dir('ダッシュボードreq.isAuthenticated() : ' + req.isAuthenticated());
   res.render("admins/admin-dashboard");
 }
