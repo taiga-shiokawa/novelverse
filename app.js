@@ -102,11 +102,11 @@ passport.use('admin', new LocalStrategy({
 
 // ユーザーオブジェクトをシリアライズ（簡潔な形式に変換）してセッションに保存する
 passport.serializeUser((user, done) => {
-  done(null, { id: user._id, role: user.role });
+  done(null, { id: user._id, role: user.role }); // idとroleをセッションに保存
 });
 
 /**
- * 各リクエストでセッションからユーザーIDを取得しdeserializeUserメソッドを呼び出して, そのIDに対応するユーザーオブジェクトをデータベースから取得する
+ * 各リクエストでセッションからユーザーオブジェクトを取得しdeserializeUserメソッドを呼び出して, そのオブジェクトに対応するユーザーオブジェクトをデータベースから取得する
  * これにより、各リクエストに対してユーザーオブジェクトがreq.userとして利用可能になる
  */
 passport.deserializeUser(async (obj, done) => {
