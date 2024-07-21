@@ -1,5 +1,6 @@
 // ローカルモジュール
 const Novel = require("../models/Novels");
+const Author = require("../models/Authors");
 
 // ホーム画面へ遷移
 const goToHome = async (req, res) => {
