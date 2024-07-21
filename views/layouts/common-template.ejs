@@ -37,7 +37,7 @@
           </button>
           <div class="dropdown-content" id="genreDropdown">
             <% genres.forEach(genre => { %>
-            <a href="/novel/genre?id=<%= genre._id %>"><%= genre.genre_name %></a>
+            <a href="/novel/genre/<%= genre._id %>"><%= genre.genre_name %></a>
             <% }); %>
           </div>
         </li>
