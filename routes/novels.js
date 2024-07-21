@@ -3,8 +3,6 @@ const express = require("express");
 const multer = require("multer");
 
 // ローカルモジュール
-const Novel = require("../models/Novels");
-const Author = require("../models/Authors");
 const { storage } = require("../cloudinary/cloudinary");
 // const { isLoggedIn } = require("../middleware");
 const {
