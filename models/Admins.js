@@ -5,17 +5,17 @@ const { Schema } = mongoose;
 const adminSchema = new Schema({
   admin_code: {
     type: String,
-    requred: true,
+    required: true,
     unique: true,
   },
   name: {
     type: String,
-    requred: true,
+    required: true,
     unique: true,
   },
   email: {
     type: String,
-    requred: true,
+    required: true,
     unique: true,
   },
   birthday: {
@@ -29,7 +29,5 @@ const adminSchema = new Schema({
   ],
 });
 
-adminSchema.plugin(passportLocalMongoose, {
-  usernameField: 'admin_code'
-});
+adminSchema.plugin(passportLocalMongoose, { usernameField: 'admin_code' });
 module.exports = mongoose.model("Admin", adminSchema);

@@ -19,6 +19,7 @@ const session = require("express-session");       // アプリのセッション
 const getGenreName = require("./common/genres");    // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
 const getAuthorName = require("./common/authors");  // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきた作家名を表示する
 const User = require("./models/Users");             // ユーザーの認証のためUserモデルをインポート
+const Admin = require("./models/Admins");             // ユーザーの認証のためUserモデルをインポート
 const userAccountRouter = require("./routes/user-account");           // ユーザーアカウント関連ルーター
 const userLogoutRouter = require("./routes/user-logout");             // ユーザーのログアウトルーター
 const novelRouter = require("./routes/novels");                       // 小説関連ルーター
@@ -92,14 +93,23 @@ app.use(passport.session());    // ユーザー認証情報をセッションで
 // 認証を, authenticateという方法でLocalStrategy(ローカル認証)を使ってやることを宣言
 passport.use(new LocalStrategy(User.authenticate()));
 
+// 管理者向けのLocalStrategy
+passport.use('admin', new LocalStrategy({
+  usernameField: 'admin_code',
+  passwordField: 'password'
+}, Admin.authenticate()));
+
+
 // ユーザーオブジェクトをシリアライズ（簡潔な形式に変換）してセッションに保存する
 passport.serializeUser(User.serializeUser());
+//★　passport.serializeUser(Admin.serializeUser());
 
 /**
  * 各リクエストでセッションからユーザーIDを取得しdeserializeUserメソッドを呼び出して, そのIDに対応するユーザーオブジェクトをデータベースから取得する
  * これにより、各リクエストに対してユーザーオブジェクトがreq.userとして利用可能になる
  */
 passport.deserializeUser(User.deserializeUser()); 
+// ★　passport.deserializeUser(Admin.deserializeUser()); 
 
 // ジャンルとユーザー情報(セッション)を全てのルートで利用可能にするミドルウェア
 app.use(async (req, res, next) => {

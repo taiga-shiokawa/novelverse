@@ -3,13 +3,11 @@
 <!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
 <main>
-    <h1>
-        管理者管理
-    </h1>
     <h2>
-        管理者追加
+        管理者新規登録ページ（仮）
     </h2>
-    <form action="/admin/add_admin?_method=PUT" method="POST">
+    <a href="/admin/admin_login">ログイン画面へ</a>
+    <form action="/admin/registration_admin?_method=PUT" method="POST">
         <input type="file" id="photoInput" name="photo" accept="image/*">
         <label class="colums_label">管理者コード</label><span class="caption_label required_label">※必須</span>
         <input type="text" name="admin_code" required />
