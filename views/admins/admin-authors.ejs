@@ -4,37 +4,14 @@
 <main>
     <div class="container">
         <div class="left_container">
-            <p>総ユーザー数 <%= count %></p>
+            <p>小説の数 <%= count %></p>
             <h2>全ユーザー</h2>
-            <% for (let user of users ){%>
-                <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+            <% for (let author of authors ){%>
+                <a href="/admin-author/author-index/<%= auhtor._id %>"><%= authors.author_name %></a>
+                <a class="btn js-modal-open">削除</a>
             <% } %> 
         </div>
-        <div class="right_container">
-            <% if(!selectingUser){ %>
-                <h3 class="section_title">ユーザー情報</h3>
-                選択中のユーザーはいません。
-            <% }else{ %>
-                <h3 class="section_title"><%= selectingUser.username %>のユーザー情報</h3>
-                <div class="account_setting">
-                    <p><label class="colums_label">ニックネーム</label>　<%= selectingUser.username %></p>
-                    <br><br>
-                    <label class="colums_label">メールアドレス</label>
-                    <p><%= selectingUser.email %></p>
-                    <br><br>
-                    <% if(selectingUser.self_introdaction){%>
-                        <p><label class="colums_label">自己紹介</label><%= selectingUser.self_introdaction %></p>
-                    <% } else { %>
-                        <p><label class="colums_label">自己紹介</label> 未設定</p>
-                    <% } %>
-                    
-                    <br>
-                    <% if(selectingUser.birthday){%>
-                        <p><label class="colums_label">生年月日</label> <%= new Date(selectingUser.birthday).toISOString().slice(0, 10) %></p>
-                    <% } else { %>
-                        <p><label class="colums_label">生年月日</label> 未設定</p>
-                    <% } %>
-                    <br><br>
+        
                     <a class="btn js-modal-open">削除</a>
                     <!-- モーダル本体 -->
                     <div class="modal js-modal">
