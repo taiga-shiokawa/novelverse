@@ -55,7 +55,12 @@ module.exports.passwordChange = async (req, res, next) => {
     if (!user) {
       req.flash("error", "ユーザーが見つかりません");
       return res.redirect(`/user/login`);
-    
+    }
+
+    if (newPassword != confirmPassword) {
+      req.flash("error", "新しいパスワードと確認用パスワードが一致しません");
+      return res.redirect("/user/account/password_change");
+    }
 
     user.authenticate(currentPassword, async (err, user, passwordError) => {
       if (err || passwordError) {
@@ -112,3 +117,4 @@ module.exports.addBookmark = async (req, res) => {
 module.exports.renderNovelHome = (req, res) => {
   res.redirect("/novel/home");
 };
+
