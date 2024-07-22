@@ -71,6 +71,9 @@ app.engine("ejs", ejsMate);     // ejs拡張子を指定.
 app.set("view engine", "ejs");  // このアプリでejsをViewエンジンとして使用することを宣言.
 app.set("views", path.join(__dirname, "views"));  // Viewsフォルダ配下のejsファイルの絶対パスの生成.
 
+// JSONボディを解析するミドルウェア
+app.use(express.json());
+
 // publicフォルダを使用するためのミドルウェア
 app.use(express.static(path.join(__dirname, "public")));
 
