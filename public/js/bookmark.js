@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       } catch (error) {
         console.error('Error:', error);
-        alert('エラーが発生しました');
+        alert('ログインしてください');
       }
     });
   });
