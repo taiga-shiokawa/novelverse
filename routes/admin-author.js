@@ -9,7 +9,7 @@ const { adminIsLoggedIn } = require("../middleware");
 router.route('/author-index')
     .get(  adminIsLoggedIn , AdminAuthors.renderAdminAuthors )   //管理者管理画面に遷移
 
-router.route('/deletion')
-    .post( adminIsLoggedIn , AdminAuthors.authorsDeletion )    
+router.route('/deletion/:id')
+    .get( adminIsLoggedIn , AdminAuthors.authorsDeletion )    
     
 module.exports = router;

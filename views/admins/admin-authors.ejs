@@ -5,37 +5,10 @@
     <div class="container">
         <div class="left_container">
             <p>小説の数 <%= count %></p>
-            <h2>全ユーザー</h2>
-            <% for (let author of authors ){%>
-                <a href="/admin-author/author-index/<%= auhtor._id %>"><%= authors.author_name %></a>
-                <a class="btn js-modal-open">削除</a>
+            <% for (let author of  authors ){%>
+                <%= author.author_name %>　<a href="/admin-author/deletion/<%= author._id %>">削除</a><br>
             <% } %> 
-        </div>
-        
-                    <a class="btn js-modal-open">削除</a>
-                    <!-- モーダル本体 -->
-                    <div class="modal js-modal">
-                        <div class="modal-container">
-                            <!-- モーダルを閉じるボタン -->
-                            <div class="modal-close js-modal-close">×</div>
-                            <!-- モーダル内部のコンテンツ -->
-                            <div class="modal-content">
-                                <p>本当に削除しますか</p>
-                                <div class="btn_box">
-                                    <form action="/admin-user-management/deletion?_method=DELETE" method="POST">
-                                        <input type="hidden" name="delete_user_id" value="<%= selectingUser._id %>">
-                                        <input type="hidden" name="delete_user_name" value="<%= selectingUser.username %>">
-                                        <label>管理者コード：</label>　<input type="text" name="admin_code">
-                                        <button class="modal_btn" type="submit">はい</button>
-                                        <a class="js-modal-close-button modal_btn_a">いいえ</a>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <% } %>
         </div>
     </div> 
 </main>
-<% scripts = '<script src="/js/account_deletion.js"></script>' %> 
+<% scripts = '<script src="/js/home.js"></script>' %> 
