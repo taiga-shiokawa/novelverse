@@ -4,6 +4,10 @@
 <% head = '<link rel="stylesheet" href="/css/home.css" />' %> 
 
 <%= logoutSuccess %>
+<%= error %>
+
+<!-- ブックマークメッセージ用のコンテナ -->
+<div id="bookmark-message-container" class="bookmark-message-container"></div>
 
 <!-- コンテンツ -->
 <main class="content">
@@ -16,8 +20,9 @@
       <div class="book-item">
         <div class="book-cover">
           <a href="/novel/detail/<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
-          <form action="/user/bookmark" method="post">
-            <button class="bookmark-button">読みたい＋</button>
+          <form class="bookmark-form" data-novel-id="<%= novel._id %>">
+            <!-- <input type="hidden" name="novelId" value="<%= novel._id  %>"> -->
+            <button class="bookmark-button" type="submit">読みたい＋</button>
           </form>
         </div>
         <p><%= novel.title %></p>
@@ -109,3 +114,4 @@
 
 <!-- 特定のJavaScript -->
 <% scripts = '<script src="/js/home.js"></script>' %>
+<% scripts = '<script src="/js/bookmark.js"></script>' %>
