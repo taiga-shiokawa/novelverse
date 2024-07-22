@@ -7,7 +7,7 @@ router.post("/logout", (req, res, next) => {
     if (err) {
       return next(err);
     }
-    req.flash("success", "ログアウトしました");
+    req.flash("logout-success", "ログアウトしました");
     res.redirect("/novel/home");
   });
 });
