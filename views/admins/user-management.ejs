@@ -1,0 +1,63 @@
+<% layout("layouts/common-template") %>
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<main>
+    <div class="container">
+        <div class="left_container">
+            <h2>全ユーザー</h2>
+            <% for (let user of users ){%>
+                <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+            <% } %> 
+        </div>
+        <div class="right_container">
+            <% if(!selectingUser){ %>
+                <h3 class="section_title">ユーザー情報</h3>
+                選択中のユーザーはいません。
+            <% }else{ %>
+                <h3 class="section_title"><%= selectingUser.username %>のユーザー情報</h3>
+                <div class="account_setting">
+                    <p><label class="colums_label">ニックネーム</label>　<%= selectingUser.username %></p>
+                    <br><br>
+                    <label class="colums_label">メールアドレス</label>
+                    <p><%= selectingUser.email %></p>
+                    <br><br>
+                    <% if(selectingUser.self_introdaction){%>
+                        <p><label class="colums_label">自己紹介</label><%= selectingUser.self_introdaction %></p>
+                    <% } else { %>
+                        <p><label class="colums_label">自己紹介</label> 未設定</p>
+                    <% } %>
+                    
+                    <br>
+                    <% if(selectingUser.birthday){%>
+                        <p><label class="colums_label">生年月日</label> <%= new Date(selectingUser.birthday).toISOString().slice(0, 10) %></p>
+                    <% } else { %>
+                        <p><label class="colums_label">生年月日</label> 未設定</p>
+                    <% } %>
+                    <br><br>
+                    <a class="btn js-modal-open">削除</a>
+                    <!-- モーダル本体 -->
+                    <div class="modal js-modal">
+                        <div class="modal-container">
+                            <!-- モーダルを閉じるボタン -->
+                            <div class="modal-close js-modal-close">×</div>
+                            <!-- モーダル内部のコンテンツ -->
+                            <div class="modal-content">
+                                <p>本当に削除しますか</p>
+                                <div class="btn_box">
+                                    <form action="/admin-user-management/deletion?_method=DELETE" method="POST">
+                                        <input type="hidden" name="delete_user_id" value="<%= selectingUser._id %>">
+                                        <input type="hidden" name="delete_user_name" value="<%= selectingUser.username %>">
+                                        <label>管理者コード：</label>　<input type="text" name="admin_code">
+                                        <button class="modal_btn" type="submit">はい</button>
+                                        <a class="js-modal-close-button modal_btn_a">いいえ</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div> 
+</main>
+<% scripts = '<script src="/js/account_deletion.js"></script>' %> 

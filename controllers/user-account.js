@@ -36,7 +36,14 @@ module.exports.accountSetting =  async (req, res) => {
     res.redirect("/user/account/setting");
 }
 
-module.exports.renderPasswordChange = (req , res) => {
+module.exports.renderPasswordChange = async (req , res) => {
+
+  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  
+    if(!loginUser){
+      req.flash('error' , 'ユーザーは見つかりませんでした');
+      return res.redirect(`/user/login`);
+    }
     res.render("users/password-change");
 }
 
