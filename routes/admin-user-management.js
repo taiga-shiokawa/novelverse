@@ -13,8 +13,8 @@ router.route('/user-management/:id')
     .get(  adminIsLoggedIn , AdminUserManagement.renderUserManagementAndDetail )   //ユーザー管理画面に遷移
 
 router.route('/deletion')
-    .delete( adminIsLoggedIn , AdminUserManagement.accountDeletion )       // アカウント削除
     .post( adminIsLoggedIn , AdminUserManagement.accountDeletion )       // アカウント削除
+    // .delete( adminIsLoggedIn , AdminUserManagement.accountDeletion )       // .deleteは不要？？
     
 
 

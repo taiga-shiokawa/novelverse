@@ -10,11 +10,10 @@ module.exports.renderUserManagement = async ( req , res ) => {
   res.render("admins/user-management" , {users , selectingUser});
 }
 
-// 特定のユーザーの情報を一覧表示させて、管理者追加画面へ遷移
+// 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
 module.exports.renderUserManagementAndDetail = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = await User.findById(req.params.id)
-  const user = await User.find({});
   res.render("admins/user-management" , {users , selectingUser });
 }
 

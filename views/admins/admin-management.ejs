@@ -1,0 +1,60 @@
+<% layout("layouts/common-template") %>
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<main>
+    <div class="container">
+        <div class="left_container">
+            <h2>全管理者</h2>
+            <% for (let admin of admins ){%>
+                <a href="/admin-management/admin-management/<%= admin._id %>"><%= admin.name %></a>
+            <% } %> 
+        </div>
+        <div class="right_container">
+            <% if(!selectingAdmin){ %>
+                <h3 class="section_title">管理者情報</h3>
+                選択中の管理者はいません。
+            <% }else{ %>
+                <h3 class="section_title"><%= selectingAdmin.name %>の管理者情報</h3>
+                <div class="account_setting">
+                    <p><label class="colums_label">管理者コード</label>　<%= selectingAdmin.admin_code %></p>
+                    <br><br>
+                    <p><label class="colums_label">名前</label>　<%= selectingAdmin.name %></p>
+                    <br><br>
+                    <label class="colums_label">メールアドレス</label>
+                    <p><%= selectingAdmin.email %></p>
+                    <br><br>
+                    <% if(selectingAdmin.birthday){%>
+                        <p><label class="colums_label">生年月日</label> <%= new Date(selectingAdmin.birthday).toISOString().slice(0, 10) %></p>
+                    <% } else { %>
+                        <p><label class="colums_label">生年月日</label> 未設定</p>
+                    <% } %>
+                    <br><br>
+                    <% if(selectingAdmin.admin_code != current_admin_code){ %>
+                        <a class="btn js-modal-open">削除</a>
+                    <% } %>
+                    <!-- モーダル本体 -->
+                    <div class="modal js-modal">
+                        <div class="modal-container">
+                            <!-- モーダルを閉じるボタン -->
+                            <div class="modal-close js-modal-close">×</div>
+                            <!-- モーダル内部のコンテンツ -->
+                            <div class="modal-content">
+                                <p>本当に削除しますか</p>
+                                <div class="btn_box">
+                                    <form action="/admin-management/deletion?_method=DELETE" method="POST">
+                                        <input type="hidden" name="delete_admin_id" value="<%= selectingAdmin._id %>">
+                                        <input type="hidden" name="delete_admin_name" value="<%= selectingAdmin.name %>">
+                                        <label>管理者コード：</label>　<input type="text" name="admin_code">
+                                        <button class="modal_btn" type="submit">はい</button>
+                                        <a class="js-modal-close-button modal_btn_a">いいえ</a>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </div> 
+</main>
+<% scripts = '<script src="/js/account_deletion.js"></script>' %> 

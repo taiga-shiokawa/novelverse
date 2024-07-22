@@ -26,6 +26,7 @@ const novelRouter = require("./routes/novels");                       // 小説�
 const userSignupAndLogin = require("./routes/user-signup-and-login"); // ユーザー登録とログインルーター
 const adminRouter = require("./routes/admin");                         // 管理者関連ルーター
 const adminUserManagementRouter =  require("./routes/admin-user-management");    // 管理者ユーザー管理関係ルーター
+const adminManagementRouter =  require("./routes/admin-management");    // 管理者の管理関係ルーター
 
 const app = express();
 const PORT = 3000;
@@ -151,6 +152,7 @@ app.use("/user", userSignupAndLogin);                            // ユーザー
 app.use("/user", userLogoutRouter);                              // ユーザーログアウトAPI
 app.use("/admin", adminRouter);                                  // 管理者自身関係API
 app.use("/admin-user-management", adminUserManagementRouter);    // 管理者ユーザー管理関係API
+app.use("/admin-management", adminManagementRouter);             // 管理者の管理関係API
 
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
