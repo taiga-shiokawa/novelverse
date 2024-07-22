@@ -7,14 +7,16 @@ const passport = require("passport");
 module.exports.renderUserManagement = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = null;
-  res.render("admins/user-management" , {users , selectingUser});
+  const count = await User.estimatedDocumentCount();
+  res.render("admins/user-management" , {users , selectingUser , count});
 }
 
 // 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
 module.exports.renderUserManagementAndDetail = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = await User.findById(req.params.id)
-  res.render("admins/user-management" , {users , selectingUser });
+  const count = await User.estimatedDocumentCount();
+  res.render("admins/user-management" , {users , selectingUser , count });
 }
 
 module.exports.accountDeletion = async (req , res) => {
