@@ -21,4 +21,9 @@ router.route('/registration_admin')
 router.route('/dashboard_admin')
     .get( adminIsLoggedIn , Admin.renderDashboardAdmin )   //管理者新規登録画面に遷移
 
+router.route('/logout')
+    .post(Admin.adminLogout)         //管理者ログイン   
+
+
+    
 module.exports = router;

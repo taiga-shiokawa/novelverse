@@ -38,10 +38,7 @@ module.exports.adminLogin = async (req, res, next) => {
         // セッションから returnTo を削除
         delete req.session.returnTo;
         console.log("Redirecting to:", redirectUrl);
-
-        console.log(` ログイン画面でのreq.isAuthenticated():${req.isAuthenticated()}`);
-        console.log(` ログイン画面でのセッション確認:${req.session.passport.user}`);
-        console.dir(req.session.passport)
+        req.session.admin_code = admin_code;
 
         return res.redirect(redirectUrl);
       });
@@ -89,12 +86,21 @@ module.exports.registrationAdmin = async (req, res) => {
       req.flash('error' , '登録中にエラーが発生しました');
       res.redirect('/admin/registration_admin');
   }
-  // res.render("admins/admin-add");
 }
 
 
 module.exports.renderDashboardAdmin = ( req , res ) => {
-  console.dir('ダッシュボード' + req.session.passport.user);
-  console.dir('ダッシュボードreq.isAuthenticated() : ' + req.isAuthenticated());
   res.render("admins/admin-dashboard");
+}
+
+// ログアウト
+module.exports.adminLogout = (req, res, next) => {
+    req.logout(function (err) {
+        if (err) {
+          return next(err);
+        }
+        delete req.session.admin_code;
+        req.flash("success", "ログアウトしました");
+        res.redirect("/admin/admin_login");
+    });
 }
