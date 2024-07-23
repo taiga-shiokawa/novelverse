@@ -4,7 +4,7 @@ const { cloudinary } = require("../cloudinary/cloudinary");
 
 const router = express.Router();
 
-router.get("/delete", async (req, res) => {
+router.get("/cover/delete/", async (req, res) => {
   try {
     const novels = await Novel.find({}).populate("author").limit(1);
     // coverの詳細をコンソールに表示
@@ -27,7 +27,7 @@ router.get("/delete", async (req, res) => {
   }
 });
 
-router.post("/delete", async (req, res) => {
+router.post("/cover/delete", async (req, res) => {
   try {
     const { coverId } = req.body;
     console.log("CoverId: ", coverId);
@@ -44,7 +44,7 @@ router.post("/delete", async (req, res) => {
     novel.cover = novel.cover.filter((c) => c._id.toString() !== coverId);
     await novel.save();
 
-    res.redirect("/novel/management/delete");
+    res.redirect("/novel/management/cover/delete");
   } catch (err) {
     console.log(err);
   }
