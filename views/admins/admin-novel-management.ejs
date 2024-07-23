@@ -6,8 +6,8 @@
 <% for (let novel of novels) { %>
 <form action="/novel/management/delete" method="post">
   <div>
-    <img src="<%= novel.cover[0].url %>" alt="">
-    <input type="hidden" name="coverId" value="<%= novel.cover[0]._id %>">
+    <img src="<%= novel.cover.url %>" alt="">
+    <input type="hidden" name="coverId" value="<%= novel.cover._id %>">
     <button>削除</button>
   </div>
 </form>
