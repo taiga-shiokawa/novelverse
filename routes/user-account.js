@@ -19,4 +19,10 @@ router.route('/bookmark')
     .get(userAccount.renderNovelHome)                       // 小説一覧へリダイレクト
     .post(isLoggedIn, userAccount.addBookmark);             // ブックマーク追加      
 
+router.route('/bookmark/list')
+    .get(isLoggedIn, userAccount.renderBookmarkLists);      // ブックマーク一覧画面へ遷移
+
+router.route('/bookmark/cancel')
+    .post(isLoggedIn, userAccount.cancelBookmark);
+
 module.exports = router;
