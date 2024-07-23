@@ -1,13 +1,17 @@
 <% layout("layouts/common-template") %>
 
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/home.css" />' %> 
-
-<%= logoutSuccess %>
-<%= error %>
+<% head = '<link rel="stylesheet" href="/css/home.css" />' %> <%= logoutSuccess
+%> <%= error %>
 
 <!-- ブックマークメッセージ用のコンテナ -->
 <div id="bookmark-message-container" class="bookmark-message-container"></div>
+
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
 
 <!-- コンテンツ -->
 <main class="content">
@@ -19,7 +23,11 @@
       <% for (let novel of newNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
+          <a href="/novel/detail/<%= novel._id %>"
+            ><img
+              src="<%= getCoverUrl(novel) %>"
+              alt="<%= novel.title %>の表紙"
+          /></a>
           <form class="bookmark-form" data-novel-id="<%= novel._id %>">
             <!-- <input type="hidden" name="novelId" value="<%= novel._id  %>"> -->
             <button class="bookmark-button" type="submit">読みたい＋</button>
@@ -33,13 +41,18 @@
 
     <h2>
       おすすめの文庫<span
-        ><a href="/novel/list?novel_type=文庫">もっと見る -></a></span>
+        ><a href="/novel/list?novel_type=文庫">もっと見る -></a></span
+      >
     </h2>
     <div class="book-list">
       <% for (let novel of bunkoNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
+          <a href="/novel/detail/<%= novel._id %>"
+            ><img
+              src="<%= getCoverUrl(novel) %>"
+              alt="<%= novel.title %>の表紙"
+          /></a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -59,7 +72,11 @@
       <% for (let novel of tankobonNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
+          <a href="/novel/detail/<%= novel._id %>"
+            ><img
+              src="<%= getCoverUrl(novel) %>"
+              alt="<%= novel.title %>の表紙"
+          /></a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -79,7 +96,11 @@
       <% for (let novel of lightNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
+          <a href="/novel/detail/<%= novel._id %>"
+            ><img
+              src="<%= getCoverUrl(novel) %>"
+              alt="<%= novel.title %>の表紙"
+          /></a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -99,7 +120,11 @@
       <% for (let novel of recommendedNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail?id=<%= novel._id %>"><img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙" /></a>
+          <a href="/novel/detail?id=<%= novel._id %>"
+            ><img
+              src="<%= getCoverUrl(novel) %>"
+              alt="<%= novel.title %>の表紙"
+          /></a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -113,5 +138,5 @@
 </main>
 
 <!-- 特定のJavaScript -->
-<% scripts = '<script src="/js/home.js"></script>' %>
+<% scripts = '<script src="/js/home.js"></script>' %> 
 <% scripts = '<script src="/js/bookmark.js"></script>' %>

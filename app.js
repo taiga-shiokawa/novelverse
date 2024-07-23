@@ -23,6 +23,7 @@ const Admin = require("./models/Admins");             // ユーザーの認証�
 const userAccountRouter = require("./routes/user-account");           // ユーザーアカウント関連ルーター
 const userLogoutRouter = require("./routes/user-logout");             // ユーザーのログアウトルーター
 const novelRouter = require("./routes/novels");                       // 小説関連ルーター
+const novelManagementRouter = require("./routes/admin-novel-management");       // 小説管理ルーター
 const userSignupAndLogin = require("./routes/user-signup-and-login"); // ユーザー登録とログインルーター
 const adminRouter = require("./routes/admin");                         // 管理者関連ルーター
 const adminUserManagementRouter =  require("./routes/admin-user-management");    // 管理者ユーザー管理関係ルーター
@@ -151,13 +152,14 @@ app.use(async (req, res, next) => {
 });
 
 app.use("/novel", novelRouter);                                  // 小説関連API
+app.use("/novel/management", novelManagementRouter);             // 小説管理API
 app.use("/user/account", userAccountRouter);                     // ユーザーアカウント関連API
 app.use("/user", userSignupAndLogin);                            // ユーザー登録とログインAPI
 app.use("/user", userLogoutRouter);                              // ユーザーログアウトAPI
 app.use("/admin", adminRouter);                                  // 管理者自身関係API
 app.use("/admin-user-management", adminUserManagementRouter);    // 管理者ユーザー管理関係API
 app.use("/admin-management", adminManagementRouter);             // 管理者の管理関係API
-app.use("/admin-author", adminAuthorRouter);                       // 管理者小説関連API
+app.use("/admin-author", adminAuthorRouter);                     // 管理者小説関連API
 
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
