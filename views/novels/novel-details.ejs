@@ -3,9 +3,15 @@
 <!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/novel_detail.css">' %>
 
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
+
 <main class="container">
   <div class="img-container">
-      <img src="<%= novelDetails.cover[0].url %>" alt="小説画像">
+      <img src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
   </div>
   <div class="info-container">
       <h2>タイトル: <%= novelDetails.title  %> <button class="read-button">読みたい +</button></h2>

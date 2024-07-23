@@ -1,0 +1,18 @@
+<% layout("layouts/common-template") %>
+<!-- 特定のCSS -->
+ <!-- まだ作ってない -->
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+
+<% for (let novel of novels) { %>
+<form action="/novel/management/delete" method="post">
+  <div>
+    <img src="<%= novel.cover[0].url %>" alt="">
+    <input type="hidden" name="coverId" value="<%= novel.cover[0]._id %>">
+    <button>削除</button>
+  </div>
+</form>
+<% }; %>
+
+<!-- 特定のJs -->
+ <!-- まだ作ってない -->
+<% scripts = '<script src="/js/account_deletion.js"></script>' %> 

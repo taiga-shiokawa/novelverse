@@ -3,6 +3,12 @@
 <!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/home.css">' %>
 
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
+
 <!-- コンテンツ -->
 <main class="content">
   <section class="section">
@@ -13,7 +19,7 @@
       <% for (let novel of novels) { %>
         <div class="book-item">
           <div class="book-cover">
-            <img src="<%= novel.cover[0].url %>" alt="<%= novel.title %>の表紙">
+            <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙">
             <form action="/user/bookmark" method="post">
               <button class="bookmark-button">読みたい＋</button>
             </form>
