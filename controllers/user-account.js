@@ -97,7 +97,10 @@ module.exports.addBookmark = async (req, res) => {
     // 既存のブックマークを確認
     let bookmark = await Bookmark.findOne({ user: userId, novel: novelId });
     if (bookmark) {
-      return res.json({ success: false, message: "既にブックマークされています" });
+      return res.json({
+        success: false,
+        message: "既にブックマークされています",
+      });
     }
 
     bookmark = new Bookmark({
@@ -110,7 +113,9 @@ module.exports.addBookmark = async (req, res) => {
     res.json({ success: true, message: "ブックマークに追加しました" });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ success: false, message: "サーバーエラーが発生しました" });
+    res
+      .status(500)
+      .json({ success: false, message: "サーバーエラーが発生しました" });
   }
 };
 
@@ -118,3 +123,49 @@ module.exports.renderNovelHome = (req, res) => {
   res.redirect("/novel/home");
 };
 
+module.exports.renderBookmarkLists = async (req, res) => {
+  const userId = req.user._id;
+  try {
+    const bookmarks = await Bookmark.find({ user: userId }).populate({
+      path: "novel",
+      populate: {
+        path: "author",
+        model: "Author",
+      },
+    });
+
+    const novels = bookmarks.map((bookmark) => bookmark.novel);
+    res.render("users/bookmark-list", { novels });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports.cancelBookmark = async (req, res) => {
+  try {
+    const novelId = req.body.novelId;
+    const userId = req.user._id;
+
+    // 既存のブックマークを確認して削除
+    let result = await Bookmark.findOneAndDelete({
+      user: userId,
+      novel: novelId,
+    });
+    if (result) {
+      return res.json({
+        success: true,
+        message: "ブックマークを解除しました",
+      });
+    } else {
+      return res.json({
+        success: false,
+        message: "ブックマークの解除に失敗しました",
+      });
+    }
+  } catch (err) {
+    console.error(err);
+    res
+      .status(500)
+      .json({ success: false, message: "サーバーエラーが発生しました" });
+  }
+};
