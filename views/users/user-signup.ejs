@@ -1,21 +1,16 @@
 <% layout("layouts/signup-and-login-template") %>
-
-<!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/signup.css">' %>
-
-<form action="/user/signup" method="post">
-  <div>
-    <label for="nickname">ニックネーム</label>
-    <input type="text" name="username" id="nickname">
+<main>
+  <div class="container">
+    <form class="form " action="/user/signup" method="post">
+      <h1 class="section_title">アカウント作成</h1>
+      <label id="label" for="nickname">ニックネーム</label>
+      <input class="input_box" type="text" name="username" id="nickname"><br>
+      <label for="email">メールアドレス</label>
+      <input class="input_box" type="email" name="email" id="email"><br>
+      <label for="password">パスワード</label>
+      <input class="input_box" type="password" name="password" id="password"><br>
+      <button type="submit" class="btn">新規登録</button>
+    </form>
   </div>
-  <div>
-    <label for="email">メールアドレス</label>
-    <input type="email" name="email" id="email">
-  </div>
-  <div>
-    <label for="password">パスワード</label>
-    <input type="password" name="password" id="password">
-  </div>
-
-  <button>作成</button>
-</form>
+</main>

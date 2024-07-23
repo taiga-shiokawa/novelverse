@@ -24,7 +24,7 @@ header .search-form {
   margin-left: 900px;
 }
 
-input[type="text"] {
+input[type="text"].search {
   padding: 5px 20px;
 }
 
@@ -64,4 +64,4 @@ footer ul li {
 footer ul li a{
   text-decoration: none;
   color: white;
-}
+} 
