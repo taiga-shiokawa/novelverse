@@ -1,1 +1,67 @@
 @charset "utf-8";
+
+/* 共通 */
+main {
+    font-family: "Noto Sans JP", sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 80vh;
+}
+
+.container{
+    width: 100%;
+    max-width: 1000px;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+
+/* form関係 */
+
+.section_title{
+    letter-spacing: 5px;
+    font-size: 24px;
+    padding-bottom: 20px;
+}
+
+.form {
+    width: 100%;
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+.form > label{
+    display: inline-block;
+    letter-spacing: 3px;
+    width: 150px;
+    padding: 8px;
+    font-size: 12px;
+    color: rgb(45, 45, 45);
+}
+
+.input_box{
+    border: none; 
+    height: 40px;
+    width: 270px;
+    padding-left: 5px;
+    margin-bottom: 30px;
+}
+
+/* 新規登録ボタン */
+.btn{
+    letter-spacing: 5px;
+    line-height: 40px;
+    border:none;
+    color: #fff;
+    background-color:#505F00;
+    text-align: center;
+    width: 200px;
+    display: block;
+    margin: 20px auto;
+    transition: opacity 0.5s ease; /* opacity の変化を0.5秒かけてゆっくりと行う */
+}
+
+.btn:hover{
+    opacity: .8;
+}
