@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router({ mergeParams : true});
-const { isLoggedIn } = require("../middleware");
-const userAccount = require('../controllers/user-account');
+const { isLoggedIn } = require("../../middleware");
+const userAccount = require("../../controllers/users/user-account-controllers");
 
 router.route('/deletion')
     .get(isLoggedIn , userAccount.renderAccountDeletion )   // アカウント削除画面へ遷移

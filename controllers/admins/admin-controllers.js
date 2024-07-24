@@ -1,4 +1,4 @@
-const Admin = require('../models/Admins');
+const Admin = require('../../models/Admins');
 const passport = require("passport");
 
 

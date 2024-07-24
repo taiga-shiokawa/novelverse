@@ -1,4 +1,4 @@
-const Admin = require('../models/Admins');
+const Admin = require('../../models/Admins');
 
 // ユーザー管理画面へ遷移
 module.exports.renderAdminManagement = async ( req , res ) => {

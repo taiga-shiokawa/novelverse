@@ -7,7 +7,7 @@ const {
   accountCreate,
   goToLogin,
   userLogin,
-} = require("../controllers/user-signup-and-login-controllers");
+} = require("../../controllers/users/user-signup-and-login-controllers");
 
 const router = express.Router();
 
