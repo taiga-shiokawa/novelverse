@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => { // イベント発生 ブシャーーーー
   document.querySelectorAll(".bookmark-form").forEach(form => { // クラスに一致するすべての要素を取得
     form.addEventListener("submit", async (event) => { // またまたイベント発生 ブシャーーーー
-      event.preventDefault();
+      event.preventDefault(); // 意図しないフォーム送信を防ぐ
       const novelId = form.getAttribute("data-novel-id"); // 属性取得
       /**
        * form要素から上に祖先要素を探しにいく
@@ -15,13 +15,13 @@ document.addEventListener("DOMContentLoaded", () => { // イベント発生 ブ�
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ novelId })
+          body: JSON.stringify({ novelId }) // novelIdをJSON文字列に変換
         });
 
-        if (response.ok) {
+        if (response.ok) { // fetch APIによるレスポンスが200番台かどうか
           const result = await response.json();
           if (result.success) {
-            bookItem.remove();
+            bookItem.remove(); // book-listコンテナを削除
             // alert('ブックマークを解除しました');
           } else {
             alert(result.message);

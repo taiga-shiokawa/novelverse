@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   document.querySelectorAll(".bookmark-form").forEach(form => {
     form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+      event.preventDefault(); // 意図しないフォーム送信を防ぐ
       const novelId = form.getAttribute("data-novel-id");
 
       try {
@@ -10,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ novelId })
+          body: JSON.stringify({ novelId }) // novelIdをJSON文字列に変換
         });
 
-        if (response.ok) {
+        if (response.ok) { // fetch APIによるレスポンスが200番台かどうか
           const result = await response.json();
           if (result.success) {
             alert('ブックマークに追加しました');
