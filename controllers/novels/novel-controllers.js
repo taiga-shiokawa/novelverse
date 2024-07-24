@@ -4,7 +4,7 @@ const Author = require("../../models/Authors");
 const Genre = require("../../models/Genres");
 
 // ホーム画面へ遷移
-const goToHome = async (req, res) => {
+module.exports.goToHome = async (req, res) => {
   try {
     const newNovels = await Novel.find({ is_new: true })
       .populate("author")
@@ -39,7 +39,7 @@ const goToHome = async (req, res) => {
 };
 
 // 「もっと見る」以降の小説一覧
-const seeMoreNovelList = async (req, res) => {
+module.exports.seeMoreNovelList = async (req, res) => {
   try {
     let query = {};
     let pageTitle = "";
@@ -62,11 +62,12 @@ const seeMoreNovelList = async (req, res) => {
 };
 
 // 小説登録画面へ遷移
-const goToNovelRegistration = (req, res) => {
-  res.render("authors/novel-test");
+module.exports.goToNovelRegistration = (req, res) => {
+  res.render("admins/novel-registration");
 };
+
 // 小説登録処理
-const novelRegistration = async (req, res) => {
+module.exports.novelRegistration = async (req, res) => {
   try {
     const novelData = req.body.novel;
 
@@ -87,7 +88,7 @@ const novelRegistration = async (req, res) => {
 };
 
 // 小説詳細画面へ遷移
-const goToNovelDetails = async (req, res) => {
+module.exports.goToNovelDetails = async (req, res) => {
   const id = req.params.id;
   const novelDetails = await Novel.findById(id)
     .populate("author")
@@ -97,7 +98,7 @@ const goToNovelDetails = async (req, res) => {
 };
 
 // 作家名取得（非同期）
-const getAuthorNames = async (req, res) => {
+module.exports.getAuthorNames = async (req, res) => {
   const query = req.query.q;
   if (!query) {
     return res.json([]);
@@ -117,7 +118,7 @@ const getAuthorNames = async (req, res) => {
 };
 
 // 検索結果画面へ遷移&処理
-const goToSearchResultAndSearchProcess = async (req, res) => {
+module.exports.goToSearchResultAndSearchProcess = async (req, res) => {
   const searchQuery = req.query.search;
   let pageTitle = "";
 
@@ -168,7 +169,7 @@ const goToSearchResultAndSearchProcess = async (req, res) => {
 };
 
 // ジャンル別小説一覧画面へ遷移&取得
-const goToByGenreNovelListAndGNovelGet = async (req, res) => {
+module.exports.goToByGenreNovelListAndGNovelGet = async (req, res) => {
   const genreId = req.params.id;
   let pageTitle = "";
   try {
@@ -184,15 +185,4 @@ const goToByGenreNovelListAndGNovelGet = async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-};
-
-module.exports = {
-  goToHome,
-  seeMoreNovelList,
-  goToNovelRegistration,
-  novelRegistration,
-  goToNovelDetails,
-  getAuthorNames,
-  goToSearchResultAndSearchProcess,
-  goToByGenreNovelListAndGNovelGet,
 };

@@ -5,44 +5,33 @@ const multer = require("multer");
 // ローカルモジュール
 const { storage } = require("../../cloudinary/cloudinary");
 // const { isLoggedIn } = require("../middleware");
-const {
-  goToHome,
-  seeMoreNovelList,
-  goToNovelRegistration,
-  novelRegistration,
-  goToNovelDetails,
-  getAuthorNames,
-  goToSearchResultAndSearchProcess,
-  goToByGenreNovelListAndGNovelGet,
-} = require("../../controllers/novels/novel-controllers");
+const Novels = require("../../controllers/novels/novel-controllers");
 
 const router = express.Router();
 
 // アップロードされたファイルの保存先を指定
 const upload = multer({ storage });
 
-// ホーム画面へ遷移
-router.get("/home", goToHome);
+router.route("/home")
+    .get(Novels.goToHome);  // ホーム画面へ遷移
 
-// 「もっと見る」以降の小説一覧
-router.get("/list", seeMoreNovelList);
+router.route("/list")
+    .get(Novels.seeMoreNovelList);  // 「もっと見る」以降の小説一覧
 
-// 小説登録画面へ遷移
-router.get("/registration", goToNovelRegistration);
+router.route("/registration")
+    .get(Novels.goToNovelRegistration)  // 小説登録画面へ遷移
+    .post(upload.single("cover"), Novels.novelRegistration);    // 小説登録処理
 
-// 小説登録処理
-router.post("/registration", upload.single("cover"), novelRegistration);
+router.route("/detail/:id")
+    .get(Novels.goToNovelDetails);  // 小説詳細画面へ遷移
 
-// 小説詳細画面へ遷移
-router.get("/detail/:id", goToNovelDetails);
+router.route("/author")
+    .get(Novels.getAuthorNames);  // 作家取得（非同期）
 
-// 作家取得（非同期）
-router.get("/author", getAuthorNames);
+router.route("/search")
+    .get(Novels.goToSearchResultAndSearchProcess);  // 検索結果画面へ遷移&処理
 
-// 検索結果画面へ遷移&処理
-router.get("/search", goToSearchResultAndSearchProcess);
-
-// ジャンル別小説一覧画面へ遷移
-router.get("/genre/:id", goToByGenreNovelListAndGNovelGet);
+router.route("/genre/:id")
+    .get(Novels.goToByGenreNovelListAndGNovelGet);  // ジャンル別小説一覧画面へ遷移
 
 module.exports = router;

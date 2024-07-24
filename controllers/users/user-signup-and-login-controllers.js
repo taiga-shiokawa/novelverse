@@ -10,12 +10,12 @@ const User = require("../../models/Users");
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 // アカウント作成画面へ遷移
-const goToAccountCreate = (req, res) => {
+module.exports.goToAccountCreate = (req, res) => {
   res.render("users/user-signup");
 };
 
 // アカウント作成処理
-const accountCreate = async (req, res) => {
+module.exports.accountCreate = async (req, res) => {
   const { username, email, password } = req.body;
   let role = "user";
   try {
@@ -40,12 +40,12 @@ const accountCreate = async (req, res) => {
 };
 
 // ログイン画面へ遷移
-const goToLogin = (req, res) => {
+module.exports.goToLogin = (req, res) => {
   res.render("users/user-login");
-}
+};
 
 // ログイン処理
-const userLogin = async (req, res, next) => {
+module.exports.userLogin = async (req, res, next) => {
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;
   console.log("Original returnTo:", returnTo);
@@ -78,11 +78,4 @@ const userLogin = async (req, res, next) => {
       return res.redirect(redirectUrl);
     });
   })(req, res, next);
-}
-
-module.exports = {
-  goToAccountCreate,
-  accountCreate,
-  goToLogin,
-  userLogin,
 };
