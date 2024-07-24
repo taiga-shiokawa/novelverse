@@ -1,5 +1,5 @@
-const Admin = require('../models/Admins');
-const User = require('../models/Users');
+const Admin = require('../../models/Admins');
+const User = require('../../models/Users');
 const passport = require("passport");
 
 

@@ -1,5 +1,5 @@
-const Author = require('../models/Authors');
-const Novel = require('../models/Novels');
+const Author = require('../../models/Authors');
+const Novel = require('../../models/Novels');
 const ObjectId = require('mongodb').ObjectId;
 
 // 著者画面へ遷移

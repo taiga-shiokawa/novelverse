@@ -4,7 +4,7 @@ require("dotenv").config();
 const passport = require("passport");
 
 // ローカルモジュール
-const User = require("../models/Users");
+const User = require("../../models/Users");
 
 // Resend環境変数
 const resend = new Resend(process.env.RESEND_API_KEY);

@@ -1,10 +1,10 @@
 const express = require("express");
 const { Resend } = require("resend");
 require("dotenv").config();
-const Admin = require('../controllers/admin');
+const Admin = require('../../controllers/admins/admin-controllers');
 const resend = new Resend(process.env.RESEND_API_KEY);
 const router = express.Router();
-const { isLoggedIn , adminIsLoggedIn } = require("../middleware");
+const { isLoggedIn , adminIsLoggedIn } = require("../../middleware");
 
 router.route('/add_admin')
     .get( adminIsLoggedIn , Admin.renderAddAdmin )   //管理者追加画面に遷移

@@ -3,7 +3,7 @@ const express = require("express");
 const multer = require("multer");
 
 // ローカルモジュール
-const { storage } = require("../cloudinary/cloudinary");
+const { storage } = require("../../cloudinary/cloudinary");
 // const { isLoggedIn } = require("../middleware");
 const {
   goToHome,
@@ -14,7 +14,7 @@ const {
   getAuthorNames,
   goToSearchResultAndSearchProcess,
   goToByGenreNovelListAndGNovelGet,
-} = require("../controllers/novel-controllers");
+} = require("../../controllers/novels/novel-controllers");
 
 const router = express.Router();
 

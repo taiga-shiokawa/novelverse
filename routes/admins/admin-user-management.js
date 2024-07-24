@@ -1,10 +1,10 @@
 const express = require("express");
 const { Resend } = require("resend");
 require("dotenv").config();
-const AdminUserManagement = require('../controllers/admin-user-management');
+const AdminUserManagement = require('../../controllers/admins/admin-user-management-controllers');
 const resend = new Resend(process.env.RESEND_API_KEY);
 const router = express.Router();
-const { adminIsLoggedIn } = require("../middleware");
+const { adminIsLoggedIn } = require("../../middleware");
 
 router.route('/user-management')
     .get(  adminIsLoggedIn , AdminUserManagement.renderUserManagement )   //ユーザー管理画面に遷移

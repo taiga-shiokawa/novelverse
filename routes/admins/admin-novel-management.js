@@ -1,6 +1,6 @@
 const express = require("express");
-const Novel = require("../models/Novels");
-const { cloudinary } = require("../cloudinary/cloudinary");
+const Novel = require("../../models/Novels");
+const { cloudinary } = require("../../cloudinary/cloudinary");
 
 const router = express.Router();
 

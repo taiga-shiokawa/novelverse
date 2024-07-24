@@ -1,7 +1,7 @@
-const User = require("../models/Users");
-const Bookmark = require("../models/Bookmark");
-const Novel = require("../models/Novels");
-const DeletionReason = require("../models/Deletion_reasons");
+const User = require("../../models/Users");
+const Bookmark = require("../../models/Bookmark");
+const Novel = require("../../models/Novels");
+const DeletionReason = require("../../models/Deletion_reasons");
 
 module.exports.renderAccountDeletion = (req, res) => {
   res.render("users/account-deletion");
