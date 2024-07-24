@@ -1,14 +1,15 @@
 
 main{
+    font-family: "Noto Sans JP", sans-serif;
     background-color: #F6F1DE;
     color: #332405;
+    min-height: 70vh;
 }
 
 .container{
     width: 100%;
     max-width: 1200px;
-    min-height: 90vh;
-    padding-top: 300px;
+    padding: 200px 0;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -17,44 +18,57 @@ main{
 /* 左側*/
 
 .left_container{
-    width: 25%;
+    width: 28%;
     height: 100%;
     font-size: 12px;
-    margin-top: 100px;
+    margin-top: 50px;
+    padding-left: 20px;
 }
 
 .left_container form input{
-    margin-top: 5px;
-    border:none;
-    height:30px;
+    margin-top: 8px;
+    border: none; 
+    height: 40px;
     width: 100%;
+    max-width: 320px;
+    padding-left: 10px;
+    margin-bottom: 10px;
 }
 
-.form_btn{
+.signup_btn,.form_btn{
     color: #fff;
     background-color: #505F00;
     border:none;
     padding: 10px 24px;
     letter-spacing: 2px;
+    transition: opacity 0.5s ease;
 }
+
+.form_btn:hover ,.signup_btn:hover{
+    opacity: .7;
+} 
 
 .button_box{
     margin: 12px auto;
-    width: 100%;
-    max-width:240px;
+    width: 80%;
     display: flex;
     justify-content: space-between;
 }
 
-    
 /* 右側 */
 
 .right_container{
-    width: 65%;
+    width: 60%;
     height: 100%;
     padding: 20px;
 }
 
-.right_container h2 ,.right_container p {
-    padding: 20px;
+.right_container h2{
+    padding: 20px 0 0 50px; 
+}
+
+.right_container p{
+    padding: 20px; 
+    font-size: 14px;
+    text-align: center;
 }
