@@ -13,41 +13,50 @@
   <body>
     <!-- ヘッダー -->
     <header>
-      <!-- サイトロゴとサイト説明-->
-      <h2>ノベバ</h2>
-      <p>サイト説明</p>
-      <!-- サイト内検索ボックス -->
-      <form action="" class="search-form">
-        <input class="search" type="text" name="search" placeholder="サイト内検索" />
-      </form>
+      <div class="header_wrapper">
+        <!-- サイトロゴとサイト説明-->
+        <div class="site_logo">
+          <a href="/novel/home">
+            <img class="site_img" src="/images/アセット 4@2x.png" alt="" />
+          </a>
+        </div>
+        <!-- サイト内検索ボックス -->
+          <form class="search_form" action="/novel/search" method="get" class="search-form">
+          <input class="search" type="text" name="search" placeholder="サイト内検索" />
+        </form>
+      </div>
     </header>
     <!-- ナビゲーション -->
-    <nav class="site-nav">
-      <ul>
-        <li>
-            <a href="/user/sign-up">アカウント作成</a>
+    <div class="nav_container">
+      <nav class="site_nav">
+        <ul>
+          <li>
+              <a href="/user/signup">アカウント作成</a>
+          </li>
+          <li>
             <a href="/user/login">ログイン</a>
-        </li>
-      </ul>
-      <!-- <img src="" alt=""> -->
-    </nav>
-
+          </li>
+          <li>
+            <a href="/user/login">アイコン画像<!-- <img src="" alt=""> --></a>
+          </li>
+        </ul>
+      </nav>
+    </div>
     <%- include('../partials/flash') %>
     <%- body %>
-
     <!-- フッター -->
     <footer>
       <ul>
-        <li><a href="#" class="footer-title">サイトについて</a></li>
-        <li><a href="#">ノベバとは</a></li>
-        <li><a href="#">利用規約</a></li>
-        <li><a href="#">プライバシーポリシー</a></li>
-        <li><a href="#">運営者</a></li>
-        <li><a href="#">掲示板とは</a></li>
+        <label class="footer_label">ノベバについて</label>
+        <li><a href="#">→ ノベバとは</a></li>
+        <li><a href="#">→ 利用規約</a></li>
+        <li><a href="#">→ プライバシーポリシー</a></li>
+        <li><a href="#">→ 運営者</a></li>
+        <li><a href="#">→ 掲示板とは</a></li>
       </ul>
       <ul>
-        <li><a href="#">サポート</a></li>
-        <li><a href="#">ご意見・お問い合わせ</a></li>
+        <label class="footer_label">サポート</label>
+        <li><a href="#">→ ご意見・お問い合わせ</a></li>
       </ul>
     </footer>
   </body>
