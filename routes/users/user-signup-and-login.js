@@ -11,16 +11,13 @@ const {
 
 const router = express.Router();
 
-// アカウント作成画面へ遷移
-router.get("/signup", goToAccountCreate);
+router.route("/signup")
+    .get(goToAccountCreate) // アカウント作成画面へ遷移
+    .post(accountCreate);   // アカウント作成処理
 
-// アカウント作成処理
-router.post("/signup", accountCreate);
+router.route("/login")
+    .get(goToLogin)   // ログイン画面へ遷移
+    .post(userLogin); // ログイン処理
 
-// ログイン画面へ遷移
-router.get("/login", goToLogin);
-
-// ログイン処理
-router.post("/login", userLogin);
 
 module.exports = router;
