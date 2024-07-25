@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
       suggestions.forEach((suggestion) => {
         const div = document.createElement("div");
         div.textContent = suggestion;
-        div.className = "suggestion-item";
+        div.className = "suggestion_item";
         div.onclick = (e) => {
           e.stopPropagation(); // イベントの伝播を止める
           searchInput.value = suggestion;
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ドロップダウンの外側をクリックしたときに全てのドロップダウンを閉じる
   document.addEventListener('click', (event) => {
     allDropdowns.forEach(dropdown => {
-      if (!dropdown.contains(event.target) && !event.target.closest('.site-nav-button')) {
+      if (!dropdown.contains(event.target) && !event.target.closest('.site_nav_button')) {
         dropdown.classList.remove('show');
       }
     });
