@@ -13,108 +13,115 @@
   <body>
     <!-- ヘッダー -->
     <header>
-      <!-- サイトロゴとサイト説明-->
-      <div class="site-logo">
-        <a href="/novel/home">
-          <img src="/images/アセット 4@2x.png" alt="" />
-        </a>
+      <div class="header_wrapper">
+        <!-- サイトロゴとサイト説明-->
+        <div class="site_logo">
+          <a href="/novel/home">
+            <img class="site_img" src="/images/アセット 4@2x.png" alt="" />
+          </a>
+        </div>
+        <!-- サイト内検索ボックス -->
+        <form  class="search_form" action="/novel/search" method="get" class="search_form">
+          <input type="text" name="search" placeholder="サイト内検索" />
+        </form>
       </div>
-      <!-- <p>サイト説明</p> -->
-      <!-- サイト内検索ボックス -->
-      <form action="/novel/search" method="get" class="search-form">
-        <input type="text" name="search" placeholder="サイト内検索" />
-      </form>
     </header>
     <!-- ナビゲーション -->
-    <nav class="site-nav">
-      <ul>
-        <li>
-          <button class="site-nav-button">
-            <a href="/novel/home">ホーム</a>
-          </button>
-        </li>
-        <li>
-          <button class="site-nav-button" id="genreButton">
-            <a href="#">ジャンル</a>
-          </button>
-          <div class="dropdown-content" id="genreDropdown">
-            <% genres.forEach(genre => { %>
-            <a href="/novel/genre/<%= genre._id %>"><%= genre.genre_name %></a>
-            <% }); %>
-          </div>
-        </li>
-        <li>
-          <button class="site-nav-button" id="writerButton">
-            <a href="#">作家</a>
-          </button>
-          <div class="dropdown-content" id="writerDropdown">
-            <div class="writerSearch">
-              <form action="/novel/search" method="get">
-                <input type="text" name="search" id="searchInput" placeholder="作家名で検索">
-              </form>
-              <div id="suggestions" class="suggestions"></div>
-            </div>
-          </div>
-        </li>
-        <li>
-          <button class="site-nav-button" id="siteInformationButton">
-            <a href="#">サイト案内</a>
-          </button>
-          <div class="dropdown-content" id="siteInfomationDropdown">
-            <a href="#">ノベバとは</a>
-            <a href="#">運営者について</a>
-          </div>
-        </li>
-        <li>
-          <button class="site-nav-button" id="boardButton">
-            <a href="#">掲示板</a>
-          </button>
-          <div class="dropdown-content" id="boardDropdown">
-            <a href="#">掲示板とは</a>
-            <a href="#">見てみる</a>
-          </div>
-        </li>
-        <li>
-          <div class="mypage-container">
-            <button class="site-nav-button" id="mypageButton">
-              <a href="#" class="mypage">マイページ</a>
-            </button>
-            <div class="dropdown-content" id="mypageDropdown">
-              <a href="/user/account/setting">アカウント設定</a>
-              <a href="#">読みたい一覧</a>
-              <% if (!currentUser) { %>
-              <a href="/user/login">ログイン</a>
-              <% } else { %>
-              <form action="/user/logout" method="post">
-                <button>ログアウト</button>
-              </form>
-              <% } %>
-            </div>
-          </div>
-        </li>
-      </ul>
-      <!-- <img src="" alt=""> -->
-    </nav>
+    <div class="wrapper">
+      <div class="nav_container">
+        <div class="nav_left">
+          <nav class="site_nav">
+            <ul>
+              <li>
+                <label class="site_nav_button">
+                  <a href="/novel/home">ホーム</a>
+                </label>
+              </li>
+              <li>
+                <label class="site_nav_button" id="genreButton">
+                   ジャンル
+                </label>
+                <div class="dropdown_content" id="genreDropdown">
+                  <% genres.forEach(genre => { %>
+                  <a href="/novel/genre/<%= genre._id %>"><%= genre.genre_name %></a>
+                  <% }); %>
+                </div>
+              </li>
+              <li>
+                <label class="site_nav_button" id="writerButton">
+                  作家
+                </label>
+                <div class="dropdown_content" id="writerDropdown">
+                  <div class="writerSearch">
+                    <form action="/novel/search" method="get">
+                      <input type="text" class="nav_input" name="search" id="searchInput" placeholder="作家名で検索">
+                    </form>
+                    <!-- <div id="suggestions" class="suggestions"></div> -->
+                  </div>
+                </div>
+              </li>
+              <li>
+                <label class="site_nav_button" id="siteInformationButton">
+                  サイト案内
+                </label>
+                <div class="dropdown_content" id="siteInfomationDropdown">
+                  <a href="#">ノベバとは</a>
+                  <a href="#">運営者について</a>
+                </div>
+              </li>
+              <li>
+                <label class="site_nav_button" id="boardButton">
+                  掲示板
+                </label>
+                <div class="dropdown_content" id="boardDropdown">
+                  <a href="#">掲示板とは</a>
+                  <a href="#">見てみる</a>
+                </div>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div class="nav_right">
+          <ul>
+            <li>
+              <label class="site_nav_button" id="mypageButton" class="mypage">マイページ</label>
+              <div class="dropdown_content" id="mypageDropdown">
+                <a href="/user/account/setting">アカウント設定</a>
+                <a href="#">読みたい一覧</a>
+                <% if (!currentUser) { %>
+                <a href="/user/login">ログイン</a>
+                <% } else { %>
+                <form action="/user/logout" method="post">
+                  <button class="logout" type="submit">ログアウト</button>
+                </form>
+                <% } %>
+              </div>
+            </li>
+            <li>
+              <!-- <img src="" alt=""> --><label>写真</label>
+            </li>
+          </ul>
+        </div>
+      </div>
 
+    </div>
+    
     <%- include('../partials/flash') %>
     <%- body %>
-
-    <!-- フッター -->
     <footer>
       <ul>
-        <li><a href="#" class="footer-title">サイトについて</a></li>
-        <li><a href="#">ノベバとは</a></li>
-        <li><a href="#">利用規約</a></li>
-        <li><a href="#">プライバシーポリシー</a></li>
-        <li><a href="#">運営者</a></li>
-        <li><a href="#">掲示板とは</a></li>
+        <label class="footer_label">ノベバについて</label>
+        <li><a href="#">→ ノベバとは</a></li>
+        <li><a href="#">→ 利用規約</a></li>
+        <li><a href="#">→ プライバシーポリシー</a></li>
+        <li><a href="#">→ 運営者</a></li>
+        <li><a href="#">→ 掲示板とは</a></li>
       </ul>
       <ul>
-        <li><a href="#">サポート</a></li>
-        <li><a href="#">ご意見・お問い合わせ</a></li>
+        <label class="footer_label">サポート</label>
+        <li><a href="#">→ ご意見・お問い合わせ</a></li>
       </ul>
     </footer>
-
     <script src="/js/navbar-search-input.js"></script>
     <script src="/js/navbar.js"></script>
     <%- scripts %>
