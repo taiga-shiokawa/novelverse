@@ -14,6 +14,7 @@ const flash = require("connect-flash");           // req,res間で一時的に�
 const LocalStrategy = require("passport-local");  // Passport.jsのローカル認証をインポート
 const passport = require("passport");             // Passportライブラリのインポート
 const session = require("express-session");       // アプリのセッション管理機能を追加するためのミドルウェアの設定
+const methodOverride = require("method-override");
 
 // ローカルモジュール
 const getGenreName = require("./common/genres");    // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
@@ -80,6 +81,7 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // HTMLのフォーム送信によるbody部分に含まれるデータを解析しreq.bodyにパースするためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 // セッション設定
 const sessionConfig = {
