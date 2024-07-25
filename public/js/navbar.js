@@ -27,8 +27,6 @@ function setupDropdown(buttonId, dropdownId) {
   });
 }
 
-// 既存のコードの後に追加
-
 // すべてのドロップダウンを取得
 const allDropdowns = document.querySelectorAll('.dropdown_content');
 
