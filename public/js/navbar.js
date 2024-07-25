@@ -27,6 +27,21 @@ function setupDropdown(buttonId, dropdownId) {
   });
 }
 
+// 既存のコードの後に追加
+
+// すべてのドロップダウンを取得
+const allDropdowns = document.querySelectorAll('.dropdown_content');
+
+// ドキュメント全体にクリックイベントリスナーを追加
+document.addEventListener('click', function(event) {
+  allDropdowns.forEach(dropdown => {
+    // クリックされた要素がドロップダウンの外部かどうかをチェック
+    if (!dropdown.contains(event.target) && !event.target.matches('.site_nav_button')) {
+      dropdown.classList.remove('show');
+    }
+  });
+});
+
 //ジャンルドロップダウン
 setupDropdown("genreButton", "genreDropdown");
 //作家ドロップダウン
