@@ -1,8 +1,10 @@
 <% layout("layouts/common-template") %>
 
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/home.css" />' %> <%= logoutSuccess
-%> <%= error %>
+<% head = '<link rel="stylesheet" href="/css/home.css" />' %> 
+
+<%= logoutSuccess%>
+<%= error %>
 
 <!-- ブックマークメッセージ用のコンテナ -->
 <div id="bookmark-message-container" class="bookmark-message-container"></div>
@@ -38,19 +40,15 @@ function getCoverUrl(novel) {
     </div>
 
     <h2>
-      おすすめの文庫<span
-        ><a href="/novel/list?novel_type=文庫">もっと見る -></a></span
-      >
+      おすすめの文庫<span><a href="/novel/list?novel_type=文庫">もっと見る -></a></span>
     </h2>
     <div class="book-list">
       <% for (let novel of bunkoNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"
-            ><img
-              src="<%= getCoverUrl(novel) %>"
-              alt="<%= novel.title %>の表紙"
-          /></a>
+          <a href="/novel/detail/<%= novel._id %>">
+            <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙"/>
+          </a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -62,19 +60,15 @@ function getCoverUrl(novel) {
     </div>
 
     <h2>
-      おすすめの単行本<span
-        ><a href="/novel/list?novel_type=単行本">もっと見る -></a></span
-      >
+      おすすめの単行本<span><a href="/novel/list?novel_type=単行本">もっと見る -></a></span>
     </h2>
     <div class="book-list">
       <% for (let novel of tankobonNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"
-            ><img
-              src="<%= getCoverUrl(novel) %>"
-              alt="<%= novel.title %>の表紙"
-          /></a>
+          <a href="/novel/detail/<%= novel._id %>">
+            <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙"/>
+          </a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -86,19 +80,15 @@ function getCoverUrl(novel) {
     </div>
 
     <h2>
-      おすすめのライトノベル<span
-        ><a href="/novel/list?novel_type=ライトノベル">もっと見る -></a></span
-      >
+      おすすめのライトノベル<span><a href="/novel/list?novel_type=ライトノベル">もっと見る -></a></span>
     </h2>
     <div class="book-list">
       <% for (let novel of lightNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail/<%= novel._id %>"
-            ><img
-              src="<%= getCoverUrl(novel) %>"
-              alt="<%= novel.title %>の表紙"
-          /></a>
+          <a href="/novel/detail/<%= novel._id %>">
+            <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙"/>
+          </a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>
@@ -110,19 +100,15 @@ function getCoverUrl(novel) {
     </div>
 
     <h2>
-      ノベルバースおすすめ<span
-        ><a href="/novel/list?is_recommend=true">もっと見る -></a></span
-      >
+      ノベルバースおすすめ<span><a href="/novel/list?is_recommend=true">もっと見る -></a></span>
     </h2>
     <div class="book-list">
       <% for (let novel of recommendedNovels) { %>
       <div class="book-item">
         <div class="book-cover">
-          <a href="/novel/detail?id=<%= novel._id %>"
-            ><img
-              src="<%= getCoverUrl(novel) %>"
-              alt="<%= novel.title %>の表紙"
-          /></a>
+          <a href="/novel/detail/<%= novel._id %>">
+            <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙"/>
+          </a>
           <form action="/user/bookmark" method="post">
             <button class="bookmark-button">読みたい＋</button>
           </form>

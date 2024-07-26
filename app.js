@@ -31,6 +31,7 @@ const adminRouter = require("./routes/admins/admin"); // 管理者関連ルー�
 const adminUserManagementRouter = require("./routes/admins/admin-user-management"); // 管理者ユーザー管理関係ルーター
 const adminManagementRouter = require("./routes/admins/admin-management"); // 管理者の管理関係ルーター
 const adminAuthorRouter = require("./routes/admins/admin-author"); // 管理者の著者関係ルーター
+const ExpressError = require("./utils/ExpressError");
 
 const app = express();
 const PORT = 3000;
@@ -179,10 +180,18 @@ app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユー
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
 
+// ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
+app.all("*", (req, res, next) => {
+  next(new ExpressError("ページが見つかりませんでした", 404));
+});
+
 // エラーハンドリングミドルウェア
 app.use((err, req, res, next) => {
-  console.error(err);
-  res.status(500).send("Something went wrong");
+  const { statusCode = 500 } = err;
+  if (!err.message) {
+    err.message = "問題が起きましt";
+  }
+  res.status(statusCode).render("errors/error", { err });
 });
 
 // サーバー起動

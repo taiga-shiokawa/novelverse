@@ -14,7 +14,9 @@ function getCoverUrl(novel) {
       <img src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
   </div>
   <div class="info-container">
-      <h2>タイトル: <%= novelDetails.title  %> <button class="read-button">読みたい +</button></h2>
+    <form class="bookmark-form" data-novel-id="<%= novelDetails._id %>">
+      <h2>タイトル: <%= novelDetails.title  %> <button class="bookmark-button" type="submit">読みたい +</button></h2>
+    </form>
       <p>著者名: <%= novelDetails.author.author_name %></p>
       <p>あらすじ: </p>
       <textarea placeholder="あらすじ"><%= novelDetails.summary  %></textarea>
@@ -29,3 +31,4 @@ function getCoverUrl(novel) {
 
 <!-- 特定のJavaScript -->
 <% scripts = '<script src="/js/home.js"></script>' %> 
+<% scripts = '<script src="/js/bookmark-add.js"></script>' %>
