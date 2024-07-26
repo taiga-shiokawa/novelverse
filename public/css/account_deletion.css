@@ -3,22 +3,18 @@
 main {
     font-family: "Noto Sans JP", sans-serif;
     display: flex;
-    justify-content: center;
-    align-items: center;
     min-height: 70vh;
 }
 
 .container{
     width: 100%;
-    max-width: 1000px;
-    padding-top: 200px;
-    padding-bottom: 200px;
+    max-width: 1200px;
+    margin: auto; 
 }
 
 .colums_label{
     font-size: 12px;
     display: inline-block;
-    width: 150px;
     margin-bottom: 5px;
     width: 80px;
 }
@@ -32,15 +28,10 @@ main {
     color: #920000;
 } 
 
-form{
+main form{
     width: 100%;
     margin: 0 auto;
-    padding-top: 80px;
-    max-width: 800px;
-}
-
-form select {
-   height:40px;  
+    max-width: 700px;
 }
 
 .opinion{
@@ -53,28 +44,40 @@ form select , .opinion{
     padding-left: 5px;
 }
 
+/* 削除ボタン */
 .btn{
-  display: block;
-  margin: 0 auto; 
-  color: #fff;
-  background-color: #505F00;
+  letter-spacing: 5px;
+  line-height: 40px;
   border:none;
-  width: 70%;
-  padding: 10px 24px;
-  margin-top: 30px;
-  letter-spacing: 2px;
+  color: #fff;
+  background-color:#505F00;
   text-align: center;
+  width: 200px;
+  display: block;
+  margin: 20px auto;
+  transition: opacity 0.5s ease;
 }
 
+.btn:hover{
+  opacity: .8;
+} 
 
 /* その他 テキストエリア */
-.other{
-  display:none;
+
+.other {
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+  transition: opacity 0.5s ease, height 0.5s ease;
   padding-top: 10px;
   width:  100%;
   border:none;
   padding-left: 5px;
   margin-top:20px;
+}
+.other.show {
+  opacity: 1;
+  height: auto; /* 内容に応じた高さに調整 */
 }
 
 /* モーダル */
@@ -154,7 +157,6 @@ form select , .opinion{
   letter-spacing: 2px;
 }
 
-
 .modal_btn{
   display: block;
   margin: 0 auto; 
@@ -165,19 +167,27 @@ form select , .opinion{
   margin-top: 30px;
   letter-spacing: 2px;
   width: 160px;
+  font-size: 12px;
+  transition: opacity 0.5s ease;
 }
 
-.modal_btn_a{
+.modal_btn_label{
   display: block;
   margin: 0 auto; 
   color: #fff;
   background-color: #505F00;
+  text-align: center;
   border:none;
-  padding: 10px 24px;
+  padding: 10px 0;
   margin-top: 30px;
   letter-spacing: 2px;
   width: 160px;
-  text-align: center;
+  font-size: 12px;
+  transition: opacity 0.5s ease;
+}
+
+.modal_btn:hover , .modal_btn_label:hover{
+  opacity:.7;
 }
 
 .btn_box{
@@ -185,4 +195,35 @@ form select , .opinion{
   justify-content: space-between;
   width: 80%;
   margin: 0 auto;
+}
+
+/* チェックボックス */
+input[type="checkbox"] {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #6e6d6d;
+  background-color: #fff;
+  vertical-align: -7px;
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+}
+
+.checkbox_label{
+  display: inline-block;
+  margin-left: 10px;
+  font-size: 12px;
+}
+
+input[type="checkbox"]:checked:before {
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  transform: rotate(50deg);
+  width: 4px;
+  height: 8px;
+  border-right: 2px solid #000;
+  border-bottom: 2px solid #000;
+  content: '';
 }

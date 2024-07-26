@@ -30,15 +30,24 @@ function modalOut(e) {
 addEventListener('click', modalOut);
 
 
-
-let selectValue="";
-
-function handleChange(selectElement) {
-  this.selectValue = selectElement.value;
-  if(this.selectValue == "3"){
-    other.style.display = 'block';
+function handleChange(checkbox) {
+  if(checkbox.checked){
+    other.classList.add('show');
   } else {
-    other.style.display = 'none';
+    other.classList.remove('show');
     other.value="";
   }
+}
+
+//チェックボックスバリデーション
+
+function validateForm() {
+  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+  const atLeastOneChecked = Array.from(checkboxes).some(cb => cb.checked);
+
+  if (!atLeastOneChecked) {
+      alert('少なくとも一つのチェックボックスを選択してください。');
+      return false; // フォームの送信を防ぐ
+  }
+  return true; // フォームの送信を許可する
 }

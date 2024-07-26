@@ -1,22 +1,19 @@
 <% layout("layouts/common-template") %>
-
-<!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
         <main>
             <div class="container">
-                <h2 class="delet_title">アカウント削除</h2>
-                <form action="/user/account/deletion" method="POST">
+                <form  onsubmit="return validateForm()" action="/user/account/deletion" method="POST">
+                    <h2 class="delet_title">アカウント削除</h2>
                     <label class="colums_label">削除理由</label><span class="caption_label required_label">※必須</span><br>
-                    <select name="reason" onchange="handleChange(this)">
-                        <option value="削除理由テキスト１">削除理由テキスト１</option>
-                        <option value="削除理由テキスト２">削除理由テキスト２</option>
-                        <option value="その他">その他</option>
-                    </select><br>
-                    <textarea class="other" name="other" rows="3" placeholder="その他を選んだ方は、こちらに理由を記述してください"></textarea>
+                        <label class="checkbox_label" ><input name="reason1" type="checkbox" value="削除理由テキスト１" /> 削除理由テキスト１</label>
+                        <label class="checkbox_label" ><input name="reason2" type="checkbox" value="削除理由テキスト２" /> 削除理由テキスト２</label>
+                        <label class="checkbox_label" ><input name="reason3" type="checkbox" value="その他" onchange="handleChange(this)" /> その他</label>
+                    <br>
+                    <textarea class="other" id="other" name="other" rows="3" placeholder="その他を選んだ方は、こちらに理由を記述してください"></textarea>
                     <br>
                     <label class="colums_label">ご意見</label><span class="caption_label">任意</span><br>
                     <textarea class="opinion" name="opinion" rows="5"></textarea>
-                    <a class="btn js-modal-open">削除</a>
+                    <label class="btn js-modal-open">削除</label>
 
                     <!-- モーダル本体 -->
                     <div class="modal js-modal">
@@ -28,7 +25,7 @@
                                 <p>本当に削除しますか</p>
                                 <div class="btn_box">
                                     <button class="modal_btn" type="submit">はい</button>
-                                    <a class="js-modal-close-button modal_btn_a">いいえ</a>
+                                    <label class="js-modal-close-button modal_btn_label">いいえ</label>
                                 </div>
                             </div>
                         </div>
