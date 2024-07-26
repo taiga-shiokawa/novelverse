@@ -12,7 +12,6 @@ const novelSchema = new Schema({
   },
   is_new: {
     type: Boolean,
-    required: true,
     default: false,
   },
   pages: {
@@ -37,8 +36,6 @@ const novelSchema = new Schema({
   },
   is_recommend: {
     type: Boolean,
-    required: true,
-    default: false,
   },
   cover: [
     {

@@ -9,37 +9,37 @@
   <form action="/novel/registration" method="post" enctype="multipart/form-data">
     <div>
       <label for="title">タイトル</label>
-      <input type="text" name="novel[title]", id="title">
+      <input type="text" name="novel[title]", id="title" required>
     </div>
     <div>
       <label for="summary">概要</label>
-      <input type="text" name="novel[summary]", id="summary">
+      <input type="text" name="novel[summary]", id="summary" required>
     </div>
     <div>
       <label><input type="checkbox" name="novel[is_new]">新作</label><br>
     </div>
     <div>
       <label for="pages">ページ数</label>
-      <input type="number" name="novel[pages]" id="pages">
+      <input type="number" name="novel[pages]" id="pages" required>
     </div>
     <div>
       <label for="publisher_name">出版社名</label>
-      <input type="text" name="novel[publisher_name]" id="publisher_name">
+      <input type="text" name="novel[publisher_name]" id="publisher_name" required>
     </div>
     <div>
       <label for="publication_date">出版日</label>
-      <input type="date" name="novel[publication_date]" id="publication_date">
+      <input type="date" name="novel[publication_date]" id="publication_date" required>
     </div>
     <div>
       <label for="price">価格</label>
-      <input type="number" name="novel[price]" id="price">
+      <input type="number" name="novel[price]" id="price" required>
     </div>
     <div>
       <label for="cover">表紙</label>
       <input type="file" name="cover" id="cover">
     </div>
     <div>
-      <select name="novel[novel_type]" id="novel_type">
+      <select name="novel[novel_type]" id="novel_type" required>
         <option value="文庫">文庫</option>
         <option value="単行本">単行本</option>
         <option value="ライトノベル">ライトノベル</option>
@@ -50,7 +50,7 @@
     </div>
     <div>
       <label for="author">著者</label>authors
-      <select name="novel[author]" id="author">
+      <select name="novel[author]" id="author" required>
         <% authors.forEach(author => { %>
         <option value="<%= author._id %>"><%= author.author_name %></option>
         <% }); %>
@@ -58,7 +58,7 @@
     </div>
     <div>
       <label for="genre">ジャンル</label>
-      <select name="novel[genre]" id="genre">
+      <select name="novel[genre]" id="genre" required>
         <% genres.forEach(genre => { %>
         <option value="<%= genre._id %>"><%= genre.genre_name %></option>
         <% }); %>
