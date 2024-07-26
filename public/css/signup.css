@@ -58,7 +58,7 @@ main {
     width: 200px;
     display: block;
     margin: 20px auto;
-    transition: opacity 0.5s ease; /* opacity の変化を0.5秒かけてゆっくりと行う */
+    transition: opacity 0.5s ease;
 }
 
 .btn:hover{
