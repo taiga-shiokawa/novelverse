@@ -1,21 +1,55 @@
 const User = require("../../models/Users");
 const Bookmark = require("../../models/Bookmark");
-const Novel = require("../../models/Novels");
 const DeletionReason = require("../../models/Deletion_reasons");
+const passport = require("passport");
 
-module.exports.renderAccountDeletion = (req, res) => {
-  res.render("users/account-deletion");
+module.exports.renderAccountDeletion = async (req, res) => {
+  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  const username = loginUser.username;
+  res.render("users/account-deletion", { username });
 };
 
-module.exports.accountDeletion = async (req, res) => {
+module.exports.accountDeletion = async (req, res, next) => {
+  console.log(`deletion`);
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const { reason, opinion } = req.body; //formに入力した値
-  const deletionReason = new DeletionReason({ reason, opinion });
-  deletionReason.save(); //削除理由登録
-  await User.findByIdAndDelete(id); //アカウント削除
-  req.flash("success", "アカウントを削除しました");
-  //ログアウト
-  res.redirect("/user/login"); //リダイレクト先
+  const { password, opinion } = req.body; //formに入力した値
+  console.log(`パスワードは${password}でidが${id}`);
+
+
+  passport.authenticate("local", async (err, user, info) => {
+    if (err) {
+      // エラーがあれば次のエラーハンドラーに渡す
+      return next(err);
+    }
+    if (!user) {
+      req.flash('error', 'パスワードが間違っています');
+      return res.redirect('/user/account/deletion'); // リダイレクト先
+    }
+
+    try {
+      // 削除理由の保存
+      const deletionReason = new DeletionReason({ opinion });
+      await deletionReason.save(); // 削除理由を登録
+
+      // ユーザーアカウントの削除
+      await User.findByIdAndDelete(user.id);
+
+      // ログアウト処理
+      req.logout(err => {
+        if (err) {
+          return next(err);
+        }
+        req.flash('success', 'アカウントを削除しました');
+        res.redirect('/user/login'); // リダイレクト先
+      });
+    } catch (error) {
+      console.error('アカウント削除中にエラーが発生しました:', error);
+      req.flash('error', 'アカウント削除に失敗しました');
+      res.redirect('/user/account/deletion'); // リダイレクト先
+    }
+  })(req, res, next); // passport.authenticateミドルウェアを呼び出す
+
 };
 
 module.exports.renderAccountSetting = async (req, res) => {
