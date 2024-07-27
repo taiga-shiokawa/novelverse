@@ -220,3 +220,38 @@ module.exports.cancelBookmark = async (req, res) => {
       .json({ success: false, message: "サーバーエラーが発生しました" });
   }
 };
+
+// ご意見・お問い合わせ画面へ遷移
+module.exports.goToInquiry = (req, res) => {
+  res.render("users/inquiry-page");
+};
+
+// ご意見・お問い合わせ処理
+module.exports.inquiry = async (req, res) => {
+  const { email, subject, text } = req.body;
+  const userId = req.user._id;
+  try {
+    const existingUser = await User.findOne({
+      $or: [{ _id: userId }, { email }],
+    });
+    if (!existingUser) {
+      req.flash("existError", "ログインしてください");
+      return res.redirect("/user/login");
+    }
+    const data = await resend.emails.send({
+      from: "onboarding@resend.dev",
+      to: "taiga.hr12@gmail.com",
+      subject: `${subject}`,
+      html: `
+      <p>From: ${email}</p>
+      <p>Subject: ${subject}</p>
+      <p>Message:</p>
+      <p>${text}</p>
+    `,
+    });
+    console.log("メール送信成功 : ", data);
+    res.redirect("/user/after_page");
+  } catch (err) {
+    console.log("メール送信エラー : ", err);
+  }
+};
