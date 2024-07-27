@@ -24,7 +24,9 @@
                             <form action="/user/account/setting-img?_method=PUT" method="post" enctype="multipart/form-data">
                                 <div>
                                     <div id="imagePreview">
-                                        <img class="top_img" src="<%= loginUser.image[0].url %>" alt="現在のトプ画">
+                                        <% if(loginUser.image.url){ %>
+                                            <img class="top_img" src="<%= loginUser.image[0].url %>" alt="現在のトプ画">
+                                        <% } %>
                                     </div>
                                     <input type="file" id="photoInput" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
                                 </div>
