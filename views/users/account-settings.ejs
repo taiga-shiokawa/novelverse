@@ -5,11 +5,11 @@
                 <div class="left_container">
                     <h2 class="left_title">ヘルプ</h2>
                     <div class="nav_box">
-                        <ul class="nav_list">
-                            <li><a href="#">ノベバとは</a></li>
+                        <ul class="help_list">
+                            <li><a href="/admin/app_info">ノベバとは</a></li>
                             <li><a href="#">利用規約</a></li>
                             <li><a href="#">よくある質問</a></li>
-                            <li><a href="#">掲示板について</a></li>
+                            <li><a href="/board/info">掲示板について</a></li>
                         </ul>
                     </div>
                 </div>
@@ -21,10 +21,12 @@
                         <div class="photo_setting">
                             <h3 class="section_title">写真</h3>
                             <label class="caption_label">※任意</label>
-                            <form>
+                            <form action="/user/account/setting-img?_method=PUT" method="post" enctype="multipart/form-data">
                                 <div>
-                                    <div id="imagePreview"></div>
-                                    <input type="file" id="photoInput" name="photo" accept="image/*" onchange="handleFileUpload(event)" />
+                                    <div id="imagePreview">
+                                        <img class="top_img" src="<%= loginUser.image[0].url %>" alt="現在のトプ画">
+                                    </div>
+                                    <input type="file" id="photoInput" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
                                 </div>
                                 <button class="btn" type="submit">画像選択</button>
                             </form>
@@ -43,7 +45,7 @@
                                     <textarea name="user[self_introdaction]" maxlength="140"><%= loginUser.self_introdaction %></textarea>
                                 </div>
                                 <br>
-                                <label class="colums_label">生年月日</label><span  class="caption_label">※任意</span>
+                                <label class="colums_label">生年月日</label><span class="caption_label">※任意</span>
                                 <% if(loginUser.birthday){%>
                                     <input type="date" name="user[birthday]" value="<%= new Date(loginUser.birthday).toISOString().slice(0, 10) %>">
                                     <% } else { %>
@@ -51,7 +53,7 @@
                                 <% } %>
                                 <br><br>
                                 <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
-                                <input type="password" class="password" value="********" required readonly />
+                                <input type="password" class="password" value="********" required readonly /><br>
                                 <label class="pass_label"><a href="/user/account/password_change">パスワード変更はこちら</a></label>
                                 <br><br>
                                 <button class="btn" type="submit">更新</button>

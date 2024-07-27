@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router({ mergeParams : true});
 const { isLoggedIn } = require("../../middleware");
 const userAccount = require("../../controllers/users/user-account-controllers");
+const multer = require("multer");
+const { storage } = require("../../cloudinary/cloudinary");
+const upload = multer({ storage });
 
 router.route('/deletion')
     .get(isLoggedIn , userAccount.renderAccountDeletion )   // アカウント削除画面へ遷移
@@ -10,6 +13,9 @@ router.route('/deletion')
 router.route('/setting')
     .get(isLoggedIn , userAccount.renderAccountSetting )    // アカウント設定画面へ遷移
     .put(isLoggedIn , userAccount.accountSetting );         // アカウント設定
+
+router.route('/setting-img')
+    .put(upload.single("image"), userAccount.accountSettingImg);    // 小説登録処理
 
 router.route('/password_change')
     .get(isLoggedIn , userAccount.renderPasswordChange )    // アカウント設定画面へ遷移
