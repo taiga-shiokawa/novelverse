@@ -20,6 +20,11 @@ module.exports.accountCreate = async (req, res) => {
   let role = "user";
   try {
     const user = new User({ username, email, role });
+    const existingUser = await User.findOne({ $or: [{ username }, { email }] });
+    if (existingUser) {
+      req.flash("creation-error", "ニックネームまたはメールアドレスがすでに使用されています");
+      return res.redirect("/user/signup");
+    }
     const registerdUser = await User.register(user, password);
     const data = await resend.emails.send({
       from: "onboarding@resend.dev",
@@ -33,10 +38,14 @@ module.exports.accountCreate = async (req, res) => {
       `,
     });
     console.log("メール送信成功 : ", data);
-    res.redirect("/user/login");
+    res.redirect("/user/after_page");
   } catch (err) {
     console.log("メール送信エラー : ", err);
   }
+};
+
+module.exports.goToAfterPage = (req, res) => {
+  res.render("users/after-account-creation-page");
 };
 
 // ログイン画面へ遷移

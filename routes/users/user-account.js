@@ -23,6 +23,6 @@ router.route('/bookmark/list')
     .get(isLoggedIn, userAccount.renderBookmarkLists);      // ブックマーク一覧画面へ遷移
 
 router.route('/bookmark/cancel')
-    .post(isLoggedIn, userAccount.cancelBookmark);
+    .post(isLoggedIn, userAccount.cancelBookmark);          // ブックマーク解除
 
 module.exports = router;
