@@ -160,6 +160,7 @@ app.use(async (req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.logoutSuccess = req.flash("logout-success");
   res.locals.error = req.flash("error");
+  res.locals.creationError = req.flash("creation-error");
   res.locals.messages = req.flash();
   if (!res.locals.genres) {
     res.locals.genres = await loadGenres();

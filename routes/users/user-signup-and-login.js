@@ -7,6 +7,7 @@ const {
   accountCreate,
   goToLogin,
   userLogin,
+  goToAfterPage,
 } = require("../../controllers/users/user-signup-and-login-controllers");
 
 const router = express.Router();
@@ -18,6 +19,9 @@ router.route("/signup")
 router.route("/login")
     .get(goToLogin)   // ログイン画面へ遷移
     .post(userLogin); // ログイン処理
+
+router.route("/after_page") // アカウント作成後ページ
+    .get(goToAfterPage);
 
 
 module.exports = router;
