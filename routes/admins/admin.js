@@ -1,8 +1,6 @@
 const express = require("express");
-const { Resend } = require("resend");
 require("dotenv").config();
 const Admin = require('../../controllers/admins/admin-controllers');
-const resend = new Resend(process.env.RESEND_API_KEY);
 const router = express.Router();
 const { isLoggedIn , adminIsLoggedIn } = require("../../middleware");
 
@@ -23,16 +21,6 @@ router.route('/dashboard_admin')
 
 router.route('/logout')
     .post(Admin.adminLogout)         //管理者ログイン   
-
-router.route('/info')
-    .get(Admin.goToAdminInfo);  // 「運営者について」画面に遷移
-
-router.route('/app_info')
-    .get(Admin.goToAppInfo);    // 「ノベルバース」について画面に遷移
-
-router.route('/inquiry')
-    .get(Admin.goToInquiry)
-    .post(Admin.inquiry);
 
     
 module.exports = router;

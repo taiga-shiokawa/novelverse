@@ -31,4 +31,8 @@ router.route('/bookmark/list')
 router.route('/bookmark/cancel')
     .post(isLoggedIn, userAccount.cancelBookmark);          // ブックマーク解除
 
+router.route('/inquiry')
+    .get(isLoggedIn, userAccount.goToInquiry)               // ご意見・お問い合わせ画面へ遷移
+    .post(isLoggedIn, userAccount.inquiry);                 // ご意見・お問い合わせ処理
+
 module.exports = router;
