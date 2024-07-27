@@ -34,7 +34,6 @@ module.exports.accountSetting = async (req, res) => {
   const user = await User.findById(id);
   await User.findByIdAndUpdate(id, { ...req.body.user });
   req.flash("success", "アカウントを更新しました");
-  req.session.passport.user = req.body.user.username; //formに入力した値
   res.redirect("/user/account/setting");
 };
 
