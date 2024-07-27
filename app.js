@@ -43,7 +43,7 @@ const DB_URL = "mongodb://localhost:27017/novelversedb";
 // MongoDB接続
 const start = async () => {
   try {
-    await connectDB(DB_URL);
+    await connectDB(process.env.MONGO_URL);
   } catch (err) {
     console.log(err);
   }

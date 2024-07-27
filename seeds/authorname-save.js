@@ -2,13 +2,14 @@ const mongoose = require("mongoose");
 const Author = require("../models/Authors");
 const authors = require("./authors");
 const connectDB = require("../db/connect"); // MongoDB接続
+require("dotenv").config();
 
 const DB_URL = "mongodb://localhost:27017/novelversedb"; // MongoDB名（ローカル）
 
 // MongoDB接続
 const start = async () => {
   try {
-    await connectDB(DB_URL);
+    await connectDB(process.env.MONGO_URL);
   } catch (err) {
     console.log(err);
   }
