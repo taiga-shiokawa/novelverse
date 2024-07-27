@@ -1,6 +1,7 @@
 
-
-main{
+main {
+    font-family: "Noto Sans JP", sans-serif;
+    display: flex;
     background-color: #F6F1DE;
     color: #332405;
 }
@@ -9,48 +10,66 @@ li{
     list-style: none;
 }
 
-a{
+main a{
     text-decoration: none;
     color: #332405;
 }
 
 .container{
     width: 100%;
-    max-width: 1400px;
+    max-width: 1200px;
+    padding-top: 100px;
+    padding-bottom: 100px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    min-height: 90vh;
-    padding-top: 100px;
+    min-height: 70vh;
 }
 
 /* 左側 */
 
 .left_container{
-    margin-top: 20px;
-    width: 20%;
-    height: 100%;
+    margin-top: 30px;
+    width: 250px;
+    height:250px;
     background-color: #fff;
-    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .left_title{
     margin-top: 0;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     background-color:#002B24;
     color: #fff;
     padding: 10px;
+    margin-bottom: 30px;
+    font-size: 18px;
+    text-align: center;
 }
 
-.nav_list li{
+.help_list{
+    padding-left: 0;
+}
+
+.help_list li{
     margin-bottom: 12px;
+    text-align: center;
+}
+
+.help_list li a{
+    transition: opacity 0.5s ease; 
+}
+
+.help_list li a:hover {
+    opacity: .6;
 }
 
 /* 右側 */
 
 .right_container{
-    width: 70%;
+    width: 80%;
     height: 100%;
+    padding-left: 50px;
 }
 
 .right_box{
@@ -60,8 +79,7 @@ a{
 
 .right_title{
     letter-spacing: 2px;
-    padding: 10px;
-    margin-bottom: 30px;
+    padding: 10px 0;
 }
 
 .section_title{
@@ -69,7 +87,7 @@ a{
     padding-bottom: 30px;
 }
 
-form{
+.right_container form{
     padding-left: 30px;
 }
 
@@ -91,19 +109,24 @@ form{
     width: 100%;
     max-width:200px;
     padding: 10px 24px;
-    margin-top: 30px;
+    margin-top: 10px;
     letter-spacing: 2px;
+    transition: opacity 0.5s ease; 
+}
+
+.btn:hover {
+    opacity:.7;
 }
 
 /* 写真フォーム */
 
 .photo_setting{
-    width: 40%;
+    width: 30%;
 }
 
 .photo_setting form{
     height: 100%;
-    max-height: 342px;
+    max-height: 418px;
     display: flex;
     flex-direction :column;
     justify-content: space-between;
@@ -125,14 +148,14 @@ form{
 /* ユーザー情報フォーム */
 
 .account_setting{
-    width: 60%;
+    width: 65%;
 }
 
 .account_setting input{
     width: 100%;
-    max-width: 200px;
+    max-width: 280px;
+    height: 40px;
     border: none;
-    height:24px;
     padding-left: 5px;
 }
 
@@ -143,10 +166,11 @@ form{
 
 textarea{
     width: 100%;
-    max-width: 200px;
+    max-width: 280px;
     border: none;
     padding-left: 5px;
     margin-left: 5px;
+    height: 60px;
 }
 
 .password{
@@ -156,6 +180,7 @@ textarea{
 
 .pass_label{
     font-size: 8px;
+    padding-left: 150px;
 }
 
 .pass_label:hover{
@@ -166,6 +191,6 @@ textarea{
     font-size: 12px;
     display: inline-block;
     width: 100px;
-    padding-right: 50px;
+    padding-right: 10px;
 }
 

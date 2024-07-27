@@ -71,6 +71,24 @@ module.exports.accountSetting = async (req, res) => {
   res.redirect("/user/account/setting");
 };
 
+module.exports.accountSettingImg = async (req, res) => {
+  const { id } = res.locals.currentUser;
+  if (req.file) {
+    const img = { url: req.file.path, filename: req.file.filename };
+  }
+
+  try {
+    await User.findByIdAndUpdate( id , { image: { url: req.file.path, filename: req.file.filename } });
+    req.flash("success", "トップ画像をしました");
+    res.redirect("/user/account/setting");
+  } catch (err) {
+    req.flash("error", "トップ画像の変更に失敗しました");
+    res.redirect("/user/account/setting");
+  }
+  
+};
+
+
 module.exports.renderPasswordChange = (req, res) => {
   res.render("users/password-change");
 };
