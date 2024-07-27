@@ -25,10 +25,14 @@ router.route('/logout')
     .post(Admin.adminLogout)         //管理者ログイン   
 
 router.route('/info')
-    .get(Admin.adminInfo);  // 「運営者について」画面に遷移
+    .get(Admin.goToAdminInfo);  // 「運営者について」画面に遷移
 
 router.route('/app_info')
-    .get(Admin.appInfo);    // 「ノベルバース」について画面に遷移
+    .get(Admin.goToAppInfo);    // 「ノベルバース」について画面に遷移
+
+router.route('/inquiry')
+    .get(Admin.goToInquiry)
+    .post(Admin.inquiry);
 
     
 module.exports = router;
