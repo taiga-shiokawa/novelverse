@@ -4,8 +4,6 @@ const modal = document.querySelector('.js-modal'),
       open = document.querySelector('.js-modal-open'),
       closeButton = document.querySelector('.js-modal-close-button');
       close = document.querySelector('.js-modal-close');
-      other = document.querySelector('.other');
-
 //「開くボタン」をクリックしてモーダルを開く
 function modalOpen() {
   modal.classList.add('is-active');
@@ -28,26 +26,3 @@ function modalOut(e) {
   }
 }
 addEventListener('click', modalOut);
-
-
-function handleChange(checkbox) {
-  if(checkbox.checked){
-    other.classList.add('show');
-  } else {
-    other.classList.remove('show');
-    other.value="";
-  }
-}
-
-//チェックボックスバリデーション
-
-function validateForm() {
-  const checkboxes = document.querySelectorAll('input[type="checkbox"]');
-  const atLeastOneChecked = Array.from(checkboxes).some(cb => cb.checked);
-
-  if (!atLeastOneChecked) {
-      alert('少なくとも一つのチェックボックスを選択してください。');
-      return false; // フォームの送信を防ぐ
-  }
-  return true; // フォームの送信を許可する
-}

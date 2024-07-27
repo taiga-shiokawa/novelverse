@@ -2,17 +2,17 @@
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
         <main>
             <div class="container">
-                <form  onsubmit="return validateForm()" action="/user/account/deletion" method="POST">
+                <form action="/user/account/deletion?_method=PUT" method="POST">
                     <h2 class="delet_title">アカウント削除</h2>
-                    <label class="colums_label">削除理由</label><span class="caption_label required_label">※必須</span><br>
-                        <label class="checkbox_label" ><input name="reason1" type="checkbox" value="削除理由テキスト１" /> 削除理由テキスト１</label>
-                        <label class="checkbox_label" ><input name="reason2" type="checkbox" value="削除理由テキスト２" /> 削除理由テキスト２</label>
-                        <label class="checkbox_label" ><input name="reason3" type="checkbox" value="その他" onchange="handleChange(this)" /> その他</label>
+                    <label class="colums_label">パスワード　<span class="required_label caption_label">必須</span></label>
+                    <input type="password" name="password" class="password" placeholder="password" required />
+                    <input type="hidden" name="username" value=<%= username %>
                     <br>
-                    <textarea class="other" id="other" name="other" rows="3" placeholder="その他を選んだ方は、こちらに理由を記述してください"></textarea>
-                    <br>
-                    <label class="colums_label">ご意見</label><span class="caption_label">任意</span><br>
-                    <textarea class="opinion" name="opinion" rows="5"></textarea>
+                    <div class="textarea_box">
+                        <label class="colums_label">削除理由　　<span class="caption_label">任意</span></label>
+                        <textarea class="opinion" name="opinion" rows="5"></textarea>
+                    </div>
+                    
                     <label class="btn js-modal-open">削除</label>
 
                     <!-- モーダル本体 -->
