@@ -1,0 +1,22 @@
+<% layout("layouts/common-template") %>
+<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+        <main>
+            <div class="container">
+                <form action="/admin/inquiry" method="POST">
+                    <h2 class="delet_title">ご意見・お問い合わせ</h2>
+                    <label class="colums_label">メールアドレス　<span class="required_label caption_label">必須</span></label>
+                    <input type="email" name="email" class="password" value="<%= currentUser.email %>" required />
+                    <br>
+                    <label class="colums_label">件名　<span class="required_label caption_label">必須</span></label>
+                    <input type="text" name="subject" class="password" placeholder="" required />
+                    <br>
+                    <div class="textarea_box">
+                        <label class="colums_label">本文　　<span class="required_label caption_label">必須</span></label>
+                        <textarea class="opinion" name="text" rows="5"></textarea>
+                    </div>
+                
+                    <button type="submit" class="btn js-modal-open">送信</button>
+                </form>
+            </div> 
+        </main>
+<% scripts = '<script src=""></script>' %> 
