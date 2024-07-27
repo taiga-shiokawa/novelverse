@@ -8,6 +8,11 @@ html, body {
   font-family: "Noto Sans JP", sans-serif;
 }
 
+body{
+  display: flex;
+  flex-direction: column;
+}
+
 li{
   list-style: none;
 }
@@ -179,6 +184,7 @@ footer {
   padding: 15px;
   margin: auto 0;
   margin-left: -10px;
+  margin-bottom: 0;
 }
 
 footer ul{
