@@ -32,6 +32,7 @@ const adminUserManagementRouter = require("./routes/admins/admin-user-management
 const adminManagementRouter = require("./routes/admins/admin-management"); // 管理者の管理関係ルーター
 const adminAuthorRouter = require("./routes/admins/admin-author"); // 管理者の著者関係ルーター
 const ExpressError = require("./utils/ExpressError");
+const boardRouter = require("./routes/boards/boards");
 
 const app = express();
 const PORT = 3000;
@@ -180,6 +181,7 @@ app.use("/admin", adminRouter); // 管理者自身関係API
 app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユーザー管理関係API
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
+app.use("/board", boardRouter) // 掲示板
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
 app.all("*", (req, res, next) => {

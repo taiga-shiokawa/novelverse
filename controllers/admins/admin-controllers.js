@@ -104,3 +104,13 @@ module.exports.adminLogout = (req, res, next) => {
         res.redirect("/admin/admin_login");
     });
 }
+
+// 「運営者について」ページ
+module.exports.adminInfo = (req, res) => {
+  res.render("admins/admin-info");
+}
+
+// 「ノベルバースについて」ページ
+module.exports.appInfo = (req, res) => {
+  res.render("admins/app-info");
+};
