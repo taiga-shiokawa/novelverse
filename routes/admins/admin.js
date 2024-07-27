@@ -24,6 +24,11 @@ router.route('/dashboard_admin')
 router.route('/logout')
     .post(Admin.adminLogout)         //管理者ログイン   
 
+router.route('/info')
+    .get(Admin.adminInfo);  // 「運営者について」画面に遷移
+
+router.route('/app_info')
+    .get(Admin.appInfo);    // 「ノベルバース」について画面に遷移
 
     
 module.exports = router;
