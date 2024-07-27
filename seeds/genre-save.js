@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 const Genre = require("../models/Genres");
 const genres = require("./genres");
 const connectDB = require("../db/connect");
+require("dotenv").config();
 
 const DB_URL = "mongodb://localhost:27017/novelversedb"; // MongoDB名（ローカル）
 
 const start = async () => {
   try {
-    await connectDB(DB_URL);
+    await connectDB(process.env.MONGO_URL);
   } catch (err) {
     console.log(err);
   }

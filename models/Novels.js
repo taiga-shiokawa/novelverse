@@ -12,7 +12,6 @@ const novelSchema = new Schema({
   },
   is_new: {
     type: Boolean,
-    default: false,
   },
   pages: {
     type: Number,

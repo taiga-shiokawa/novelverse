@@ -6,6 +6,7 @@ const validate = (req, res, next) => {
     novel: Joi.object({
       title: Joi.string().required(),
       summary: Joi.string().required(),
+      is_new: Joi.allow(),
       pages: Joi.number().min(0).required(),
       publisher_name: Joi.string().required(),
       publication_date: Joi.date().required(),
