@@ -1,5 +1,5 @@
 const Joi = require("joi");
-const ExpressError = require("../../utils/ExpressError");
+const ExpressError = require("./ExpressError");
 
 const validate = (req, res, next) => {
   const novelSchema = Joi.object({

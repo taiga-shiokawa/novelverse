@@ -5,7 +5,7 @@ const multer = require("multer");
 // ローカルモジュール
 const { storage } = require("../../cloudinary/cloudinary");
 const Novels = require("../../controllers/novels/novel-controllers");
-const validate = require("../../public/js/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
+const validate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 
 const router = express.Router();
 
