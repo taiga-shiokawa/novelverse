@@ -21,9 +21,15 @@
           </a>
         </div>
         <!-- サイト内検索ボックス -->
-        <form class="search_form" action="/novel/search" method="get" class="search-form">
+        <!-- <form class="search_form" action="/novel/search" method="get" class="search-form">
           <input class="search" type="text" name="search" placeholder="サイト内検索" />
-        </form>
+        </form> -->
+        <!-- ハンバーガーメニュー -->
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </header>
     <!-- ナビゲーション -->
@@ -62,5 +68,26 @@
         <li><a href="/user/account/inquiry">→ ご意見・お問い合わせ</a></li>
       </ul>
     </footer>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const hamburger = document.querySelector('.hamburger-menu');
+        const nav = document.querySelector('.nav_container');
+
+        hamburger.addEventListener('click', function() {
+          nav.classList.toggle('active');
+          hamburger.classList.toggle('active');
+        });
+
+        // ナビゲーションリンクをクリックしたらメニューを閉じる
+        const navLinks = document.querySelectorAll('.site_nav a');
+        navLinks.forEach(link => {
+          link.addEventListener('click', function() {
+            nav.classList.remove('active');
+            hamburger.classList.remove('active');
+          });
+        });
+      });
+    </script>
   </body>
 </html>

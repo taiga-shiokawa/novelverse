@@ -71,3 +71,55 @@ main{
     padding: 10px; 
     font-size: 14px;
 }
+
+/* スマートフォン向けレスポンシブデザイン */
+@media screen and (max-width: 767px) {
+    .container {
+        flex-direction: column-reverse;
+        padding: 50px 20px;
+    }
+
+    .left_container, .right_container {
+        width: 100%;
+        padding: 0;
+    }
+
+    .left_container {
+        margin-top: 30px;
+    }
+
+    .left_container form input {
+        max-width: 80%;  /* inputフィールドを小さく */
+        margin: 10px auto;  /* 中央寄せ */
+        display: block;  /* ブロック要素に */
+    }
+
+    .left_container .colums_label {
+        margin-left: 50px;
+    }
+
+    .button_box {
+        width: 80%;  /* ボタンの幅を調整 */
+        flex-direction: row;  /* 横並びに */
+        justify-content: space-between;  /* 両端に寄せる */
+        align-items: center;
+        margin: 20px auto;  /* 上下のマージンを追加 */
+    }
+
+    .signup_btn, .form_btn {
+        width: 48%;  /* ボタンの幅を調整 */
+        padding: 10px 0;  /* パディングを調整 */
+        font-size: 14px;  /* フォントサイズを小さく */
+        text-align: center;
+    }
+
+    .right_container h2 {
+        font-size: 20px;
+        text-align: center;
+    }
+
+    .right_container p {
+        text-align: center;
+        padding: 10px 0;
+    }
+}
