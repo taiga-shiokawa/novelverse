@@ -26,6 +26,8 @@
                                     <div id="imagePreview">
                                         <% if(loginUser.image.url){ %>
                                             <img class="top_img" src="<%= loginUser.image[0].url %>" alt="現在のトプ画">
+                                        <% } else { %>
+                                            <img class="top_img" src="/images/noimg.jpg" alt="noimg">
                                         <% } %>
                                     </div>
                                     <input type="file" id="photoInput" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>

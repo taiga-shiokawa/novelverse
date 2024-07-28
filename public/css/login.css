@@ -9,7 +9,7 @@ main{
 .container{
     width: 100%;
     max-width: 1200px;
-    padding: 200px 0;
+    padding: 100px 0;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
