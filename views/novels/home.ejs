@@ -24,11 +24,12 @@
               注目の新作
             </h2>
           </div>
-          <a class="more" href="/novel/list?is_new=true">もっと見る  -></a>
+          <a class="more" href="/novel/list?is_new=true">もっと見る</a>
         </div>
         <div class="book-list">
           <% if( newNovels.length > 0 ) { %>
             <ul>
+              <% for (let i = 0; i < 5 ; i ++ ) { %>
             <% for (let novel of newNovels) { %>
               <li>
                 <a class="detail_link" href="/novel/detail/<%= novel._id %>">
@@ -36,16 +37,24 @@
                     <div class="book-cover">
                         <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
                         <form class="bookmark-form" data-novel-id="<%= novel._id %>">
-                          <!-- <input type="hidden" name="novelId" value="<%= novel._id  %>"> -->
                          <button class="bookmark-button" type="submit">読みたい＋</button>
                         </form>
                     </div>
-                    <p class="novel_name"><%= novel.title %></p>
-                    <p class="author_name"><%= novel.author.author_name %></p>
+                    <span>
+                      <p class="novel_name"><%= novel.title %></p>
+                      <p class="author_name"><%= novel.author.author_name %></p>   
+                    </span>
                   </div>
                 </a>
+                <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                  <button class="bookmark_button" type="submit">読みたい＋</button>
+                 </form>
               </li>
             <% } %>
+            <% } %>
+            <div class="mobile_only more_mobile_only">
+              <a href="/novel/list?is_new=true">もっと見る</a>
+            </div>
             </ul>
           <% } else { %>
             <p>注目の新作は現在登録されていません</p>
@@ -60,7 +69,7 @@
               おすすめの文庫
             </h2>
           </div>
-          <a class="more" href="/novel/list?novel_type=文庫">もっと見る  -></a>
+          <a class="more" href="/novel/list?novel_type=文庫">もっと見る</a>
         </div>
         <div class="book-list">
           <% if( bunkoNovels.length > 0 ) { %>
@@ -75,12 +84,17 @@
                       <button class="bookmark-button" type="submit">読みたい＋</button>
                     </form>
                   </div>
-                  <p class="novel_name"><%= novel.title %></p>
-                  <p class="author_name"><%= novel.author.author_name %></p>
+                  <span>
+                    <p class="novel_name"><%= novel.title %></p>
+                    <p class="author_name"><%= novel.author.author_name %></p>
+                  </span>
                 </div>
               </a>
             </li>
           <% } %>
+          <div class="mobile_only more_mobile_only">
+            <a href="/novel/list?novel_type=文庫">もっと見る</a>
+          </div>
           </ul>
           <% } else { %>
             <p>おすすめの文庫本は現在登録されていません</p>
@@ -115,6 +129,9 @@
                     </div>
                 </a>
               </li>
+              <div class="mobile_only more_mobile_only">
+                <a href="/novel/list?novel_type=単行本">もっと見る</a>
+              </div>
             <% } %>
           </ul>
           <% } else { %>
@@ -151,6 +168,9 @@
                 </a>
               </li>
             <% } %>
+            <div class="mobile_only more_mobile_only">
+              <a href="/novel/list?novel_type=ライトノベル">もっと見る</a>
+            </div>
           </ul>
           <% } else { %>
             <p>おすすめのライトノベルは現在登録されていません</p>
@@ -186,6 +206,9 @@
                   </a>
                 </li>
             <% } %>
+            <div class="mobile_only more_mobile_only">
+              <a href="/novel/list?is_recommend=true">もっと見る</a>
+            </div>
           </ul>
           <% } else { %>
             <p>ノベルバースおすすめは現在登録されていません</p>
