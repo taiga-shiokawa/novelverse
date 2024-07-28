@@ -6,8 +6,17 @@
   <title>Document</title>
 </head>
 <body>
-  <div>
-    
-  </div>
+  <h2>小説削除</h2>
+  <% for (let novel of novels) { %>
+    <form action="/novel/management/delete" method="post">
+      <p><%= novel.title  %></p>
+      <p><%= novel._id %></p>
+      <img src="<%= novel.cover[0].url %>" alt="">
+      <input type="hidden" name="coverId" value="<%= novel.cover[0]._id %>">
+      <p><%= novel.cover[0]._id %></p>
+      <input type="hidden" name="novelId" value="<%= novel._id %>">
+      <button type="submit">削除</button>
+    </form>
+  <% } %>
 </body>
 </html>
