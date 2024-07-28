@@ -76,7 +76,7 @@ a{
 .site_nav a{
   color: #fff;
   font-size: 12px;
-  transition: opacity 0.5s ease; /* opacity の変化を0.5秒かけてゆっくりと行う */
+  transition: opacity 0.5s ease; 
 }
 
 .site_nav a:hover{
@@ -98,7 +98,7 @@ footer ul{
 
 footer ul li a{
   text-decoration: none;
-  transition: opacity 0.5s ease; /* opacity の変化を0.5秒かけてゆっくりと行う */
+  transition: opacity 0.5s ease;
   color: white;
 }
 
@@ -207,26 +207,26 @@ footer ul li {
   .site_nav {
     width: 100%;
     max-width: 100%;
-    justify-content: center;  /* 中央揃えに変更 */
+    justify-content: center;  
   }
 
   .site_nav ul {
     flex-direction: column;
     align-items: center;
     padding: 0;
-    width: 100%;  /* 幅を100%に設定 */
+    width: 100%;  
   }
 
   .site_nav li {
     margin: 20px 0;
-    width: 100%;  /* 幅を100%に設定 */
-    text-align: center;  /* テキストを中央揃えに */
+    width: 100%;  
+    text-align: center; 
   }
 
   .site_nav a {
     font-size: 18px;
-    display: block;  /* ブロック要素に変更 */
-    padding: 10px 0;  /* 上下のパディングを追加 */
+    display: block;  
+    padding: 10px 0;  
   }
 
   footer ul {

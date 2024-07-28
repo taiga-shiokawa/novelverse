@@ -89,9 +89,9 @@ main{
     }
 
     .left_container form input {
-        max-width: 80%;  /* inputフィールドを小さく */
-        margin: 10px auto;  /* 中央寄せ */
-        display: block;  /* ブロック要素に */
+        max-width: 80%;  
+        margin: 10px auto;  
+        display: block; 
     }
 
     .left_container .colums_label {
@@ -99,17 +99,17 @@ main{
     }
 
     .button_box {
-        width: 80%;  /* ボタンの幅を調整 */
-        flex-direction: row;  /* 横並びに */
-        justify-content: space-between;  /* 両端に寄せる */
+        width: 80%; 
+        flex-direction: row;  
+        justify-content: space-between;  
         align-items: center;
-        margin: 20px auto;  /* 上下のマージンを追加 */
+        margin: 20px auto; 
     }
 
     .signup_btn, .form_btn {
-        width: 48%;  /* ボタンの幅を調整 */
-        padding: 10px 0;  /* パディングを調整 */
-        font-size: 14px;  /* フォントサイズを小さく */
+        width: 48%; 
+        padding: 10px 0;  
+        font-size: 14px; 
         text-align: center;
     }
 
