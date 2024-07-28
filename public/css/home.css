@@ -3,11 +3,14 @@
   margin-left: 20px;
 }
 
+.mobile_only{
+  display: none;
+}
+
 .container{
   width: 100%;
   max-width: 1200px;
-  padding-top: 100px;
-  padding-bottom: 100px;
+  padding: 100px 40px;
   margin: 0 auto;
   font-family: "Noto Sans JP", sans-serif;
   color: #332405;
@@ -30,7 +33,8 @@
 
 .section_title , .more{
   display: inline-block;
-  color: #332405;}
+  color: #332405;
+}
 
 .yellow{
    display:inline-block;
@@ -117,55 +121,126 @@
   opacity: 0.7;
 }
 
+/* 例: 768px以下の画面サイズに対するスタイル */
+@media (max-width: 768px) {
 
+  .mobile_only{
+    display: block;
+  }
 
-/* 
-.content {
-  flex-grow: 1;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  .more_mobile_only{
+    background-color: #fff;
+    line-height: 60px;
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    border: solid 1px #78540d;;
+  }
+  
+  .more_mobile_only a{
+    display: inline-block;
+    width: 100%;
+    line-height: 60px;
+    color:  #332405;
+    letter-spacing: 1px;
+    font-weight: bold;
+  }
+
+  .more_mobile_only a:hover{
+    opacity: .7;
+  }
+
+  .container{
+    max-width: 768px;
+    padding: 100px 10px ;
+  }
+
+  .book-cover img {
+    height: 260px;
+    width: 180px;
+  }
+  .more{
+    display: none;
+  }
+  
+  .book-list li{
+    width: 100%;
+    max-width: 90%;
+    margin: 0 auto;
+    margin-bottom: 50px;
+  }
+  
+  .wrap_book_list{
+    margin-top: 0px;
+  }
+  
+  .book-list ul{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+  
+  .book-list li a{
+    display: flex;
+    justify-content: center;
+    color: #332405;
+  }
+  
+  .book-list li p { 
+    margin: 0 ;  
+  }
+  
+  .novel_name{
+    padding-top: 10px;
+    font-size: 24px;
+  }
+  
+  .author_name{
+    font-size: 16px;
+  }
+
+  .book-cover {
+    position: static;
+  }
+
+  .book-list li {
+    position: relative;
+  }
+  
+  .book-item{
+    display: flex;
+    width: 100%;
+    padding: 0 40px;
+    margin: 0 auto;
+  }
+
+  .book-item span{
+    padding-left: 30px;
+  }
+
+  .book-list ul{
+    flex-direction: column;
+  }
+
+  .bookmark-button {
+    display: none;
+  }
+  
+  
+  .bookmark_button {
+    padding: 10px 15px;
+    width: 200px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    background-color: #505F00;
+    color: white;
+    position:absolute;
+    bottom: 10%;
+    left: 55%;
+  }
+
+  .bookmark_button:hover{
+    opacity: .7;
+  }
 }
-
-.book-list {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
-
-.book-item p {
-  margin: 0;
-  margin-right: 30px;
-  margin-bottom: 5px;
-  text-align: right;
-}
-
-
-.bookmark-button {
-  position: absolute;
-  bottom: 5%;
-  right: 5%;
-  left: 5%;
-  padding: 10px 15px;
-  border: none;
-  cursor: pointer;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  background-color: #505F00;
-  color: white;
-}
-
-.book-cover {
-  position: relative;
-  margin-bottom: 10px;
-}
-
-.book-cover:hover .bookmark-button,
-.bookmark-button:hover {
-  opacity: 0.8;
-} 
-
-
-
-
-*/

@@ -36,7 +36,7 @@ main a{
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.left_title{
+.left_title ,.right_title h2{
     margin-top: 0;
     letter-spacing: 3px;
     background-color:#002B24;
@@ -44,8 +44,8 @@ main a{
     padding: 10px;
     margin-bottom: 30px;
     font-size: 18px;
-    text-align: center;
 }
+
 
 .help_list{
     padding-left: 0;
@@ -67,6 +67,7 @@ main a{
 /* 右側 */
 
 .right_container{
+    margin-top: 30px;
     width: 80%;
     height: 100%;
     padding-left: 50px;
@@ -77,10 +78,7 @@ main a{
     justify-content: space-between;
 }
 
-.right_title{
-    letter-spacing: 2px;
-    padding: 10px 0;
-}
+
 
 .section_title{
     display: inline-block;
