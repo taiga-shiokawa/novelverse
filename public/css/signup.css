@@ -11,9 +11,11 @@ main {
 
 .container{
     width: 100%;
-    max-width: 1000px;
-    padding-top: 200px;
-    padding-bottom: 200px;
+    max-width: 1200px;
+    padding: 100px 0;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
 }
 
 /* form関係 */
@@ -44,7 +46,8 @@ main {
     height: 40px;
     width: 270px;
     padding-left: 10px;
-    margin-bottom: 30px;
+    margin-top: 30px;
+    /* margin-bottom: 30px; */
 }
 
 /* 新規登録ボタン */
@@ -66,5 +69,13 @@ main {
 } 
 
 p {
+    color: red;
+}
+
+/* エラーメッセージ */
+.error-message {
+    margin-top: 0;
+    margin-left: 170px;
+    font-size: 10px;
     color: red;
 }

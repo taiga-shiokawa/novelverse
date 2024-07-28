@@ -2,6 +2,7 @@
 const { Resend } = require("resend");
 require("dotenv").config();
 const passport = require("passport");
+const userAccountCreateValidate = require("../../utils/user-account-create-validation");
 
 // ローカルモジュール
 const User = require("../../models/Users");
@@ -11,13 +12,22 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // アカウント作成画面へ遷移
 module.exports.goToAccountCreate = (req, res) => {
-  res.render("users/user-signup");
+  res.render("users/user-signup", { inputData: {}, errors: {} });
 };
 
 // アカウント作成処理
 module.exports.accountCreate = async (req, res) => {
   const { username, email, password } = req.body;
   let role = "user";
+
+  const errors = userAccountCreateValidate(req.body);
+  if (errors) {
+    return res.render('users/user-signup', { 
+      inputData: { username, email },
+      errors: errors
+    });
+  }
+
   try {
     const user = new User({ username, email, role });
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });

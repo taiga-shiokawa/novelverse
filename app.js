@@ -194,6 +194,13 @@ app.use((err, req, res, next) => {
   if (!err.message) {
     err.message = "問題が起きましt";
   }
+
+  if (statusCode === 400 && err instanceof ExpressError) {
+    // Joiバリデーションエラーが発火した場合
+    req.flash("error", err.message);
+    return res.redirect("back"); // 元のページにリダイレクト
+  }
+
   res.status(statusCode).render("errors/error", { err });
 });
 

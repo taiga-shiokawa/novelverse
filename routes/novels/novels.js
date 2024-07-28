@@ -5,7 +5,7 @@ const multer = require("multer");
 // ローカルモジュール
 const { storage } = require("../../cloudinary/cloudinary");
 const Novels = require("../../controllers/novels/novel-controllers");
-const validate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
+const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.route("/list")
 
 router.route("/registration")
     .get(Novels.goToNovelRegistration)  // 小説登録画面へ遷移
-    .post(upload.single("cover"), validate, Novels.novelRegistration);    // 小説登録処理
+    .post(upload.single("cover"), novelRegisrationtAndUpdateValidate, Novels.novelRegistration);    // 小説登録処理
 
 router.route("/detail/:id")
     .get(Novels.goToNovelDetails);  // 小説詳細画面へ遷移

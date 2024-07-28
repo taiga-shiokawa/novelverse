@@ -1,7 +1,7 @@
 const Joi = require("joi");
 const ExpressError = require("./ExpressError");
 
-const validate = (req, res, next) => {
+const novelRegisrationtAndUpdateValidate = (req, res, next) => {
   const novelSchema = Joi.object({
     novel: Joi.object({
       title: Joi.string().required(),
@@ -27,4 +27,4 @@ const validate = (req, res, next) => {
   }
 };
 
-module.exports = validate;
+module.exports = novelRegisrationtAndUpdateValidate;

@@ -6,11 +6,20 @@
       <h1 class="section_title">アカウント作成</h1>
       <p><%= creationError %></p>
       <label id="label" for="nickname">ニックネーム</label>
-      <input class="input_box" type="text" name="username" id="nickname"><br>
+      <input class="input_box" type="text" name="username" id="nickname" value="<%= inputData.username || '' %>"><br>
+      <% if (errors && errors.username) { %>
+        <div class="error-message"><%= errors.username %></div>
+      <% } %>
       <label for="email">メールアドレス</label>
-      <input class="input_box" type="email" name="email" id="email"><br>
+      <input class="input_box" type="email" name="email" id="email" value="<%= inputData.email || '' %>"><br>
+      <% if (errors && errors.email) { %>
+        <div class="error-message"><%= errors.email %></div>
+      <% } %>
       <label for="password">パスワード</label>
       <input class="input_box" type="password" name="password" id="password"><br>
+      <% if (errors && errors.password) { %>
+        <div class="error-message"><%= errors.password %></div>
+      <% } %>
       <button type="submit" class="btn">新規登録</button>
     </form>
   </div>
