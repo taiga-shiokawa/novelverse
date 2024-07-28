@@ -118,3 +118,134 @@ footer ul li {
 }
 
 
+/* レスポンシブデザイン用のスタイル */
+@media screen and (max-width: 768px) {
+  .header_wrapper {
+    flex-direction: column;
+    height: auto;
+    padding: 10px;
+  }
+
+  .site_logo, .search_form {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
+
+  .site_img {
+    max-width: 200px;
+  }
+
+  .search_form input {
+    width: 100%;
+    max-width: 300px;
+  }
+
+  .hamburger-menu {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 20px;
+    cursor: pointer;
+    z-index: 1000;
+  }
+
+  .hamburger-menu span {
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: #002B24;
+    transition: 0.3s ease-in-out;
+  }
+
+  .hamburger-menu span:nth-child(1) {
+    top: 0;
+  }
+
+  .hamburger-menu span:nth-child(2) {
+    top: 9px;
+  }
+
+  .hamburger-menu span:nth-child(3) {
+    bottom: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(1) {
+    transform: rotate(45deg);
+    top: 9px;
+  }
+
+  .hamburger-menu.active span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-menu.active span:nth-child(3) {
+    transform: rotate(-45deg);
+    bottom: 9px;
+  }
+
+  .nav_container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 43, 36, 0.9);
+    z-index: 999;
+  }
+
+  .nav_container.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .site_nav {
+    width: 100%;
+    max-width: 100%;
+    justify-content: center;  /* 中央揃えに変更 */
+  }
+
+  .site_nav ul {
+    flex-direction: column;
+    align-items: center;
+    padding: 0;
+    width: 100%;  /* 幅を100%に設定 */
+  }
+
+  .site_nav li {
+    margin: 20px 0;
+    width: 100%;  /* 幅を100%に設定 */
+    text-align: center;  /* テキストを中央揃えに */
+  }
+
+  .site_nav a {
+    font-size: 18px;
+    display: block;  /* ブロック要素に変更 */
+    padding: 10px 0;  /* 上下のパディングを追加 */
+  }
+
+  footer ul {
+    flex-direction: column;
+    margin-left: 0;
+    padding: 0;
+  }
+
+  footer ul li {
+    margin: 5px 0;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .hamburger-menu {
+    display: none;
+  }
+
+  .nav_container {
+    display: block !important;
+  }
+}
