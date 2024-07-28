@@ -112,7 +112,16 @@ app.use(passport.initialize()); // パスポートを初期化し, ユーザー�
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
 
 // 認証を, authenticateという方法でLocalStrategy(ローカル認証)を使ってやることを宣言
-passport.use(new LocalStrategy(User.authenticate()));
+passport.use(
+  "user",
+  new LocalStrategy(
+    { 
+      usernameField: "email", 
+      passwordField: "password" 
+    },
+    User.authenticate()
+  )
+);
 
 // 管理者向けのLocalStrategy
 passport.use(
@@ -181,7 +190,7 @@ app.use("/admin", adminRouter); // 管理者自身関係API
 app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユーザー管理関係API
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
-app.use("/board", boardRouter) // 掲示板
+app.use("/board", boardRouter); // 掲示板
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
 app.all("*", (req, res, next) => {
