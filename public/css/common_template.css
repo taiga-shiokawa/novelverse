@@ -82,6 +82,17 @@ a{
   margin-left: 50px;
 }
 
+.nav_right label a {
+  margin-left: 40px;
+  color: #fff;
+  font-size: 12px;
+  transition: opacity 0.5s ease;
+}
+
+#logout {
+  margin-left: 320px;
+}
+
 .site_nav ul li a{
   color: white;
 }
