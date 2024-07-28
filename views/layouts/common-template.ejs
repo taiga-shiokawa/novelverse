@@ -84,17 +84,20 @@
         <div class="nav_right">
           <ul>
             <li>
+              <% if (!currentUser) { %>
+                <div id="logout">
+                  <label class="site_nav_button"><a href="/user/login">ログイン</a></label>
+                  <label class="site_nav_button"><a href="/user/signup">アカウント作成</a></label>
+                </div>
+              <% } else { %>
               <label class="site_nav_button" id="mypageButton" class="mypage">マイページ</label>
               <div class="dropdown_content" id="mypageDropdown">
                 <a href="/user/account/setting">アカウント設定</a>
                 <a href="/user/account/bookmark/list">読みたい一覧</a>
-                <% if (!currentUser) { %>
-                <a href="/user/login">ログイン</a>
-                <% } else { %>
                 <form action="/user/logout" method="post">
                   <button class="logout" type="submit">ログアウト</button>
                 </form>
-                <% } %>
+              <% } %>
               </div>
             </li>
             <li>

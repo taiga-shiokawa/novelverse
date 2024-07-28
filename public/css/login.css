@@ -64,11 +64,10 @@ main{
 }
 
 .right_container h2{
-    padding: 20px 0 0 50px; 
+    padding-top: 20px; 
 }
 
 .right_container p{
-    padding: 20px; 
+    padding: 10px; 
     font-size: 14px;
-    text-align: center;
 }
