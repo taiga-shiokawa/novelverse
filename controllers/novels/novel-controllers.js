@@ -115,8 +115,10 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
     let pageTitle = "";
 
     if (!searchQuery || searchQuery.trim() === "") {
-      req.flash("info", "検索キーワードを入力してください");
+      req.flash("info", "検索結果がありませんでした");
+      pageTitle = "検索結果";
       return res.render("novels/novel-search-result", {
+        pageTitle,
         results: [],
         messages: req.flash(),
       });
