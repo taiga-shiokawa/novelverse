@@ -3,6 +3,7 @@ const { Resend } = require("resend");
 require("dotenv").config();
 const passport = require("passport");
 const userAccountCreateValidate = require("../../utils/user-account-create-validation");
+const userLoginValidate = require("../../utils/user-login-validation");
 
 // ローカルモジュール
 const User = require("../../models/Users");
@@ -60,11 +61,20 @@ module.exports.goToAfterPage = (req, res) => {
 
 // ログイン画面へ遷移
 module.exports.goToLogin = (req, res) => {
-  res.render("users/user-login");
+  res.render("users/user-login", { inputData: {}, errors: {} });
 };
 
 // ログイン処理
 module.exports.userLogin = async (req, res, next) => {
+
+  const errors = userLoginValidate(req.body);
+  if (errors) {
+    return res.render('users/user-login', { 
+      inputData: { email, password },
+      errors: errors
+    });
+  }
+
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;
   console.log("Original returnTo:", returnTo);
@@ -73,16 +83,16 @@ module.exports.userLogin = async (req, res, next) => {
   const user = await User.findOne({ email: email });
 
   if (!user) {
-    req.flash("error", "ログインに失敗しました");
+    req.flash("error", "メールアドレスまたはパスワードが正しくありません");
     return res.redirect("/user/login");
   }
 
-  passport.authenticate("local", (err, user, info) => {
+  passport.authenticate("user", (err, user, info) => {
     if (err) {
       return next(err);
     }
     if (!user) {
-      // req.flash("error", "Invalid username or password");
+      req.flash("error", "Invalid username or password");
       return res.redirect("/user/login");
     }
     req.logIn(user, (err) => {
