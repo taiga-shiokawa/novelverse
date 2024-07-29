@@ -179,13 +179,3 @@ module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
     res.render("novels/novel-genre-list", { novelByGenreList, pageTitle });
   }
 );
-
-// 「運営者について」画面へ遷移
-module.exports.goToAdminInfo = (req, res) => {
-  res.render("admins/admin-info");
-};
-
-// 「ノベルバースについて」画面へ遷移
-module.exports.goToAppInfo = (req, res) => {
-  res.render("admins/app-info");
-};
