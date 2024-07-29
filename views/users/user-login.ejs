@@ -1,21 +1,16 @@
 <% layout("layouts/signup-and-login-template") %>
 <% head = '<link rel="stylesheet" href="/css/login.css" />' %>
+<%= loginError  %>
 <main>
   <div class="container">
     <div class="left_container">
       <form action="/user/login" method="post">
         <label class="colums_label">メールアドレス</label><br />
-        <input type="text" name="email" value="<%= inputData.email || '' %>" required />
+        <input type="text" name="email" required />
         <br /><br />
-        <% if (errors && errors.email) { %>
-          <div class="error-message"><%= errors.email %></div>
-        <% } %>
         <label class="colums_label">パスワード</label><br />
         <input type="password" name="password" required />
         <br /><br />
-        <% if (errors && errors.password) { %>
-          <div class="error-message"><%= errors.password %></div>
-        <% } %>
         <div class="button_box">
           <a class="signup_btn" href="/user/signup">アカウント作成</a>
           <button class="form_btn">ログイン</button>

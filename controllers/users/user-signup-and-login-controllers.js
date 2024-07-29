@@ -21,6 +21,8 @@ module.exports.accountCreate = async (req, res) => {
   const { username, email, password } = req.body;
   let role = "user";
 
+  console.log(password);
+
   const errors = userAccountCreateValidate(req.body);
   if (errors) {
     return res.render('users/user-signup', { 
@@ -67,11 +69,12 @@ module.exports.goToLogin = (req, res) => {
 // ログイン処理
 module.exports.userLogin = async (req, res, next) => {
 
+  const { email } = req.body;
+
   const errors = userLoginValidate(req.body);
   if (errors) {
     return res.render('users/user-login', { 
-      inputData: { email, password },
-      errors: errors
+      errors: errors,
     });
   }
 
@@ -79,22 +82,34 @@ module.exports.userLogin = async (req, res, next) => {
   const returnTo = req.session.returnTo;
   console.log("Original returnTo:", returnTo);
 
-  const email = req.body.email;
   const user = await User.findOne({ email: email });
 
-  if (!user) {
-    req.flash("error", "メールアドレスまたはパスワードが正しくありません");
+  // アカウントがロックされているかチェック
+  if (user.isLocked) {
+    req.flash("error", "アカウントがロックされています。しばらく待ってから再試行してください。");
+    console.log('Authentication failed:', info);
     return res.redirect("/user/login");
   }
-
-  passport.authenticate("user", (err, user, info) => {
+  
+  passport.authenticate("user", async (err, user, info) => {
     if (err) {
+      console.error('Authentication error:', err);
       return next(err);
     }
     if (!user) {
-      req.flash("error", "Invalid username or password");
+      const userToUpdate = await User.findOne({ email: email });
+      if (userToUpdate) {
+        await userToUpdate.incLoginAttempts();
+      }
+      req.flash("error", "メールアドレスまたはパスワードが正しくありません");
       return res.redirect("/user/login");
     }
+    
+    // ログイン成功時の処理
+    user.loginAttempts = 0;
+    user.lockUntil = null;
+    await user.save();
+
     req.logIn(user, (err) => {
       if (err) {
         return next(err);
