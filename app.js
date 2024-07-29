@@ -102,10 +102,19 @@ const sessionConfig = {
   saveUninitialized: true,
   cookie: {
     httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: 'lax',
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Cookieの有効期限を1週間後に設定
     maxAge: 1000 * 60 * 60 * 24 * 7, // Coolieの"最大"有効期限を1週間に設定
   },
 };
+
+// 本番環境でのみ適用される追加設定
+if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1);
+  sessionConfig.cookie.secure = true;
+}
+
 app.use(session(sessionConfig));
 app.use(flash());
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
@@ -115,9 +124,9 @@ app.use(passport.session()); // ユーザー認証情報をセッションで維
 passport.use(
   "user",
   new LocalStrategy(
-    {
-      usernameField: "email",
-      passwordField: "password",
+    { 
+      usernameField: "email", 
+      passwordField: "password" 
     },
     User.authenticate()
   )
@@ -170,6 +179,7 @@ app.use(async (req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.logoutSuccess = req.flash("logout-success");
   res.locals.error = req.flash("error");
+  res.locals.loginError = req.flash("login-error");
   res.locals.creationError = req.flash("creation-error");
   res.locals.messages = req.flash();
   if (!res.locals.genres) {
@@ -181,8 +191,9 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get("/", (req, res) => {
-  res.redirect("/novel/home");
+// WELCOMEルート
+app.get('/', (req, res) => {
+  res.redirect('/novel/home');
 });
 
 app.use("/novel", novelRouter); // 小説関連API
@@ -196,24 +207,24 @@ app.use("/admin-management", adminManagementRouter); // 管理者の管理関係
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
 
-// 「運営者について」画面に遷移
 app.get("/admin-info", (req, res) => {
   res.render("users/admin-info");
 });
 
-// 「ノベルバース」について画面に遷移
 app.get("/app-info", (req, res) => {
   res.render("users/app-info");
 });
 
-// 利用規約画面に遷移
 app.get("/terms-and-conditions", (req, res) => {
   res.render("common/terms_and_conditions");
 });
 
-// プライバシーポリシー画面に遷移
 app.get("/privacy-policy", (req, res) => {
   res.render("common/privacy_policy");
+});
+
+app.get("/error", (req, res) => {
+  res.render("errors/error");
 });
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
