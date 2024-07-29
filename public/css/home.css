@@ -113,7 +113,7 @@
   position: relative;
 }
 
-.book-cover:hover .bookmark-button{
+.book-item:hover .bookmark-button{
   opacity: 1;
 } 
 
@@ -203,10 +203,6 @@
     position: static;
   }
 
-  .book-list li {
-    position: relative;
-  }
-  
   .book-item{
     display: flex;
     width: 100%;
@@ -229,15 +225,12 @@
   
   .bookmark_button {
     padding: 10px 15px;
-    width: 200px;
+    width: 160px;
     border: none;
     cursor: pointer;
     transition: opacity 0.3s ease;
     background-color: #505F00;
     color: white;
-    position:absolute;
-    bottom: 10%;
-    left: 55%;
   }
 
   .bookmark_button:hover{

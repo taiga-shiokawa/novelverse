@@ -18,7 +18,7 @@ function getCoverUrl(novel) {
           <span></span>
         </div>
         <div class="book-list">
-        <% if( novels.length > 0 ) { %>
+        <% if( novels && novels.length > 0 ) { %>
           <ul>
             <% for (let novel of novels) { %>
             <li class="wrap_book_list">
@@ -38,7 +38,7 @@ function getCoverUrl(novel) {
           <% } %>
           </ul>
         <% } else { %>
-          <p><%= pageTitle %>は現在登録されていません</p>
+          <p>ブックマークは現在登録されていません</p>
         <% } %>
         </div>
       </div>
