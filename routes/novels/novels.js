@@ -34,10 +34,4 @@ router.route("/search")
 router.route("/genre/:id")
     .get(Novels.goToByGenreNovelListAndGNovelGet);  // ジャンル別小説一覧画面へ遷移
 
-router.route('/admin/info')
-    .get(Novels.goToAdminInfo);  // 「運営者について」画面に遷移
-
-router.route('/app_info')
-    .get(Novels.goToAppInfo);    // 「ノベルバース」について画面に遷移
-
 module.exports = router;

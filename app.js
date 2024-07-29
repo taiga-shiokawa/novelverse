@@ -115,9 +115,9 @@ app.use(passport.session()); // ユーザー認証情報をセッションで維
 passport.use(
   "user",
   new LocalStrategy(
-    { 
-      usernameField: "email", 
-      passwordField: "password" 
+    {
+      usernameField: "email",
+      passwordField: "password",
     },
     User.authenticate()
   )
@@ -181,8 +181,8 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get('/', (req, res) => {
-  res.redirect('/novel/home');
+app.get("/", (req, res) => {
+  res.redirect("/novel/home");
 });
 
 app.use("/novel", novelRouter); // 小説関連API
@@ -195,6 +195,26 @@ app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユー
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
+
+// 「運営者について」画面に遷移
+app.get("/admin-info", (req, res) => {
+  res.render("users/admin-info");
+});
+
+// 「ノベルバース」について画面に遷移
+app.get("/app-info", (req, res) => {
+  res.render("users/app-info");
+});
+
+// 利用規約画面に遷移
+app.get("/terms-and-conditions", (req, res) => {
+  res.render("common/terms_and_conditions");
+});
+
+// プライバシーポリシー画面に遷移
+app.get("/privacy-policy", (req, res) => {
+  res.render("common/privacy_policy");
+});
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
 app.all("*", (req, res, next) => {
