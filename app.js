@@ -181,6 +181,10 @@ app.use(async (req, res, next) => {
   next();
 });
 
+app.get('/', (req, res) => {
+  res.redirect('/novel/home');
+});
+
 app.use("/novel", novelRouter); // 小説関連API
 app.use("/novel/management", novelManagementRouter); // 小説管理API
 app.use("/user/account", userAccountRouter); // ユーザーアカウント関連API
