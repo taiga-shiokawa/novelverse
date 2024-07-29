@@ -40,15 +40,16 @@
                          <button class="bookmark-button" type="submit">読みたい＋</button>
                         </form>
                     </div>
-                    <span>
+                    <span class="book_info">
                       <p class="novel_name"><%= novel.title %></p>
                       <p class="author_name"><%= novel.author.author_name %></p>   
                     </span>
+                    <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                      <button class="bookmark_button" type="submit">読みたい＋</button>
+                  </form>
                   </div>
                 </a>
-                <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
-                  <button class="bookmark_button" type="submit">読みたい＋</button>
-                 </form>
+                
               </li>
             <% } %>
             <% } %>
