@@ -1,7 +1,3 @@
-.icon {
-  color: white;
-  margin-left: 20px;
-}
 
 .mobile_only{
   display: none;
@@ -151,8 +147,8 @@
   }
 
   .container{
-    max-width: 768px;
-    padding: 100px 10px ;
+    width: 100vw;
+    padding: 0 10px ;
   }
 
   .book-cover img {
@@ -222,7 +218,6 @@
     display: none;
   }
   
-  
   .bookmark_button {
     padding: 10px 15px;
     width: 160px;
@@ -235,5 +230,10 @@
 
   .bookmark_button:hover{
     opacity: .7;
+  }
+
+  .bookmark_form{
+    display: block;
+    margin-top: 40px;
   }
 }

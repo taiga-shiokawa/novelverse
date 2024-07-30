@@ -11,6 +11,16 @@
     <%- head %>
   </head>
   <body>
+    <button class="mobile_only openbtn1"><label>著者で探す</label></button>
+    <nav id="g-nav" class="mobile_only">
+        <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
+                <form class="mobile_author" action="/novel/search" method="get">
+                  <img class="magnifying_glass mobile_only" src="/images/magnifying_glass.png" alt="虫眼鏡"><input type="text" class="mobile_nav_input" name="search" id="searchInput" placeholder="作家名で検索する" required>
+                  <button class="mobile_author_submit" type="submit">さがす</button>
+                </form>
+                <div id="suggestions" class="suggestions"></div>
+        </div>
+      </nav>
     <!-- ヘッダー -->
     <header>
       <div class="header_wrapper">
@@ -24,10 +34,60 @@
         <form  class="search_form" action="/novel/search" method="get" class="search_form">
           <input type="text" name="search" placeholder="サイト内検索" />
         </form>
+        <!-- <label id="toggleButton" class="mobile_only search_by_author">著者で探す</label> -->
+        <!-- ハンバーガーメニュー -->
+        <div class="hamburger-menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
     </header>
     <!-- ナビゲーション -->
     <div class="wrapper">
+      <div id="nav-container" class="mobile_only nav-container">
+        <nav class="site_nav">
+          <ul>
+            <li>
+                <a href="/novel/home">ホーム</a>
+            </li>
+            <li>
+              <a href="/novel/app_info">ノベルバースとは</a>
+            </li>
+            <li>
+                <a href="/novel/admin/info">運営者について</a>
+            </li>
+            <li>
+              <a href="/board/info">掲示板とは</a>
+            </li>
+            <li>
+                <a href="/board/home">見てみる</a>
+            </li>
+            <li>
+              <a href="/novel/home">ホーム</a>
+            </li>
+            <% if (!currentUser) { %>
+            <li><a href="/user/login">ログイン</a></li>
+            <li><a href="/user/signup">アカウント作成</a></li>
+            <% } else { %>
+              <li><a href="/user/account/setting">アカウント設定</a></li> 
+              <li><a href="/user/account/bookmark/list">読みたい一覧</a></li>
+              <li><form action="/user/logout" method="post">
+                  <button class="logout" type="submit">ログアウト</button>
+                </form>
+              </li>
+            <% } %>
+            <label class="nav_title">ジャンルで探す</label>
+            <ul class="nav_genre">
+              <% genres.forEach(genre => { %>
+                <li><a href="/novel/genre/<%= genre._id %>"><%= genre.genre_name %></a></li>
+                <% }); %>
+              </ul>
+              
+            </ul>
+        </nav>
+      </div>
+      
       <div class="nav_container">
         <div class="nav_left">
           <nav class="site_nav">
@@ -129,4 +189,46 @@
     <script src="/js/navbar.js"></script>
     <%- scripts %>
   </body>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const nav = document.querySelector('.nav-container');
+
+      hamburger.addEventListener('click', function() {
+        nav.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+      // ナビゲーションリンクをクリックしたらメニューを閉じる
+      const navLinks = document.querySelectorAll('.site-nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          nav.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+      });
+    });
+
+    
+  // ボタンのクリックイベントリスナーを追加
+document.querySelector('.openbtn1').addEventListener('click', function () {
+  // ボタン自身に active クラスをトグル
+  this.classList.toggle('active');
+  // ナビゲーションに panelactive クラスをトグル
+  document.querySelector('#g-nav').classList.toggle('panelactive');
+});
+
+// ナビゲーションのリンクがクリックされたときの処理
+document.querySelectorAll('#g-nav a').forEach(function (link) {
+  link.addEventListener('click', function () {
+    // ボタンの active クラスを削除
+    document.querySelector('.openbtn1').classList.remove('active');
+    // ナビゲーションの panelactive クラスを削除
+    document.querySelector('#g-nav').classList.remove('panelactive');
+  });
+});
+  </script>
 </html>
+
+
