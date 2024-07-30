@@ -13,6 +13,7 @@ const userSchema = Joi.object({
     "string.base": "パスワードは文字列である必要があります",
     "any.required": "パスワードは必須です"
   }),
+  _csrf: Joi.string().required()
 }).required();
 
 const userLoginValidate = (data) => {
@@ -21,13 +22,15 @@ const userLoginValidate = (data) => {
     const errors = {};
     if (error.details && Array.isArray(error.details)) {
       error.details.forEach((err) => {
-        errors[err.path[0]] = err.message;
+        if (err.path[0] !== '_csrf') { // CSRFエラーはクライアントに送信しない
+          errors[err.path[0]] = err.message;
+        }
       });
     } else {
       // エラーの詳細が期待通りの形式でない場合の処理
       errors.general = "入力内容を確認してください";
     }
-    return errors;
+    return Object.keys(errors).length > 0 ? errors : null;
   }
   return null;
 };

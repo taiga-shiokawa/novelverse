@@ -13,7 +13,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // アカウント作成画面へ遷移
 module.exports.goToAccountCreate = (req, res) => {
-  res.render("users/user-signup", { inputData: {}, errors: {} });
+  res.render("users/user-signup", { inputData: {}, errors: {}, csrfToken: req.csrfToken() });
 };
 
 // アカウント作成処理
@@ -22,11 +22,13 @@ module.exports.accountCreate = async (req, res) => {
   let role = "user";
 
   console.log(password);
+  console.log(req.body._csrf);
 
   const errors = userAccountCreateValidate(req.body);
   if (errors) {
     return res.render('users/user-signup', { 
       inputData: { username, email },
+      csrfToken: req.csrfToken(),
       errors: errors
     });
   }
@@ -63,20 +65,27 @@ module.exports.goToAfterPage = (req, res) => {
 
 // ログイン画面へ遷移
 module.exports.goToLogin = (req, res) => {
-  res.render("users/user-login", { inputData: {}, errors: {} });
+  res.render("users/user-login", { inputData: {}, errors: {}, csrfToken: req.csrfToken() });
 };
 
 // ログイン処理
 module.exports.userLogin = async (req, res, next) => {
 
   const { email } = req.body;
-
+  
+  console.log(req.body._csrf);
+  
   const errors = userLoginValidate(req.body);
   if (errors) {
     return res.render('users/user-login', { 
       errors: errors,
+      csrfToken: req.csrfToken()
     });
   }
+  
+  // if (!req.body._csrf) {
+  //   return res.status(403).json({ error: 'CSRFトークンがありません' });
+  // }
 
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;
