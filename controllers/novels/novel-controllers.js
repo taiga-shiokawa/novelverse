@@ -7,22 +7,27 @@ const catchAsync = require("../../utils/catchAsync");
 // ホーム画面へ遷移
 module.exports.goToHome = catchAsync(async (req, res) => {
   const newNovels = await Novel.find({ is_new: true })
+    .sort({_id: -1})
     .populate("author")
     .limit(5);
 
   const bunkoNovels = await Novel.find({ novel_type: "文庫" })
+    .sort({_id: -1})
     .populate("author")
     .limit(5);
 
   const tankobonNovels = await Novel.find({ novel_type: "単行本" })
+    .sort({_id: -1})
     .populate("author")
     .limit(5);
 
   const lightNovels = await Novel.find({ novel_type: "ライトノベル" })
+    .sort({_id: -1})
     .populate("author")
     .limit(5);
 
   const recommendedNovels = await Novel.find({ is_recommend: true })
+    .sort({_id: -1})
     .populate("author")
     .limit(5);
 
@@ -50,7 +55,7 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
     query.is_recommend = true;
     pageTitle = "ノベルバースおすすめ";
   }
-  const novels = await Novel.find(query).populate("author").populate("genre");
+  const novels = await Novel.find(query).sort({_id: -1}).populate("author").populate("genre");
   res.render("novels/novel-lists", { novels, pageTitle });
 });
 
@@ -135,6 +140,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
       const results = await Novel.find({
         $or: [{ title: regex }, { author: { $in: authorIds } }],
       })
+        .sort({_id: -1})
         .populate("author")
         .populate("genre")
         .exec();
@@ -173,6 +179,7 @@ module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
       pageTitle = genre.genre_name;
     }
     const novelByGenreList = await Novel.find({ genre: genreId })
+      .sort({_id: -1})
       .populate("author")
       .populate("genre");
     console.log(novelByGenreList);
