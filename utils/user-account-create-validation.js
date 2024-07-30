@@ -23,6 +23,7 @@ const userSchema = Joi.object({
     "string.min": "パスワードは少なくとも8文字以上である必要があります",
     "any.required": "パスワードは必須です",
   }),
+  _csrf: Joi.string().required()
 }).required();
 
 const userAccountCreateValidate = (data) => {

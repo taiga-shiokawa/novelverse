@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", () => { // イベント発生 ブ�
     form.addEventListener("submit", async (event) => { // またまたイベント発生 ブシャーーーー
       event.preventDefault(); // 意図しないフォーム送信を防ぐ
       const novelId = form.getAttribute("data-novel-id"); // 属性取得
+      const csrfToken = form.querySelector('input[name="_csrf"]').value;
       /**
        * form要素から上に祖先要素を探しにいく
        * .book-itemの親要素、つまりbook-listを取得
@@ -13,7 +14,8 @@ document.addEventListener("DOMContentLoaded", () => { // イベント発生 ブ�
         const response = await fetch('/user/account/bookmark/cancel', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'CSRF-Token': csrfToken
           },
           body: JSON.stringify({ novelId }) // novelIdをJSON文字列に変換
         });

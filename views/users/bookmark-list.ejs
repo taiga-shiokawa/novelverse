@@ -27,6 +27,7 @@ function getCoverUrl(novel) {
                   <div class="book-cover">
                       <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
                       <form class="bookmark-form" data-novel-id="<%= novel._id %>">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                         <button class="bookmark-button" type="submit">読みたい解除</button>
                       </form>
                   </div>
