@@ -44,8 +44,8 @@
                       <p class="novel_name"><%= novel.title %></p>
                       <p class="author_name"><%= novel.author.author_name %></p>   
                       <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
-                      <button class="bookmark_button" type="submit">読みたい＋</button>
-                    </form>
+                        <button class="bookmark_button" type="submit">読みたい＋</button>
+                      </form>
                     </span>
                   </div>
                 </a>
@@ -85,9 +85,12 @@
                       <button class="bookmark-button" type="submit">読みたい＋</button>
                     </form>
                   </div>
-                  <span>
+                  <span class="book_info">
                     <p class="novel_name"><%= novel.title %></p>
-                    <p class="author_name"><%= novel.author.author_name %></p>
+                    <p class="author_name"><%= novel.author.author_name %></p>   
+                    <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                      <button class="bookmark_button" type="submit">読みたい＋</button>
+                    </form>
                   </span>
                 </div>
               </a>
@@ -125,8 +128,13 @@
                           <button class="bookmark-button" type="submit">読みたい＋</button>
                         </form>
                       </div>
-                      <p class="novel_name"><%= novel.title %></p>
-                      <p class="author_name"><%= novel.author.author_name %></p>
+                      <span class="book_info">
+                        <p class="novel_name"><%= novel.title %></p>
+                        <p class="author_name"><%= novel.author.author_name %></p>   
+                        <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                          <button class="bookmark_button" type="submit">読みたい＋</button>
+                        </form>
+                      </span>
                     </div>
                 </a>
               </li>
@@ -163,8 +171,13 @@
                         <button class="bookmark-button" type="submit">読みたい＋</button>
                       </form>
                     </div>
-                    <p class="novel_name"><%= novel.title %></p>
-                    <p class="author_name"><%= novel.author.author_name %></p>
+                    <span class="book_info">
+                      <p class="novel_name"><%= novel.title %></p>
+                      <p class="author_name"><%= novel.author.author_name %></p>   
+                      <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                        <button class="bookmark_button" type="submit">読みたい＋</button>
+                      </form>
+                    </span>
                   </div>
                 </a>
               </li>
@@ -201,8 +214,13 @@
                             <button class="bookmark-button" type="submit">読みたい＋</button>
                           </form>
                       </div>
-                      <p class="novel_name"><%= novel.title %></p>
-                      <p class="author_name"><%= novel.author.author_name %></p>
+                      <span class="book_info">
+                        <p class="novel_name"><%= novel.title %></p>
+                        <p class="author_name"><%= novel.author.author_name %></p>   
+                        <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                          <button class="bookmark_button" type="submit">読みたい＋</button>
+                        </form>
+                      </span>
                     </div>
                   </a>
                 </li>
