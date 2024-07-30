@@ -16,6 +16,8 @@ const passport = require("passport"); // Passportライブラリのインポー�
 const session = require("express-session"); // アプリのセッション管理機能を追加するためのミドルウェアの設定
 const methodOverride = require("method-override");
 const mongoSanitize = require("express-mongo-sanitize");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
 
 // ローカルモジュール
 const getGenreName = require("./common/genres"); // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
@@ -84,6 +86,9 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // HTMLのフォーム送信によるbody部分に含まれるデータを解析しreq.bodyにパースするためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+app.use(csrf({cookie: true}));
 
 // PUT、DELETEメソッドのため
 app.use(methodOverride("_method"));
@@ -182,6 +187,7 @@ app.use(async (req, res, next) => {
   res.locals.loginError = req.flash("login-error");
   res.locals.creationError = req.flash("creation-error");
   res.locals.messages = req.flash();
+  res.locals.csrfToken = req.csrfToken();
   if (!res.locals.genres) {
     res.locals.genres = await loadGenres();
   }
@@ -225,6 +231,15 @@ app.get("/privacy-policy", (req, res) => {
 
 app.get("/error", (req, res) => {
   res.render("errors/error");
+});
+
+app.use((err, req, res, next) => {
+  if (err.code !== 'EBADCSRFTOKEN') return next(err);
+  
+  // CSRFトークンエラーの処理
+  req.flash('error', 'フォームの送信期限が切れました。もう一度お試しください。');
+  res.status(403);
+  res.redirect('back');
 });
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
