@@ -73,6 +73,7 @@
               <li><a href="/user/account/setting">アカウント設定</a></li> 
               <li><a href="/user/account/bookmark/list">読みたい一覧</a></li>
               <li><form action="/user/logout" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button class="logout" type="submit">ログアウト</button>
                 </form>
               </li>
@@ -155,6 +156,7 @@
                 <a href="/user/account/setting">アカウント設定</a>
                 <a href="/user/account/bookmark/list">読みたい一覧</a>
                 <form action="/user/logout" method="post">
+                  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                   <button class="logout" type="submit">ログアウト</button>
                 </form>
               <% } %>
@@ -189,6 +191,10 @@
     <script src="/js/navbar.js"></script>
     <%- scripts %>
   </body>
+
+  <script>
+    console.log('CSRF token in logout form:', '<%= csrfToken %>');
+    </script>
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {

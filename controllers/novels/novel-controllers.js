@@ -37,6 +37,7 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     tankobonNovels,
     lightNovels,
     recommendedNovels,
+    csrfToken: req.csrfToken(),
   });
 });
 
@@ -56,7 +57,7 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
     pageTitle = "ノベルバースおすすめ";
   }
   const novels = await Novel.find(query).sort({_id: -1}).populate("author").populate("genre");
-  res.render("novels/novel-lists", { novels, pageTitle });
+  res.render("novels/novel-lists", { novels, pageTitle, csrfToken: req.csrfToken(), });
 });
 
 // 小説登録画面へ遷移
@@ -92,7 +93,7 @@ module.exports.goToNovelDetails = catchAsync(async (req, res) => {
     .populate("author")
     .populate("genre");
   console.log(novelDetails);
-  res.render("novels/novel-details", { novelDetails });
+  res.render("novels/novel-details", { novelDetails, csrfToken: req.csrfToken() });
 });
 
 // 作家名取得（非同期）
@@ -126,6 +127,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
         pageTitle,
         results: [],
         messages: req.flash(),
+        csrfToken: req.csrfToken()
       });
     }
 
@@ -156,6 +158,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
         results,
         pageTitle,
         messages: req.flash(),
+        csrfToken: req.csrfToken()
       });
     } catch (err) {
       console.error("検索エラー", err);
@@ -164,6 +167,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
         results: [],
         pageTitle: "エラー",
         messages: req.flash(),
+        csrfToken: req.csrfToken()
       });
     }
   }
@@ -183,6 +187,6 @@ module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
       .populate("author")
       .populate("genre");
     console.log(novelByGenreList);
-    res.render("novels/novel-genre-list", { novelByGenreList, pageTitle });
+    res.render("novels/novel-genre-list", { novelByGenreList, pageTitle, csrfToken: req.csrfToken() });
   }
 );

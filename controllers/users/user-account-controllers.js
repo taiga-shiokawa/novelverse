@@ -186,7 +186,7 @@ module.exports.renderBookmarkLists = async (req, res) => {
     });
 
     const novels = bookmarks.map((bookmark) => bookmark.novel);
-    res.render("users/bookmark-list", { novels });
+    res.render("users/bookmark-list", { novels, csrfToken: req.csrfToken() });
   } catch (err) {
     console.log(err);
   }

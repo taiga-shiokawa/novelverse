@@ -3,12 +3,14 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (event) => {
       event.preventDefault(); // 意図しないフォーム送信を防ぐ
       const novelId = form.getAttribute("data-novel-id");
+      const csrfToken = form.querySelector('input[name="_csrf"]').value;
 
       try {
         const response = await fetch('/user/account/bookmark', {
           method: 'POST',
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'CSRF-Token': csrfToken
           },
           body: JSON.stringify({ novelId }) // novelIdをJSON文字列に変換
         });

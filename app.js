@@ -87,9 +87,6 @@ app.use(express.static(path.join(__dirname, "public")));
 // HTMLのフォーム送信によるbody部分に含まれるデータを解析しreq.bodyにパースするためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
 
-app.use(cookieParser());
-app.use(csrf({cookie: true}));
-
 // PUT、DELETEメソッドのため
 app.use(methodOverride("_method"));
 
@@ -104,7 +101,7 @@ app.use(
 const sessionConfig = {
   secret: "mysecret",
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
@@ -120,10 +117,18 @@ if (process.env.NODE_ENV === 'production') {
   sessionConfig.cookie.secure = true;
 }
 
+app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(csrf({cookie: true}))
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
+
+// すべてのルートでcsrfTokenを利用可能にする
+app.use((req, res, next) => {
+  req.session.csrfToken = req.csrfToken();
+  next();
+});
 
 // 認証を, authenticateという方法でLocalStrategy(ローカル認証)を使ってやることを宣言
 passport.use(
@@ -148,6 +153,16 @@ passport.use(
     Admin.authenticate()
   )
 );
+
+// ログイン直後とログアウト直前にCSRFトークンをログ出力するミドルウェア
+app.use((req, res, next) => {
+  const originalRender = res.render;
+  res.render = function() {
+    console.log('Current CSRF token:', req.csrfToken());
+    originalRender.apply(res, arguments);
+  }
+  next();
+});
 
 // ユーザーオブジェクトをシリアライズ（簡潔な形式に変換）してセッションに保存する
 passport.serializeUser((user, done) => {
@@ -187,7 +202,6 @@ app.use(async (req, res, next) => {
   res.locals.loginError = req.flash("login-error");
   res.locals.creationError = req.flash("creation-error");
   res.locals.messages = req.flash();
-  res.locals.csrfToken = req.csrfToken();
   if (!res.locals.genres) {
     res.locals.genres = await loadGenres();
   }
@@ -237,7 +251,14 @@ app.use((err, req, res, next) => {
   if (err.code !== 'EBADCSRFTOKEN') return next(err);
   
   // CSRFトークンエラーの処理
-  req.flash('error', 'フォームの送信期限が切れました。もう一度お試しください。');
+  console.error('CSRF error:', err);
+  console.error('Request body:', req.body);
+  console.error('CSRF token from form:', req.body._csrf);
+  console.error('CSRF token from request:', req.csrfToken());
+  console.error('Headers:', req.headers);
+  console.error('Session:', req.session);
+
+  req.flash('error', 'セキュリティトークンが無効です。もう一度お試しください。');
   res.status(403);
   res.redirect('back');
 });
