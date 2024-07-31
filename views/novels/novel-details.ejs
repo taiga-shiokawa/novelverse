@@ -9,22 +9,38 @@ function getCoverUrl(novel) {
 } 
 %>
 
-<main class="container">
-  <div class="img-container">
-      <img src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
-  </div>
-  <div class="info-container">
-    <form class="bookmark-form" data-novel-id="<%= novelDetails._id %>">
-      <h2>タイトル: <%= novelDetails.title  %> <button class="bookmark-button" type="submit">読みたい +</button></h2>
-    </form>
-      <p>著者名: <%= novelDetails.author.author_name %></p>
-      <p>あらすじ: </p>
-      <textarea placeholder="あらすじ"><%= novelDetails.summary  %></textarea>
+<main>
+  <div class="container">
+    <img class="cover_img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
+    <div class="info-container">
+      <div class="title_header">
+        <h2 class="novel_title">タイトル<%= novelDetails.title  %></h2>
+        <form class="bookmark-form" data-novel-id="<%= novelDetails._id %>">
+          <button class="bookmark-button" type="submit">読みたい +</button>
+        </form>
+      </div>
+      <p><label class="author_name">著者</label>　　<%= novelDetails.author.author_name %></p>
+      <p>あらすじ</p>
+      <p class="summary_text"><%= novelDetails.summary %></p>
       <hr>
-      <p>ジャンル: <%= novelDetails.genre.genre_name  %></p>
-      <p>出版情報: <%= new Date(novelDetails.publication_date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) %> 
-        <%= novelDetails.publisher_name %></p>
-      <p>ページ数: <%= novelDetails.pages %>ページ</p>
+      <table>
+        <tbody>
+          <tr>
+            <th>ジャンル</th>
+            <td><%= novelDetails.genre.genre_name %></td>
+          </tr>
+          <tr>
+            <th>出版情報</th>
+            <td><%= new Date(novelDetails.publication_date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) %> 
+              <%= novelDetails.publisher_name %></td>
+          </tr>
+          <tr>
+            <th>ページ数</th>
+            <td><%= novelDetails.pages %>ページ</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </main>
 
