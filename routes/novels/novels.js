@@ -18,10 +18,6 @@ router.route("/home")
 router.route("/list")
     .get(Novels.seeMoreNovelList);  // 「もっと見る」以降の小説一覧
 
-router.route("/registration")
-    .get(Novels.goToNovelRegistration)  // 小説登録画面へ遷移
-    .post(upload.single("cover"), novelRegisrationtAndUpdateValidate, Novels.novelRegistration);    // 小説登録処理
-
 router.route("/detail/:id")
     .get(Novels.goToNovelDetails);  // 小説詳細画面へ遷移
 

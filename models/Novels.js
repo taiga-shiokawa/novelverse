@@ -1,3 +1,4 @@
+const { string } = require("joi");
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
@@ -35,6 +36,9 @@ const novelSchema = new Schema({
   },
   is_recommend: {
     type: Boolean,
+  },
+  amazon_url: {
+    type: String,
   },
   cover: [
     {

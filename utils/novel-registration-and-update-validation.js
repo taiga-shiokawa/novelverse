@@ -6,16 +6,17 @@ const novelRegisrationtAndUpdateValidate = (req, res, next) => {
     novel: Joi.object({
       title: Joi.string().required(),
       summary: Joi.string().required(),
-      is_new: Joi.allow(),
+      is_new: Joi.string().valid('on').optional(),
       pages: Joi.number().min(0).required(),
       publisher_name: Joi.string().required(),
       publication_date: Joi.date().required(),
       price: Joi.number().min(0).required(),
       novel_type: Joi.string().required(),
-      is_recommend: Joi.allow(),
-      author: Joi.required(),
-      genre: Joi.required(),
-    }),
+      author: Joi.string().required(),
+      genre: Joi.string().required()
+    }).required(),
+    amazon_url: Joi.string().allow(''),
+    _csrf: Joi.string().optional()
   });
 
   const { error } = novelSchema.validate(req.body);
