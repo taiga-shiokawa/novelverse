@@ -227,24 +227,29 @@ app.use("/admin-management", adminManagementRouter); // 管理者の管理関係
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
 
-app.get("/admin-info", (req, res) => {
-  res.render("users/admin-info");
-});
-
+// サイト案内 -> ノベルバースとは
 app.get("/app-info", (req, res) => {
-  res.render("users/app-info");
+  res.render("users/app-info", { csrfToken: req.csrfToken() });
 });
 
+// サイト案内 -> 運営者について
+app.get("/admin-info", (req, res) => {
+  res.render("users/admin-info", { csrfToken: req.csrfToken() });
+});
+
+// 利用規約
 app.get("/terms-and-conditions", (req, res) => {
-  res.render("common/terms_and_conditions");
+  res.render("common/terms_and_conditions", { csrfToken: req.csrfToken() });
 });
 
+// プライバシーポリシー
 app.get("/privacy-policy", (req, res) => {
-  res.render("common/privacy_policy");
+  res.render("common/privacy_policy", { csrfToken: req.csrfToken() });
 });
 
+// 共通エラーページ
 app.get("/error", (req, res) => {
-  res.render("errors/error");
+  res.render("errors/error", { csrfToken: req.csrfToken() });
 });
 
 app.use((err, req, res, next) => {
