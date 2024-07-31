@@ -60,32 +60,6 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
   res.render("novels/novel-lists", { novels, pageTitle, csrfToken: req.csrfToken(), });
 });
 
-// 小説登録画面へ遷移
-module.exports.goToNovelRegistration = (req, res) => {
-  res.render("admins/novel-registration");
-};
-
-// 小説登録処理
-module.exports.novelRegistration = catchAsync(async (req, res) => {
-  const novelData = req.body.novel;
-
-  // チェックボックスの値をMongoDBのBoolean型に合うように変換
-  novelData.is_new = novelData.is_new === "on";
-  novelData.is_recommend = novelData.is_recommend === "on";
-  const novel = new Novel(req.body.novel);
-  if (req.file) {
-    novel.cover = { url: req.file.path, filename: req.file.filename };
-  }
-  try {
-    const saveNovel = await novel.save();
-    console.log("小説の登録に成功しました。", saveNovel);
-    return res.redirect("/novel/registration");
-  } catch (err) {
-    console.log("小説の登録に失敗しました。", err);
-    return res.redirect("/novel/registration");
-  }
-});
-
 // 小説詳細画面へ遷移
 module.exports.goToNovelDetails = catchAsync(async (req, res) => {
   const id = req.params.id;

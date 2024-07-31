@@ -1,13 +1,52 @@
 const express = require("express");
 const Novel = require("../../models/Novels");
 const { cloudinary } = require("../../cloudinary/cloudinary");
+const multer = require("multer");
+const { storage } = require("../../cloudinary/cloudinary");
+const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 
 const router = express.Router();
+
+// アップロードされたファイルの保存先を指定
+const upload = multer({ storage });
+
+// 小説登録画面へ遷移
+router.get("/registration", (req, res) => {
+  res.render("admins/novel-registration", { csrfToken: req.csrfToken() });
+});
+
+// 小説登録処理
+router.post("/registration", (req, res, next) => {
+  console.log("Route reached");
+  console.log("Request body:", req.body);
+  console.log("Request query:", req.query);
+  console.log("Request file:", req.file);
+  console.log("CSRF token from query:", req.query._csrf);
+  next();
+}, upload.single("cover"), novelRegisrationtAndUpdateValidate, async (req, res) => {
+  const novelData = req.body.novel;
+
+  // チェックボックスの値をMongoDBのBoolean型に合うように変換
+  novelData.is_new = novelData.is_new === "on";
+  novelData.is_recommend = novelData.is_recommend === "on";
+  const novel = new Novel(req.body.novel);
+  if (req.file) {
+    novel.cover = { url: req.file.path, filename: req.file.filename };
+  }
+  try {
+    const saveNovel = await novel.save();
+    console.log("小説の登録に成功しました。", saveNovel);
+    return res.redirect("/novel/management/registration");
+  } catch (err) {
+    console.log("小説の登録に失敗しました。", err);
+    return res.render("admins/novel-registration", { csrfToken: req.csrfToken() });
+  }
+});
 
 router.get("/all", async (req, res) => {
   try {
     const novels = await Novel.find({}).populate("author").populate("genre");
-    res.render("admins/admin-novel-edit", { novels });
+    res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
   } catch (err) {
     console.log(err);
   }
@@ -17,6 +56,7 @@ router.post("/delete", async (req, res) => {
   const { novelId, coverId } = req.body;
   try {
     const novel = await Novel.findById(novelId);
+    const novels = await Novel.find({}).populate("author").populate("genre");
     if (!novel) {
       return res.status(404).json({ message: "Novel not found" });
     }
@@ -37,10 +77,10 @@ router.post("/delete", async (req, res) => {
       await novel.save();
     }
 
-    res.redirect("/novel/management/delete");
+    res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ message: "Internal server error" });
+    res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
   }
 });
 

@@ -18,6 +18,8 @@ const methodOverride = require("method-override");
 const mongoSanitize = require("express-mongo-sanitize");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
+const multer = require("multer");
+const { storage } = require("./cloudinary/cloudinary");
 
 // ローカルモジュール
 const getGenreName = require("./common/genres"); // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
@@ -87,6 +89,9 @@ app.use(express.static(path.join(__dirname, "public")));
 // HTMLのフォーム送信によるbody部分に含まれるデータを解析しreq.bodyにパースするためのミドルウェア
 app.use(express.urlencoded({ extended: true }));
 
+// マルチパートフォームデータを解析するミドルウェア
+// const upload = multer({ storage: storage });
+
 // PUT、DELETEメソッドのため
 app.use(methodOverride("_method"));
 
@@ -124,9 +129,9 @@ app.use(csrf({cookie: true}))
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
 
-// すべてのルートでcsrfTokenを利用可能にする
+// CSRFトークンを生成し、レスポンスローカルに保存するミドルウェア
 app.use((req, res, next) => {
-  req.session.csrfToken = req.csrfToken();
+  res.locals.csrfToken = req.csrfToken();
   next();
 });
 

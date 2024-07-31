@@ -9,6 +9,7 @@
   <h2>小説削除</h2>
   <% for (let novel of novels) { %>
     <form action="/novel/management/delete" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
       <p><%= novel.title  %></p>
       <p><%= novel._id %></p>
       <img src="<%= novel.cover[0].url %>" alt="">
