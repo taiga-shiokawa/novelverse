@@ -15,10 +15,11 @@
     <nav id="g-nav" class="mobile_only">
         <div id="g-nav-list"><!--ナビの数が増えた場合縦スクロールするためのdiv※不要なら削除-->
                 <form class="mobile_author" action="/novel/search" method="get">
-                  <img class="magnifying_glass mobile_only" src="/images/magnifying_glass.png" alt="虫眼鏡"><input type="text" class="mobile_nav_input" name="search" id="searchInput" placeholder="作家名で検索する" required>
+                  <img class="magnifying_glass mobile_only" src="/images/magnifying_glass.png" alt="虫眼鏡">
+                  <input type="text" class="mobile_nav_input" name="search" id="mobileSearchInput" placeholder="作家名で検索する" required>
                   <button class="mobile_author_submit" type="submit">さがす</button>
                 </form>
-                <div id="suggestions" class="suggestions"></div>
+                <div id="mobileSuggestions" class="suggestions"></div>
         </div>
       </nav>
     <!-- ヘッダー -->
@@ -31,7 +32,7 @@
           </a>
         </div>
         <!-- サイト内検索ボックス -->
-        <form  class="search_form" action="/novel/search" method="get" class="search_form">
+        <form  class="search_form" action="/novel/search" method="get">
           <input type="text" name="search" placeholder="サイト内検索" />
         </form>
         <!-- <label id="toggleButton" class="mobile_only search_by_author">著者で探す</label> -->

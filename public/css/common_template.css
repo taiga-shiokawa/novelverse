@@ -172,7 +172,7 @@ ul li .dropdown_content a ,.logout{
 
 /* suggestions関係 */
 
-#suggestions {
+#suggestions , #mobileSuggestions {
   position: absolute;
   border: 1px solid #ddd;
   background-color: #f9f9f9;
@@ -446,7 +446,7 @@ footer ul li {
 
   /* suggestions関係 */
 
-#suggestions {
+#mobileSuggestions {
   width: 220px;
   left:120px;
   position: absolute;

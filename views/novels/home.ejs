@@ -29,7 +29,6 @@
         <div class="book-list">
           <% if( newNovels.length > 0 ) { %>
             <ul>
-              <% for (let i = 0; i < 5 ; i ++ ) { %>
             <% for (let novel of newNovels) { %>
               <li>
                 <a class="detail_link" href="/novel/detail/<%= novel._id %>">
@@ -51,9 +50,7 @@
                     </span>
                   </div>
                 </a>
-                
               </li>
-            <% } %>
             <% } %>
             <div class="mobile_only more_mobile_only">
               <a href="/novel/list?is_new=true">もっと見る</a>
