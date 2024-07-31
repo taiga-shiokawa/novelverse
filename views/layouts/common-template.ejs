@@ -164,7 +164,12 @@
               </div>
             </li>
             <li>
-              <!-- <img src="" alt=""> --><label>写真</label>
+              <img class="header_top_img" src="<%= topImg[0].url %>" alt="トプ画">
+              <!-- <% if( !currentUser || topImg == '' ){ %>
+                <img class="header_top_img" src="/images/kkrn_icon_user_14.png" alt="トプ画未設定">
+                <% } else {%>
+                <img class="header_top_img" src="<%= topImg[0].url %>" alt="トプ画">
+              <% } %> -->
             </li>
           </ul>
         </div>

@@ -7,7 +7,8 @@ module.exports.renderAccountDeletion = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
   const username = loginUser.username;
-  res.render("users/account-deletion", { username });
+  const topImg =  loginUser.image.url;
+  res.render("users/account-deletion", { username , topImg ,csrfToken: req.csrfToken() });
 };
 
 module.exports.accountDeletion = async (req, res, next) => {
@@ -55,12 +56,13 @@ module.exports.accountDeletion = async (req, res, next) => {
 module.exports.renderAccountSetting = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  const topImg =  loginUser.image;
 
   if (!loginUser) {
     req.flash("error", "ユーザーは見つかりませんでした");
     return res.redirect(`/user/login`);
   }
-  res.render("users/account-settings", { loginUser , csrfToken: req.csrfToken() });
+  res.render("users/account-settings", { loginUser , topImg , csrfToken: req.csrfToken() });
 };
 
 module.exports.accountSetting = async (req, res) => {
@@ -77,20 +79,30 @@ module.exports.accountSettingImg = async (req, res) => {
     const img = { url: req.file.path, filename: req.file.filename };
   }
 
+  console.log('accountSettingImgメソッド');
+  console.log(`${req.file.path}と${req.file.filename} `);
+
   try {
     await User.findByIdAndUpdate( id , { image: { url: req.file.path, filename: req.file.filename } });
     req.flash("success", "トップ画像をしました");
+    console.log('accountSettingImgメソッド成功');
     res.redirect("/user/account/setting");
   } catch (err) {
     req.flash("error", "トップ画像の変更に失敗しました");
+
+    console.log('accountSettingImgメソッド失敗');
     res.redirect("/user/account/setting");
   }
   
 };
 
 
-module.exports.renderPasswordChange = (req, res) => {
-  res.render("users/password-change" , {csrfToken: req.csrfToken()});
+module.exports.renderPasswordChange = async (req, res) => {
+  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  const topImg =  loginUser.image;
+  console.log(topImg);
+  res.render("users/password-change" , { topImg ,csrfToken: req.csrfToken()});
 };
 
 module.exports.passwordChange = async (req, res, next) => {
@@ -170,8 +182,11 @@ module.exports.addBookmark = async (req, res) => {
   }
 };
 
-module.exports.renderNovelHome = (req, res) => {
-  res.redirect("/novel/home" , {csrfToken: req.csrfToken()});
+module.exports.renderNovelHome = async (req, res) => {
+  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  const topImg =  loginUser.image.url;
+  res.redirect("/novel/home" , {topImg ,csrfToken: req.csrfToken()});
 };
 
 module.exports.renderBookmarkLists = async (req, res) => {
@@ -185,8 +200,12 @@ module.exports.renderBookmarkLists = async (req, res) => {
       },
     });
 
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+  const topImg =  loginUser.image.url;
+
     const novels = bookmarks.map((bookmark) => bookmark.novel);
-    res.render("users/bookmark-list", { novels, csrfToken: req.csrfToken() });
+    res.render("users/bookmark-list", { novels, topImg ,  csrfToken: req.csrfToken() });
   } catch (err) {
     console.log(err);
   }

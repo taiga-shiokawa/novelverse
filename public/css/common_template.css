@@ -141,6 +141,17 @@ ul li .dropdown_content a ,.logout{
   background-color: #e7e7e7c7;
 }
 
+/* header トプ画*/
+.header_top_img{
+  height:35px;
+  margin: 5px;
+  object-fit: cover;
+  aspect-ratio: 1 / 1; 
+  background-color: #fff;
+  display: inline-block;
+  /* border-radius:50%; */
+}
+
 
 /* ドロップダウン関係 */
 
@@ -161,9 +172,6 @@ ul li .dropdown_content a ,.logout{
 .show {
   display: block;
 }  
-
-/* 
-
 
 /* 
 #mypageDropdown {

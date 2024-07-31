@@ -126,7 +126,9 @@ app.use(passport.session()); // ユーザー認証情報をセッションで維
 
 // すべてのルートでcsrfTokenを利用可能にする
 app.use((req, res, next) => {
+  console.log('あいうえお');
   req.session.csrfToken = req.csrfToken();
+  console.log('下記くけこ');
   next();
 });
 
