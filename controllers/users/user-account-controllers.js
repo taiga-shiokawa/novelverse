@@ -60,7 +60,7 @@ module.exports.renderAccountSetting = async (req, res) => {
     req.flash("error", "ユーザーは見つかりませんでした");
     return res.redirect(`/user/login`);
   }
-  res.render("users/account-settings", { loginUser });
+  res.render("users/account-settings", { loginUser , csrfToken: req.csrfToken() });
 };
 
 module.exports.accountSetting = async (req, res) => {
@@ -90,7 +90,7 @@ module.exports.accountSettingImg = async (req, res) => {
 
 
 module.exports.renderPasswordChange = (req, res) => {
-  res.render("users/password-change");
+  res.render("users/password-change" , {csrfToken: req.csrfToken()});
 };
 
 module.exports.passwordChange = async (req, res, next) => {
@@ -171,7 +171,7 @@ module.exports.addBookmark = async (req, res) => {
 };
 
 module.exports.renderNovelHome = (req, res) => {
-  res.redirect("/novel/home");
+  res.redirect("/novel/home" , {csrfToken: req.csrfToken()});
 };
 
 module.exports.renderBookmarkLists = async (req, res) => {
@@ -223,7 +223,7 @@ module.exports.cancelBookmark = async (req, res) => {
 
 // ご意見・お問い合わせ画面へ遷移
 module.exports.goToInquiry = (req, res) => {
-  res.render("users/inquiry-page");
+  res.render("users/inquiry-page" , {csrfToken: req.csrfToken()});
 };
 
 // ご意見・お問い合わせ処理
