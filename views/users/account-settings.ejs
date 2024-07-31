@@ -22,6 +22,9 @@
                             <h3 class="section_title">写真</h3>
                             <label class="caption_label">※任意</label>
                             <form action="/user/account/setting-img?_method=PUT" method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+
                                 <div>
                                     <div id="imagePreview">
                                         <% if(loginUser.image.url){ %>
@@ -38,6 +41,9 @@
                         <div class="account_setting">
                             <h3 class="section_title">ユーザー情報</h3>
                             <form action="/user/account/setting?_method=PUT" method="POST">
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+
                                 <label class="colums_label">ニックネーム</label><span class="caption_label required_label">※必須</span>
                                 <input type="text" name="user[username]" value="<%= loginUser.username %>" required />
                                 <br><br>
