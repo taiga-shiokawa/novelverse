@@ -65,6 +65,7 @@ a{
 .nav_container{
   display: flex;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
@@ -72,6 +73,8 @@ a{
 
 .nav_container ul{
   display: flex;
+  margin: 5px;
+  align-items: center;
 }
 
 .nav_left li {
@@ -87,6 +90,10 @@ a{
   color: #fff;
   font-size: 12px;
   transition: opacity 0.5s ease;
+}
+
+.site_nav_button{
+  line-height: 40px;
 }
 
 #logout {
@@ -143,8 +150,7 @@ ul li .dropdown_content a ,.logout{
 
 /* header トプ画*/
 .header_top_img{
-  height:35px;
-  margin: 5px;
+  height:40px;
   object-fit: cover;
   aspect-ratio: 1 / 1; 
   background-color: #fff;
@@ -162,7 +168,7 @@ ul li .dropdown_content a ,.logout{
   min-width: 220px;
   box-shadow: 0px 4px 6px 0px rgba(0,0,0,0.1);
   z-index: 1;
-  margin-top: 16px;
+  margin-top: 9px;
 }
 
 .dropdown_content a:hover {
@@ -415,22 +421,20 @@ footer ul li {
     margin: 5px 0;
   }
 
-  .mobile_nav_input{
-    width: 90vw;
-    margin: 0 auto;
-  }
-
   .mobile_author{
     width: 80vw;
     margin: 0 auto;
     margin-top: 50px;
     border-bottom:1px solid #a8a8a8 ;
+    display:flex;
+    align-items: center;
   }
 
-  .mobile_author input{
+  .mobile_nav_input{
+    width: 90vw;
+    margin-left: 10px;
     border: none;
     padding: 10px;
-    margin-left: 40px;
     width: 70%;
     display: inline-block;
   }
@@ -533,12 +537,7 @@ footer ul li {
 .magnifying_glass{
   width: 16px;
   padding: 16px;
-  /*ナビゲーション天地中央揃え*/
-  position: absolute;
-  z-index: 999;
-  top:10%;
-  left:13%;
-  transform: translate(-50%,-50%);
+  display: inline-block;
 }
 
 .logout{

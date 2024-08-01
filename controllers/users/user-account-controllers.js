@@ -7,7 +7,7 @@ module.exports.renderAccountDeletion = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
   const username = loginUser.username;
-  const topImg =  loginUser.image.url;
+  const topImg =  loginUser.image;
   res.render("users/account-deletion", { username , topImg ,csrfToken: req.csrfToken() });
 };
 
@@ -15,9 +15,6 @@ module.exports.accountDeletion = async (req, res, next) => {
   console.log(`deletion`);
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const { password, opinion } = req.body; //formに入力した値
-  console.log(`パスワードは${password}でidが${id}`);
-
-
   passport.authenticate("local", async (err, user, info) => {
     if (err) {
       // エラーがあれば次のエラーハンドラーに渡す
@@ -57,7 +54,6 @@ module.exports.renderAccountSetting = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
   const topImg =  loginUser.image;
-
   if (!loginUser) {
     req.flash("error", "ユーザーは見つかりませんでした");
     return res.redirect(`/user/login`);
@@ -79,29 +75,21 @@ module.exports.accountSettingImg = async (req, res) => {
     const img = { url: req.file.path, filename: req.file.filename };
   }
 
-  console.log('accountSettingImgメソッド');
-  console.log(`${req.file.path}と${req.file.filename} `);
-
   try {
     await User.findByIdAndUpdate( id , { image: { url: req.file.path, filename: req.file.filename } });
     req.flash("success", "トップ画像をしました");
-    console.log('accountSettingImgメソッド成功');
     res.redirect("/user/account/setting");
   } catch (err) {
     req.flash("error", "トップ画像の変更に失敗しました");
-
-    console.log('accountSettingImgメソッド失敗');
     res.redirect("/user/account/setting");
   }
   
 };
 
-
 module.exports.renderPasswordChange = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
   const topImg =  loginUser.image;
-  console.log(topImg);
   res.render("users/password-change" , { topImg ,csrfToken: req.csrfToken()});
 };
 
@@ -202,7 +190,7 @@ module.exports.renderBookmarkLists = async (req, res) => {
 
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg =  loginUser.image.url;
+  const topImg =  loginUser.image;
 
     const novels = bookmarks.map((bookmark) => bookmark.novel);
     res.render("users/bookmark-list", { novels, topImg ,  csrfToken: req.csrfToken() });
