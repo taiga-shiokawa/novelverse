@@ -96,9 +96,9 @@ module.exports.deleteSettingImg = async (req, res) => {
 
     console.log(`topImg ${userImgId}`);
     // Cloudinaryから画像を削除
-    if (userImgId && userImgId.filename) {
+    if (topImg && topImg[0].filename) {
       // console.log(`topImg[0].filename ${topImg[0].filename}`);
-      await cloudinary.uploader.destroy(userImgId.filename);
+      await cloudinary.uploader.destroy(topImg[0].filename);
     }
 
     loginUser.image = loginUser.image.filter((c) => c._id.toString() !== userImgId);
