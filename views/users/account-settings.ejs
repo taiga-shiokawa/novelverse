@@ -27,6 +27,7 @@
                                         <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
                                         <form action="/user/account/delete-img?_method=PUT" method="POST">
                                             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <input type="hidden" name="imgId" value="<%= topImg[0]._id %>">
                                             <button id="top_img_delete_btn" type="submit">現在のトプ画を削除する</button>
                                         </form>
                                         <% } else { %>

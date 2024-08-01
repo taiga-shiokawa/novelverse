@@ -90,23 +90,24 @@ module.exports.accountSettingImg = async (req, res) => {
 module.exports.deleteSettingImg = async (req, res) => {
   try {
     const { id } = res.locals.currentUser;
+    const userImgId = req.body.imgId;
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
     const topImg =  loginUser.image;
 
-    console.log(`topImg ${topImg}`);
+    console.log(`topImg ${userImgId}`);
     // Cloudinaryから画像を削除
-    if (topImg && topImg[0].filename) {
-      console.log(`topImg[0].filename ${topImg[0].filename}`);
-      await cloudinary.uploader.destroy(topImg[0].filename);
+    if (userImgId && userImgId.filename) {
+      // console.log(`topImg[0].filename ${topImg[0].filename}`);
+      await cloudinary.uploader.destroy(userImgId.filename);
     }
 
-    // await User.updateMany(
-    //   { _id: id }, 
-    //   { $set: { image: [] } }
-    // )
+    loginUser.image = loginUser.image.filter((c) => c._id.toString() !== userImgId);
+    await loginUser.save();
     res.redirect("/user/account/setting");
   } catch (err) {
     console.log(err);
+    const updatedUser = await User.findByIdAndUpdate(id);
+    res.render("users/account-settings", { loginUser: updatedUser , topImg , csrfToken: req.csrfToken() });
   }
 }
 
@@ -253,8 +254,13 @@ module.exports.cancelBookmark = async (req, res) => {
 };
 
 // ご意見・お問い合わせ画面へ遷移
-module.exports.goToInquiry = (req, res) => {
-  res.render("users/inquiry-page" , {csrfToken: req.csrfToken()});
+module.exports.goToInquiry = async (req, res) => {
+  if(res.locals.currentUser){
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    const topImg =  loginUser.image;
+    res.render("users/inquiry-page" , {topImg, csrfToken: req.csrfToken()});
+  }
 };
 
 // ご意見・お問い合わせ処理
