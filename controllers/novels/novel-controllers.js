@@ -2,6 +2,7 @@
 const Novel = require("../../models/Novels");
 const Author = require("../../models/Authors");
 const Genre = require("../../models/Genres");
+const User = require("../../models/Users");
 const catchAsync = require("../../utils/catchAsync");
 
 // ホーム画面へ遷移
@@ -31,12 +32,21 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     .populate("author")
     .limit(5);
 
+    let topImg = "";
+    
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
+
   res.render("novels/home", {
     newNovels,
     bunkoNovels,
     tankobonNovels,
     lightNovels,
     recommendedNovels,
+    topImg,
     csrfToken: req.csrfToken(),
   });
 });
@@ -56,8 +66,17 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
     query.is_recommend = true;
     pageTitle = "ノベルバースおすすめ";
   }
+
+  let topImg = "";
+    
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
+
   const novels = await Novel.find(query).sort({_id: -1}).populate("author").populate("genre");
-  res.render("novels/novel-lists", { novels, pageTitle, csrfToken: req.csrfToken(), });
+  res.render("novels/novel-lists", { novels, topImg , pageTitle, csrfToken: req.csrfToken(), });
 });
 
 // 小説詳細画面へ遷移
@@ -67,7 +86,16 @@ module.exports.goToNovelDetails = catchAsync(async (req, res) => {
     .populate("author")
     .populate("genre");
   console.log(novelDetails);
-  res.render("novels/novel-details", { novelDetails, csrfToken: req.csrfToken() });
+
+  let topImg = "";
+    
+  if(res.locals.currentUser){
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    topImg =  loginUser.image;
+  }
+
+  res.render("novels/novel-details", { novelDetails, topImg, csrfToken: req.csrfToken() });
 });
 
 // 作家名取得（非同期）
@@ -94,11 +122,20 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
     const searchQuery = req.query.search;
     let pageTitle = "";
 
+    let topImg = "";
+    
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
+
     if (!searchQuery || searchQuery.trim() === "") {
       req.flash("info", "検索結果がありませんでした");
       pageTitle = "検索結果";
       return res.render("novels/novel-search-result", {
         pageTitle,
+        topImg,
         results: [],
         messages: req.flash(),
         csrfToken: req.csrfToken()
@@ -130,6 +167,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
 
       res.render("novels/novel-search-result", {
         results,
+        topImg,
         pageTitle,
         messages: req.flash(),
         csrfToken: req.csrfToken()
@@ -139,6 +177,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
       req.flash("error", "検索中にエラーが発生しました");
       res.status(500).render("novels/novel-search-result", {
         results: [],
+        topImg,
         pageTitle: "エラー",
         messages: req.flash(),
         csrfToken: req.csrfToken()
@@ -156,11 +195,20 @@ module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
     if (genre) {
       pageTitle = genre.genre_name;
     }
+
+    let topImg = "";
+    
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
+    
     const novelByGenreList = await Novel.find({ genre: genreId })
       .sort({_id: -1})
       .populate("author")
       .populate("genre");
     console.log(novelByGenreList);
-    res.render("novels/novel-genre-list", { novelByGenreList, pageTitle, csrfToken: req.csrfToken() });
+    res.render("novels/novel-genre-list", { novelByGenreList,topImg,  pageTitle, csrfToken: req.csrfToken() });
   }
 );
