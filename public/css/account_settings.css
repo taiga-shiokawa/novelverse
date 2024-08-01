@@ -1,7 +1,6 @@
 
 main {
     font-family: "Noto Sans JP", sans-serif;
-    display: flex;
     background-color: #F6F1DE;
     color: #332405;
 }
@@ -100,11 +99,11 @@ main a{
 
 .btn{
     display: block;
-    margin: 0 auto; 
     color: #fff;
     background-color: #505F00;
     border:none;
     width: 100%;
+    margin: 0 auto; 
     max-width:200px;
     padding: 10px 24px;
     margin-top: 10px;
@@ -120,15 +119,18 @@ main a{
 
 .photo_setting{
     width: 30%;
+    background-color: blue;
 }
 
 .photo_setting form{
     height: 100%;
-    max-height: 418px;
-    display: flex;
-    flex-direction :column;
-    justify-content: space-between;
 }
+
+.img_set_form ,.img_container{
+    height: 100%;
+    background-color: yellow;
+}
+
 
 #imagePreview {
     margin-top: 10px;
@@ -138,11 +140,21 @@ main a{
     width: 100%;
     max-width: 200px;
     max-height: 200px;
+    object-fit: cover;
     border: 1px solid #ccc;
     padding: 5px;
     background-color: #f0f0f0;
 }
 
+#top_img_delete_btn{
+    background-color: transparent;
+    border: none;
+    transition: opacity 0.5s ease; 
+}
+
+#top_img_delete_btn:hover{
+    opacity: .7;
+}
 /* ユーザー情報フォーム */
 
 .account_setting{
