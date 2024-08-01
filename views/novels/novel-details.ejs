@@ -12,16 +12,28 @@ function getCoverUrl(novel) {
 <main>
   <div class="container">
     <img class="cover_img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
-    <div class="info-container">
+    <div class="info_container">
       <div class="title_header">
-        <h2 class="novel_title">タイトル<%= novelDetails.title  %></h2>
+        <h1>タイトル <%= novelDetails.title %></h1>
         <form class="bookmark-form" data-novel-id="<%= novelDetails._id %>">
           <button class="bookmark-button" type="submit">読みたい +</button>
         </form>
       </div>
-      <p><label class="author_name">著者</label>　　<%= novelDetails.author.author_name %></p>
-      <p>あらすじ</p>
-      <p class="summary_text"><%= novelDetails.summary %></p>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>著者</th>
+              <td><%= novelDetails.author.author_name %></td>
+            </tr>
+            <tr>
+              <th>あらすじ</th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="summary_text"><%= novelDetails.summary %></p>
+      </div>
       <hr>
       <table>
         <tbody>
@@ -38,9 +50,13 @@ function getCoverUrl(novel) {
             <th>ページ数</th>
             <td><%= novelDetails.pages %>ページ</td>
           </tr>
+          <tr>
+            <th>Amazonリンク</th>
+            <td><a href="<%= novelDetails.amazon_url %>">Amazon</a></td>
+          </tr>
         </tbody>
       </table>
-      <a href="<%= novelDetails.amazon_url %>">Amazon</a>
+      </div>
     </div>
   </div>
 </main>

@@ -2,6 +2,7 @@ const User = require("../../models/Users");
 const Bookmark = require("../../models/Bookmark");
 const DeletionReason = require("../../models/Deletion_reasons");
 const passport = require("passport");
+const { cloudinary } = require("../../cloudinary/cloudinary");
 
 module.exports.renderAccountDeletion = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
@@ -85,6 +86,29 @@ module.exports.accountSettingImg = async (req, res) => {
   }
   
 };
+
+module.exports.deleteSettingImg = async (req, res) => {
+  try {
+    const { id } = res.locals.currentUser;
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    const topImg =  loginUser.image;
+
+    console.log(`topImg ${topImg}`);
+    // Cloudinaryから画像を削除
+    if (topImg && topImg[0].filename) {
+      console.log(`topImg[0].filename ${topImg[0].filename}`);
+      await cloudinary.uploader.destroy(topImg[0].filename);
+    }
+
+    // await User.updateMany(
+    //   { _id: id }, 
+    //   { $set: { image: [] } }
+    // )
+    res.redirect("/user/account/setting");
+  } catch (err) {
+    console.log(err);
+  }
+}
 
 module.exports.renderPasswordChange = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID

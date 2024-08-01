@@ -17,6 +17,9 @@ router.route('/setting')
 router.route('/setting-img')
     .put(upload.single("image"), userAccount.accountSettingImg);    // 小説登録処理
 
+router.route('/delete-img')
+    .put(isLoggedIn ,userAccount.deleteSettingImg);    // 小説削除
+
 router.route('/password_change')
     .get(isLoggedIn , userAccount.renderPasswordChange )    // アカウント設定画面へ遷移
     .put(isLoggedIn , userAccount.passwordChange );         // アカウント設定

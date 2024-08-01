@@ -21,50 +21,53 @@
                         <div class="photo_setting">
                             <h3 class="section_title">写真</h3>
                             <label class="caption_label">※任意</label>
-                            <form action="/user/account/setting-img?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
-                                <div>
-                                    <div id="imagePreview">
-                                        <% if(topImg.length > 0){ %>
-                                            <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
-                                            <% } else { %>
-                                                <img class="top_img" src="/images/noimg.jpg" alt="noimg">
+                            <div class="img_container">
+                                <div id="imagePreview">
+                                    <% if(topImg.length > 0){ %>
+                                        <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
+                                        <form action="/user/account/delete-img?_method=PUT" method="POST">
+                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                            <button id="top_img_delete_btn" type="submit">現在のトプ画を削除する</button>
+                                        </form>
+                                        <% } else { %>
+                                            <img class="top_img" src="/images/noimg.jpg" alt="noimg">
                                         <% } %>
-                                            </div>
+                                </div>
+                                <form class="img_set_form"action="/user/account/setting-img?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
                                     <!-- <input type="hidden" name="_csrf" value="<%= csrfToken %>"> -->
                                     <input type="file" id="photoInput" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
-                                </div>
-                                <button class="btn" type="submit">画像選択</button>
-                            </form>
+                                    <button class="btn" type="submit">画像選択</button>
+                                </form>
+                            </div>
                         </div>
                         <div class="account_setting">
-                            <h3 class="section_title">ユーザー情報</h3>
-                            <form action="/user/account/setting?_method=PUT" method="POST">
-                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                <label class="colums_label">ニックネーム</label><span class="caption_label required_label">※必須</span>
-                                <input type="text" name="user[username]" value="<%= loginUser.username %>" required />
-                                <br><br>
-                                <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
-                                <input type="text" name="user[email]"  value="<%= loginUser.email %>" required/>
-                                <br><br>
-                                <div class="ta_box">
-                                    <label class="colums_label">自己紹介</label><span class="caption_label">※任意</span>
-                                    <textarea name="user[self_introdaction]" maxlength="140"><%= loginUser.self_introdaction %></textarea>
-                                </div>
-                                <br>
-                                <label class="colums_label">生年月日</label><span class="caption_label">※任意</span>
-                                <% if(loginUser.birthday){%>
-                                    <input type="date" name="user[birthday]" value="<%= new Date(loginUser.birthday).toISOString().slice(0, 10) %>">
-                                    <% } else { %>
-                                    <input type="date" name="user[birthday]">
-                                <% } %>
-                                <br><br>
-                                <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
-                                <input type="password" class="password" value="********" required readonly /><br>
-                                <label class="pass_label"><a href="/user/account/password_change">パスワード変更はこちら</a></label>
-                                <br><br>
-                                <button class="btn" type="submit">更新</button>
-                            </form>
-                        </div>
+                        <h3 class="section_title">ユーザー情報</h3>
+                        <form action="/user/account/setting?_method=PUT" method="POST">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <label class="colums_label">ニックネーム</label><span class="caption_label required_label">※必須</span>
+                            <input type="text" name="user[username]" value="<%= loginUser.username %>" required />
+                            <br><br>
+                            <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
+                            <input type="text" name="user[email]"  value="<%= loginUser.email %>" required/>
+                            <br><br>
+                            <div class="ta_box">
+                                <label class="colums_label">自己紹介</label><span class="caption_label">※任意</span>
+                                <textarea name="user[self_introdaction]" maxlength="140"><%= loginUser.self_introdaction %></textarea>
+                            </div>
+                            <br>
+                            <label class="colums_label">生年月日</label><span class="caption_label">※任意</span>
+                            <% if(loginUser.birthday){%>
+                                <input type="date" name="user[birthday]" value="<%= new Date(loginUser.birthday).toISOString().slice(0, 10) %>">
+                                <% } else { %>
+                                <input type="date" name="user[birthday]">
+                            <% } %>
+                            <br><br>
+                            <label class="colums_label">パスワード</label><span  class="caption_label required_label">※必須</span>
+                            <input type="password" class="password" value="********" required readonly /><br>
+                            <label class="pass_label"><a href="/user/account/password_change">パスワード変更はこちら</a></label>
+                            <br><br>
+                            <button class="btn" type="submit">更新</button>
+                        </form>
                     </div>
                 </div>
             </div> 
