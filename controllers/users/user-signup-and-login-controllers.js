@@ -42,14 +42,14 @@ module.exports.accountCreate = async (req, res) => {
     }
     const registerdUser = await User.register(user, password);
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "onboarding@novelverse.net",
       to: email,
       subject: "メール確認",
       html: `
         <h1>メールアドレスの確認</h1>
-        <p>ゴキブリが、あなたを見ているよ。</p>
-        <p>以下のリンクをクリックし、認証を実行してください。</p>
-        <a href="http://localhost:8000/user/login">みょ〜ん</a>
+        <p>ゴキブリが、あなたを見ているよっちゃんイカ。</p>
+        <p>以下のリンクをクリックし、認証を実行してくだサイボーグ爺さん。</p>
+        <a href="http://localhost:8000/user/login">ぴゃー！！！</a>
       `,
     });
     console.log("メール送信成功 : ", data);
