@@ -30,6 +30,16 @@ a{
   font-family: "Noto Sans JP", sans-serif;
 }
 
+  /* header トプ画*/
+  .header_top_img{
+    height:40px;
+    object-fit: cover;
+    aspect-ratio: 1 / 1; 
+    background-color: #fff;
+    display: inline-block;
+    /* border-radius:50%; */
+  }
+
 .site_logo , .search_form{
   height: 120px;
   display: flex;
@@ -66,7 +76,6 @@ a{
 
 .site_nav ul{
   display: flex;
-  line-height: 40px;
 }
 
 .site_nav li{
@@ -108,7 +117,6 @@ footer ul li a:hover{
 
 footer ul li {
   font-size: 12px;
-  margin-right: 40px;
 }
 
 .footer_label{
@@ -140,6 +148,8 @@ footer ul li {
     width: 100%;
     max-width: 300px;
   }
+
+
 
   .hamburger-menu {
     display: block;
@@ -218,7 +228,6 @@ footer ul li {
   }
 
   .site_nav li {
-    margin: 20px 0;
     width: 100%;  
     text-align: center; 
   }
@@ -237,6 +246,10 @@ footer ul li {
 
   footer ul li {
     margin: 5px 0;
+  }
+
+  .header_top_img{
+    margin-top: 20px;
   }
 }
 
