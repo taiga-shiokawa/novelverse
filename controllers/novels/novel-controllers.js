@@ -99,22 +99,27 @@ module.exports.goToNovelDetails = catchAsync(async (req, res) => {
 });
 
 // 作家名取得（非同期）
-module.exports.getAuthorNames = catchAsync(async (req, res) => {
-  const query = req.query.q;
-  if (!query) {
-    return res.json([]);
+module.exports.getAuthorNames = async (req, res, next) => {
+  try {
+    const query = req.query.q;
+    if (!query) {
+      return res.json([]);
+    }
+
+    const suggestions = await Author.find({
+      author_name: { $regex: query, $options: "i" },
+    })
+      .limit(50)
+      .lean()
+      .exec();
+
+    const authorNames = suggestions.map((item) => item.author_name);
+    res.json(authorNames);
+  } catch (err) {
+    console.error("作家の取得に失敗しました。", err);
+    next(err); // エラーを Express のエラーハンドリングミドルウェアに渡す
   }
-
-  const suggestion = await Author.find({
-    author_name: { $regex: query, $options: "i" },
-  })
-    .limit(50)
-    .lean()
-    .exec();
-  res.json(suggestion.map((item) => item.author_name));
-
-  console.log("作家の取得に失敗しました。", err);
-});
+};
 
 // 検索結果画面へ遷移&処理
 module.exports.goToSearchResultAndSearchProcess = catchAsync(
