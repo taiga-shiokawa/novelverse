@@ -18,8 +18,8 @@ const methodOverride = require("method-override");
 const mongoSanitize = require("express-mongo-sanitize");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
-const multer = require("multer");
-const { storage } = require("./cloudinary/cloudinary");
+const { createClient } = require('redis');
+const RedisStore = require('connect-redis').default;
 
 // ローカルモジュール
 const getGenreName = require("./common/genres"); // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
@@ -52,6 +52,18 @@ const start = async () => {
     console.log(err);
   }
 };
+
+// Redisクライアントの初期化
+let redisClient = createClient({
+  url: process.env.REDIS_URL || 'redis://localhost:6379'
+});
+redisClient.connect().catch(console.error);
+
+// RedisStoreの初期化
+let redisStore = new RedisStore({
+  client: redisClient,
+  prefix: "myapp:",
+})
 
 // commonフォルダのgenres.jsからジャンル名を読み込み
 async function loadGenres() {
@@ -104,7 +116,8 @@ app.use(
 
 // セッション設定
 const sessionConfig = {
-  secret: "mysecret",
+  store: redisStore,
+  secret: process.env.SESSION_SECRET || "mysecret",
   resave: false,
   saveUninitialized: false,
   cookie: {
