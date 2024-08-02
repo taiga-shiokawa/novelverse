@@ -118,22 +118,29 @@ main a{
 /* 写真フォーム */
 
 .photo_setting{
-    width: 30%;
-    background-color: blue;
+    width: 35%;
+    background-color: red;
 }
 
-.photo_setting form{
+/* .img_set_form {
     height: 100%;
-}
+    background-color: #505F00;
+    box-sizing: border-box;
+    display: inline-block;
+} */
 
-.img_set_form ,.img_container{
-    height: 100%;
-    background-color: yellow;
+.img_set_form {
+    display: block; /* ブロック要素として表示 */
+    width: 100%; /* 幅を100%に設定 */
+    height: 100%; /* 高さを100%に設定 */
+    background-color: #505F00; /* 背景色を設定 */
+    box-sizing: border-box; /* ボックスモデルの幅にボーダーとパディングを含める */
 }
-
 
 #imagePreview {
+    height: 500px;
     margin-top: 10px;
+    display: inline-block;
 }
   
 #imagePreview img {
@@ -147,6 +154,7 @@ main a{
 }
 
 #top_img_delete_btn{
+    margin-bottom: 0;
     background-color: transparent;
     border: none;
     transition: opacity 0.5s ease; 

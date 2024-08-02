@@ -21,20 +21,18 @@
                         <div class="photo_setting">
                             <h3 class="section_title">写真</h3>
                             <label class="caption_label">※任意</label>
-                            <div class="img_container">
-                                <div id="imagePreview">
-                                    <% if(topImg.length > 0){ %>
-                                        <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
-                                        <form action="/user/account/delete-img?_method=PUT" method="POST">
-                                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                                            <input type="hidden" name="imgId" value="<%= topImg[0]._id %>">
-                                            <button id="top_img_delete_btn" type="submit">現在のトプ画を削除する</button>
-                                        </form>
-                                        <% } else { %>
-                                            <img class="top_img" src="/images/noimg.jpg" alt="noimg">
-                                        <% } %>
-                                </div>
-                                <form class="img_set_form"action="/user/account/setting-img?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
+                            <div id="imagePreview">
+                            <% if(topImg.length > 0){ %>
+                                <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
+                                <form action="/user/account/delete-img?_method=PUT" method="POST">
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="imgId" value="<%= topImg[0]._id %>">
+                                    <button id="top_img_delete_btn" type="submit">現在のトプ画を削除する</button>
+                                </form>
+                                <% } else { %>
+                                <img class="top_img" src="https://res.cloudinary.com/dogup1dum/image/upload/v1722569643/Novelverse/lcmhnb4df8mif9pj190i.jpg" alt="noimg">
+                                <% } %>
+                                <form class="img_set_form" action="/user/account/setting-img?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
                                     <!-- <input type="hidden" name="_csrf" value="<%= csrfToken %>"> -->
                                     <input type="file" id="photoInput" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
                                     <button class="btn" type="submit">画像選択</button>
