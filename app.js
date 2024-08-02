@@ -297,7 +297,7 @@ app.use((err, req, res, next) => {
 // サーバー起動
 async function startServer() {
   await start();
-  app.listen(PORT, () =>
+  app.listen(process.env.PORT || PORT, () =>
     console.log(`サーバーが起動しました。ポート: ${PORT}`)
   );
 }
