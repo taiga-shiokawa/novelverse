@@ -1,6 +1,18 @@
 <% layout("layouts/signup-and-login-template") %>
 <% head = '<link rel="stylesheet" href="/css/login.css" />' %>
-<h1><%= err.message  %></h1>
-<% if (locals.loginError) { %>
-  <p><%= loginError %></p>
-<% } %>
+<% head = '<link rel="stylesheet" href="/css/error.css" />' %>
+
+<div class="error-section">
+  <div class="error-content">
+    <% if (locals.loginError) { %>
+      <h1><%= loginError %></h1>
+    <% } else { %>
+      <h1>404 Not Found</h1>
+  </div>
+  <div class="go-to-home">
+    <form action="/" method="get">
+      <button type="submit">ホームに戻る</button>
+    </form>
+  </div>
+    <% } %>
+</div>

@@ -1,0 +1,33 @@
+.error-section {
+  width: 100%;
+  max-width: 1200px;
+  height: 490px;
+  padding: 100px 40px;
+  margin: 0 auto;
+  font-family: "Noto Sans JP", sans-serif;
+  color: #332405;
+}
+
+.error-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.go-to-home {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+button {
+  padding: 5px 10px;
+  height: 40px;
+  width: 180px;
+  background-color: #505F00;
+  color: white;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.5s ease;
+}
