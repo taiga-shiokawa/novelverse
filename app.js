@@ -135,19 +135,10 @@ if (process.env.NODE_ENV === 'production') {
   sessionConfig.cookie.secure = true;
 }
 
-// CSRFミドルウェアの設定
-const csrfProtection = csrf({
-  cookie: true,
-  ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
-  value: (req) => {
-    return req.body._csrf || req.query._csrf || req.headers['x-csrf-token'];
-  }
-});
-
 app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(csrfProtection);
+app.use(csrf({cookie: true}));
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
 
