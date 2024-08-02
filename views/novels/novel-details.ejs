@@ -14,9 +14,10 @@ function getCoverUrl(novel) {
     <img class="cover_img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
     <div class="info_container">
       <div class="title_header">
-        <h1>タイトル <%= novelDetails.title %></h1>
-        <form class="bookmark-form" data-novel-id="<%= novelDetails._id %>">
-          <button class="bookmark-button" type="submit">読みたい +</button>
+        <h1 class="novel_title"><%= novelDetails.title %></h1>
+        <form class="bookmark_form" data-novel-id="<%= novelDetails._id %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="bookmark_button" type="submit">読みたい +</button>
         </form>
       </div>
       <div>

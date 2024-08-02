@@ -45,7 +45,6 @@ main a{
     font-size: 18px;
 }
 
-
 .help_list{
     padding-left: 0;
 }
@@ -72,12 +71,15 @@ main a{
     padding-left: 50px;
 }
 
-.right_box{
+.right_box {
     display: flex;
+    align-items: stretch;
     justify-content: space-between;
 }
 
-
+.photo_setting, .account_setting {
+    align-items: stretch; /* 高さを揃える */
+}
 
 .section_title{
     display: inline-block;
@@ -117,34 +119,40 @@ main a{
 
 /* 写真フォーム */
 
-.photo_setting{
+/* .photo_setting{
     width: 35%;
+    display: block;
     background-color: red;
-}
-
-/* .img_set_form {
-    height: 100%;
-    background-color: #505F00;
-    box-sizing: border-box;
-    display: inline-block;
-} */
+    height: auto; 
+} 
 
 .img_set_form {
+    display: block; 
+    width: 100%; 
+    height: 100%; 
+    background-color: #505F00; 
+} */
+
+.photo_setting {
+    width: 35%; /* サイドバーの幅 */
     display: block; /* ブロック要素として表示 */
-    width: 100%; /* 幅を100%に設定 */
+    background-color: red; /* 背景色 */
     height: 100%; /* 高さを100%に設定 */
-    background-color: #505F00; /* 背景色を設定 */
-    box-sizing: border-box; /* ボックスモデルの幅にボーダーとパディングを含める */
+    min-height:520px;
 }
 
-#imagePreview {
-    height: 500px;
-    margin-top: 10px;
-    display: inline-block;
+#img_set_form {
+    display: block; /* ブロック要素として表示 */
+    padding: 10px; /* 内部のパディングを設定 */
+    margin-bottom: 0;
+    background-color:blue; /* 背景色 */
+    margin-top: 10px; /* 上部のマージンを設定 */
+    height: 100%; /* 高さを100%に設定 */
 }
-  
-#imagePreview img {
+
+.top_img {
     width: 100%;
+    display: block;
     max-width: 200px;
     max-height: 200px;
     object-fit: cover;
@@ -153,16 +161,10 @@ main a{
     background-color: #f0f0f0;
 }
 
-#top_img_delete_btn{
-    margin-bottom: 0;
-    background-color: transparent;
-    border: none;
-    transition: opacity 0.5s ease; 
-}
-
 #top_img_delete_btn:hover{
     opacity: .7;
 }
+
 /* ユーザー情報フォーム */
 
 .account_setting{
@@ -211,4 +213,3 @@ textarea{
     width: 100px;
     padding-right: 10px;
 }
-
