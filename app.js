@@ -234,6 +234,36 @@ app.get('/', (req, res) => {
   res.redirect('/novel/home');
 });
 
+// ブックマーク追加を直接叩いた時
+app.get("/user/account/bookmark", (req, res) => {
+  res.redirect('/novel/home');
+});
+
+// ブックマークキャンセルを直接叩いた時
+app.get("/user/account/bookmark/cancel", (req, res) => {
+  res.redirect('/novel/home');
+});
+
+// サイト案内 -> ノベルバースとは
+app.get("/app-info", (req, res) => {
+  res.render("users/app-info");
+});
+
+// サイト案内 -> 運営者について
+app.get("/admin-info", (req, res) => {
+  res.render("users/admin-info");
+});
+
+// 利用規約
+app.get("/terms-and-conditions", (req, res) => {
+  res.render("common/terms_and_conditions");
+});
+
+// プライバシーポリシー
+app.get("/privacy-policy", (req, res) => {
+  res.render("common/privacy_policy");
+});
+
 app.use("/novel", novelRouter); // 小説関連API
 app.use("/novel/management", novelManagementRouter); // 小説管理API
 app.use("/user/account", userAccountRouter); // ユーザーアカウント関連API
@@ -244,26 +274,6 @@ app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユー
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
 app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
-
-// サイト案内 -> ノベルバースとは
-app.get("/app-info", (req, res) => {
-  res.render("users/app-info", { csrfToken: req.csrfToken() });
-});
-
-// サイト案内 -> 運営者について
-app.get("/admin-info", (req, res) => {
-  res.render("users/admin-info", { csrfToken: req.csrfToken() });
-});
-
-// 利用規約
-app.get("/terms-and-conditions", (req, res) => {
-  res.render("common/terms_and_conditions", { csrfToken: req.csrfToken() });
-});
-
-// プライバシーポリシー
-app.get("/privacy-policy", (req, res) => {
-  res.render("common/privacy_policy", { csrfToken: req.csrfToken() });
-});
 
 // 共通エラーページ
 app.get("/error", (req, res) => {
