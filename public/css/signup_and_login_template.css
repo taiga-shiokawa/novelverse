@@ -62,6 +62,8 @@ a{
 /* nav */
 
 .nav_container{
+  padding: 5px;
+  width: 100%;
   background-color: #002B24;
   font-family: "Noto Sans JP", sans-serif;
 }
@@ -76,7 +78,10 @@ a{
 
 .site_nav ul{
   display: flex;
+  margin: 5px;
+  align-items: center;
 }
+
 
 .site_nav li{
   margin-left: 20px;
@@ -84,12 +89,52 @@ a{
 
 .site_nav a{
   color: #fff;
+  line-height: 16px;
   font-size: 12px;
   transition: opacity 0.5s ease; 
 }
 
 .site_nav a:hover{
   opacity: .7;
+}
+
+
+/**/
+/* nav関係 */
+
+.wrapper{
+  background-color: #002B24;
+}
+
+.nav_container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+
+
+.nav_right label a {
+  margin-left: 40px;
+  color: #fff;
+  font-size: 12px;
+  transition: opacity 0.5s ease;
+}
+
+.site_nav_button{
+  line-height: 40px;
+}
+
+.site_nav ul li a{
+  color: white;
+}
+
+.nav_container label{
+  color: #fff;
+  font-size: 12px;
+  position: relative;
+  transition: opacity 0.5s ease; 
 }
 
 /* footer */
