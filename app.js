@@ -135,10 +135,19 @@ if (process.env.NODE_ENV === 'production') {
   sessionConfig.cookie.secure = true;
 }
 
+// CSRFミドルウェアの設定
+const csrfProtection = csrf({
+  cookie: true,
+  ignoreMethods: ['GET', 'HEAD', 'OPTIONS'],
+  value: (req) => {
+    return req.body._csrf || req.query._csrf || req.headers['x-csrf-token'];
+  }
+});
+
 app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(csrf({cookie: true}))
+app.use(csrfProtection);
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
 
@@ -245,23 +254,50 @@ app.get("/user/account/bookmark/cancel", (req, res) => {
 });
 
 // サイト案内 -> ノベルバースとは
-app.get("/app-info", (req, res) => {
-  res.render("users/app-info");
+app.get("/app-info", async (req, res, next) => {
+  let topImg = "";
+    
+  try {
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
+    res.render("users/app-info", {topImg});
+  } catch (error) {
+    console.log(error);
+    next(error);
+  }
 });
 
 // サイト案内 -> 運営者について
-app.get("/admin-info", (req, res) => {
-  res.render("users/admin-info");
+app.get("/admin-info", async (req, res) => {
+  if(res.locals.currentUser){
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    topImg =  loginUser.image;
+  }
+  res.render("users/admin-info", { topImg });
 });
 
 // 利用規約
-app.get("/terms-and-conditions", (req, res) => {
-  res.render("common/terms_and_conditions");
+app.get("/terms-and-conditions", async (req, res) => {
+  if(res.locals.currentUser){
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    topImg =  loginUser.image;
+  }
+  res.render("common/terms_and_conditions", { topImg });
 });
 
 // プライバシーポリシー
-app.get("/privacy-policy", (req, res) => {
-  res.render("common/privacy_policy");
+app.get("/privacy-policy", async (req, res) => {
+  if(res.locals.currentUser){
+    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    topImg =  loginUser.image;
+  }
+  res.render("common/privacy_policy", { topImg });
 });
 
 app.use("/novel", novelRouter); // 小説関連API
