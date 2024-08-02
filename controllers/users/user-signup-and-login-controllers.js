@@ -9,13 +9,7 @@ const userLoginValidate = require("../../utils/user-login-validation");
 const User = require("../../models/Users");
 
 // Resend環境変数
-let resend;
-const apiKey = process.env.RESEND_API_KEY_HEROKU || process.env.RESEND_API_KEY;
-if (apiKey) {
-  resend = new Resend(apiKey);
-} else {
-  console.error('Resend API key is not set');
-}
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // アカウント作成画面へ遷移
 module.exports.goToAccountCreate = (req, res) => {
