@@ -47,9 +47,8 @@ module.exports.accountCreate = async (req, res) => {
       subject: "メール確認",
       html: `
         <h1>メールアドレスの確認</h1>
-        <p>ゴキブリが、あなたを見ているよっちゃんイカ。</p>
-        <p>以下のリンクをクリックし、認証を実行してくだサイボーグ爺さん。</p>
-        <a href="http://localhost:8000/user/login">ぴゃー！！！</a>
+        <p>アカウント登録ありがとうございます。</p>
+        <a href="https://www.novelverse.net/user/login">こちらからログイン</a>
       `,
     });
     console.log("メール送信成功 : ", data);
