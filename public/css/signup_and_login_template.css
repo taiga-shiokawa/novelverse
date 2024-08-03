@@ -5,6 +5,7 @@ html, body {
   margin: 0;
   padding: 0;
   background-color: #F6F1DE;
+  font-family: "Noto Sans JP", sans-serif;
 }
 
 body {
@@ -19,7 +20,7 @@ a{
   text-decoration: none;
 }
 
-/* ヘッダー */
+/* header */
 .header_wrapper{
   width: 100%;
   max-width: 1200px;
@@ -27,7 +28,6 @@ a{
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
-  font-family: "Noto Sans JP", sans-serif;
 }
 
   /* header トプ画*/
@@ -62,14 +62,13 @@ a{
 /* nav */
 
 .nav_container{
-  padding: 5px;
   width: 100%;
   background-color: #002B24;
-  font-family: "Noto Sans JP", sans-serif;
+  padding: 5px;
 }
 
 .site_nav{
-  width: 100%;
+  width: 100vw;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -80,6 +79,7 @@ a{
   display: flex;
   margin: 5px;
   align-items: center;
+  height: 40px;
 }
 
 
@@ -89,8 +89,8 @@ a{
 
 .site_nav a{
   color: #fff;
-  line-height: 16px;
   font-size: 12px;
+  display: block;
   transition: opacity 0.5s ease; 
 }
 
@@ -98,13 +98,9 @@ a{
   opacity: .7;
 }
 
-
-/**/
 /* nav関係 */
 
-.wrapper{
-  background-color: #002B24;
-}
+
 
 .nav_container{
   display: flex;
@@ -198,7 +194,7 @@ footer ul li {
 
   .hamburger-menu {
     display: block;
-    position: absolute;
+    position: fixed;
     top: 10px;
     right: 10px;
     width: 30px;
