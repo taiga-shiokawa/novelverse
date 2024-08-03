@@ -77,7 +77,7 @@ router.post("/delete", async (req, res) => {
       await novel.save();
     }
 
-    res.redirect("novel/management/all");
+    res.redirect("/novel/management/all");
   } catch (err) {
     console.error(err);
     res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
