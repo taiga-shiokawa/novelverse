@@ -62,7 +62,7 @@
     </div>
     <div>
       <label for="genre">ジャンル</label>
-      <select name="novel[genre]" id="genre" required>
+      <select name="novel[genre]" id="genre">
         <% genres.forEach(genre => { %>
         <option value="<%= genre._id %>"><%= genre.genre_name %></option>
         <% }); %>

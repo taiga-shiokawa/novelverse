@@ -14,7 +14,7 @@ const novelRegisrationtAndUpdateValidate = (req, res, next) => {
       novel_type: Joi.string().required(),
       amazon_url: Joi.string().allow(''),
       author: Joi.string().required(),
-      genre: Joi.string().required()
+      genre: Joi.string().allow(''),
     }).required(),
     _csrf: Joi.string().optional()
   });

@@ -241,6 +241,51 @@
           <% } %>
         </div>
       </div>
+      <div class="section_container">
+        <div class="section_top">
+          <div class="section_right">
+            <span class="yellow"></span>
+            <h2 class="section_title">
+              その他
+            </h2>
+          </div>
+          <a class="more" href="/novel/list?genre_name=その他">もっと見る</a>
+        </div>
+        <div class="book-list">
+          <% if( otherNovels.length > 0 ) { %>
+          <ul>
+            <% for (let novel of otherNovels) { %>
+                <li>
+                  <a class="detail_link" href="/novel/detail/<%= novel._id %>">
+                    <div class="book-item">
+                      <div class="book-cover">
+                          <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
+                          <form class="bookmark-form" data-novel-id="<%= novel._id %>">
+                            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                            <button class="bookmark-button" type="submit">読みたい＋</button>
+                          </form>
+                      </div>
+                      <span class="book_info">
+                        <p class="novel_name"><%= novel.title %></p>
+                        <p class="author_name"><%= novel.author.author_name %></p>   
+                        <form class="mobile_only bookmark_form" data-novel-id="<%= novel._id %>">
+                          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                          <button class="bookmark_button" type="submit">読みたい＋</button>
+                        </form>
+                      </span>
+                    </div>
+                  </a>
+                </li>
+            <% } %>
+            <div class="mobile_only more_mobile_only">
+              <a href="/novel/list?genre_name=その他">もっと見る</a>
+            </div>
+          </ul>
+          <% } else { %>
+            <p>その他は現在登録されていません</p>
+          <% } %>
+        </div>
+      </div>
     </section>
   </div>
 </main>

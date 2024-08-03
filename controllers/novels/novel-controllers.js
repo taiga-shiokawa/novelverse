@@ -32,6 +32,12 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     .populate("author")
     .limit(5);
 
+  const otherGenre = await Genre.findOne({ genre_name: "その他" });
+  const otherNovels = await Novel.find({ genre: otherGenre._id })
+    .sort({_id: -1})
+    .populate("author")
+    .limit(5);
+
     let topImg = "";
     
     if(res.locals.currentUser){
@@ -46,6 +52,7 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     tankobonNovels,
     lightNovels,
     recommendedNovels,
+    otherNovels,
     topImg,
     csrfToken: req.csrfToken(),
   });
@@ -65,6 +72,8 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
   } else if (req.query.is_recommend === "true") {
     query.is_recommend = true;
     pageTitle = "ノベルバースおすすめ";
+  } else if (req.query.genre_name === "その他") {
+    pageTitle = "その他";
   }
 
   let topImg = "";
