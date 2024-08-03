@@ -97,6 +97,8 @@ a{
   line-height: 40px;
 }
 
+
+
 #logout {
   margin-left: 320px;
 }
@@ -262,6 +264,10 @@ footer ul li {
     text-align: center;
     margin: 0;
     padding: 0;
+  }
+
+  .wrapper{
+    background-color: transparent;
   }
 
   .nav-container li{
