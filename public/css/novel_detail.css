@@ -59,7 +59,7 @@ hr {
 .summary_text {
   text-align: left;
   width: 100%;
-  height: 150px;
+  min-height: 150px;
   margin: 10px 0 20px;
   padding: 10px;
   background-color: #fff;
