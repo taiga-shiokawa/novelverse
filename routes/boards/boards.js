@@ -4,6 +4,7 @@ const router = express.Router();
 
 // 掲示板の説明画面へ遷移
 router.get("/info", async (req, res) => {
+  let topImg = "";
   if(res.locals.currentUser){
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
@@ -14,6 +15,7 @@ router.get("/info", async (req, res) => {
 
 // 掲示板へ遷移
 router.get("/home", async (req, res) => {
+  let topImg = "";
   if(res.locals.currentUser){
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得

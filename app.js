@@ -263,6 +263,7 @@ app.get("/app-info", async (req, res, next) => {
 
 // サイト案内 -> 運営者について
 app.get("/admin-info", async (req, res) => {
+  let topImg = "";
   if(res.locals.currentUser){
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
@@ -273,6 +274,7 @@ app.get("/admin-info", async (req, res) => {
 
 // 利用規約
 app.get("/terms-and-conditions", async (req, res) => {
+  let topImg = "";
   if(res.locals.currentUser){
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
@@ -283,6 +285,7 @@ app.get("/terms-and-conditions", async (req, res) => {
 
 // プライバシーポリシー
 app.get("/privacy-policy", async (req, res) => {
+  let topImg = "";
   if(res.locals.currentUser){
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
