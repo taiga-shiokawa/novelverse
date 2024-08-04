@@ -2,7 +2,7 @@
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
         <main>
             <div class="container">
-                <form action="/admin/inquiry" method="POST">
+                <form action="/user/account/inquiry" method="POST">
                     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <h2 class="delet_title">ご意見・お問い合わせ</h2>
                     <label class="colums_label">メールアドレス　<span class="required_label caption_label">必須</span></label>
