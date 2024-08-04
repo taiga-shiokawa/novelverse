@@ -75,3 +75,51 @@ hr {
 .info_container th{
   width: 200px;
 }
+
+/* スマホ用レスポンシブデザイン */
+@media screen and (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .cover_img {
+    margin: 0 auto 20px;
+    height: 500px;
+    width: 310px;
+  }
+
+  .info_container {
+    max-width: 100%;
+  }
+
+  .title_header {
+    display: flex;
+    align-items: center;
+  }
+
+  .title_header h1 {
+    font-size: 23px;
+  }
+
+  .novel_title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .bookmark_button {
+    margin-top: 10px;
+  }
+
+  .info_container th {
+    width: 100px;
+  }
+
+  .info_container td {
+    padding-left: 10px;
+  }
+
+  .summary_text {
+    min-height: 100px;
+  }
+}
