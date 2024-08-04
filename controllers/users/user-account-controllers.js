@@ -3,13 +3,22 @@ const Bookmark = require("../../models/Bookmark");
 const DeletionReason = require("../../models/Deletion_reasons");
 const passport = require("passport");
 const { cloudinary } = require("../../cloudinary/cloudinary");
+const { Resend } = require("resend");
+require("dotenv").config();
+
+// Resend環境変数
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports.renderAccountDeletion = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
   const username = loginUser.username;
-  const topImg =  loginUser.image;
-  res.render("users/account-deletion", { username , topImg ,csrfToken: req.csrfToken() });
+  const topImg = loginUser.image;
+  res.render("users/account-deletion", {
+    username,
+    topImg,
+    csrfToken: req.csrfToken(),
+  });
 };
 
 module.exports.accountDeletion = async (req, res, next) => {
@@ -22,8 +31,8 @@ module.exports.accountDeletion = async (req, res, next) => {
       return next(err);
     }
     if (!user) {
-      req.flash('error', 'パスワードが間違っています');
-      return res.redirect('/user/account/deletion'); // リダイレクト先
+      req.flash("error", "パスワードが間違っています");
+      return res.redirect("/user/account/deletion"); // リダイレクト先
     }
 
     try {
@@ -35,31 +44,34 @@ module.exports.accountDeletion = async (req, res, next) => {
       await User.findByIdAndDelete(user.id);
 
       // ログアウト処理
-      req.logout(err => {
+      req.logout((err) => {
         if (err) {
           return next(err);
         }
-        req.flash('success', 'アカウントを削除しました');
-        res.redirect('/user/login'); // リダイレクト先
+        req.flash("success", "アカウントを削除しました");
+        res.redirect("/user/login"); // リダイレクト先
       });
     } catch (error) {
-      console.error('アカウント削除中にエラーが発生しました:', error);
-      req.flash('error', 'アカウント削除に失敗しました');
-      res.redirect('/user/account/deletion'); // リダイレクト先
+      console.error("アカウント削除中にエラーが発生しました:", error);
+      req.flash("error", "アカウント削除に失敗しました");
+      res.redirect("/user/account/deletion"); // リダイレクト先
     }
   })(req, res, next); // passport.authenticateミドルウェアを呼び出す
-
 };
 
 module.exports.renderAccountSetting = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg =  loginUser.image;
+  const topImg = loginUser.image;
   if (!loginUser) {
     req.flash("error", "ユーザーは見つかりませんでした");
     return res.redirect(`/user/login`);
   }
-  res.render("users/account-settings", { loginUser , topImg , csrfToken: req.csrfToken() });
+  res.render("users/account-settings", {
+    loginUser,
+    topImg,
+    csrfToken: req.csrfToken(),
+  });
 };
 
 module.exports.accountSetting = async (req, res) => {
@@ -77,14 +89,15 @@ module.exports.accountSettingImg = async (req, res) => {
   }
 
   try {
-    await User.findByIdAndUpdate( id , { image: { url: req.file.path, filename: req.file.filename } });
+    await User.findByIdAndUpdate(id, {
+      image: { url: req.file.path, filename: req.file.filename },
+    });
     req.flash("success", "トップ画像をしました");
     res.redirect("/user/account/setting");
   } catch (err) {
     req.flash("error", "トップ画像の変更に失敗しました");
     res.redirect("/user/account/setting");
   }
-  
 };
 
 module.exports.deleteSettingImg = async (req, res) => {
@@ -92,7 +105,7 @@ module.exports.deleteSettingImg = async (req, res) => {
     const { id } = res.locals.currentUser;
     const userImgId = req.body.imgId;
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    const topImg =  loginUser.image;
+    const topImg = loginUser.image;
 
     console.log(`topImg ${userImgId}`);
     // Cloudinaryから画像を削除
@@ -101,21 +114,27 @@ module.exports.deleteSettingImg = async (req, res) => {
       await cloudinary.uploader.destroy(topImg[0].filename);
     }
 
-    loginUser.image = loginUser.image.filter((c) => c._id.toString() !== userImgId);
+    loginUser.image = loginUser.image.filter(
+      (c) => c._id.toString() !== userImgId
+    );
     await loginUser.save();
     res.redirect("/user/account/setting");
   } catch (err) {
     console.log(err);
     const updatedUser = await User.findByIdAndUpdate(id);
-    res.render("users/account-settings", { loginUser: updatedUser , topImg , csrfToken: req.csrfToken() });
+    res.render("users/account-settings", {
+      loginUser: updatedUser,
+      topImg,
+      csrfToken: req.csrfToken(),
+    });
   }
-}
+};
 
 module.exports.renderPasswordChange = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg =  loginUser.image;
-  res.render("users/password-change" , { topImg ,csrfToken: req.csrfToken()});
+  const topImg = loginUser.image;
+  res.render("users/password-change", { topImg, csrfToken: req.csrfToken() });
 };
 
 module.exports.passwordChange = async (req, res, next) => {
@@ -198,8 +217,8 @@ module.exports.addBookmark = async (req, res) => {
 module.exports.renderNovelHome = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg =  loginUser.image.url;
-  res.redirect("/novel/home" , {topImg ,csrfToken: req.csrfToken()});
+  const topImg = loginUser.image.url;
+  res.redirect("/novel/home", { topImg, csrfToken: req.csrfToken() });
 };
 
 module.exports.renderBookmarkLists = async (req, res) => {
@@ -214,11 +233,15 @@ module.exports.renderBookmarkLists = async (req, res) => {
     });
 
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg =  loginUser.image;
+    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    const topImg = loginUser.image;
 
     const novels = bookmarks.map((bookmark) => bookmark.novel);
-    res.render("users/bookmark-list", { novels, topImg ,  csrfToken: req.csrfToken() });
+    res.render("users/bookmark-list", {
+      novels,
+      topImg,
+      csrfToken: req.csrfToken(),
+    });
   } catch (err) {
     console.log(err);
   }
@@ -255,11 +278,11 @@ module.exports.cancelBookmark = async (req, res) => {
 
 // ご意見・お問い合わせ画面へ遷移
 module.exports.goToInquiry = async (req, res) => {
-  if(res.locals.currentUser){
+  if (res.locals.currentUser) {
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    const topImg =  loginUser.image;
-    res.render("users/inquiry-page" , {topImg, csrfToken: req.csrfToken()});
+    const topImg = loginUser.image;
+    res.render("users/inquiry-page", { topImg, csrfToken: req.csrfToken() });
   }
 };
 
@@ -276,7 +299,7 @@ module.exports.inquiry = async (req, res) => {
       return res.redirect("/user/login");
     }
     const data = await resend.emails.send({
-      from: "onboarding@resend.dev",
+      from: "onboarding@novelverse.net",
       to: "taiga.hr12@gmail.com",
       subject: `${subject}`,
       html: `
@@ -287,7 +310,7 @@ module.exports.inquiry = async (req, res) => {
     `,
     });
     console.log("メール送信成功 : ", data);
-    res.redirect("/user/after_page");
+    res.render("users/after-inquiry", { subject, text });
   } catch (err) {
     console.log("メール送信エラー : ", err);
   }
