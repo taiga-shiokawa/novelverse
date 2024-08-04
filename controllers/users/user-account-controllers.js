@@ -298,19 +298,44 @@ module.exports.inquiry = async (req, res) => {
       req.flash("existError", "ログインしてください");
       return res.redirect("/user/login");
     }
+
+    // 管理者へメール送信
     const data = await resend.emails.send({
       from: "onboarding@novelverse.net",
       to: "taiga.hr12@gmail.com",
       subject: `${subject}`,
       html: `
       <p>From: ${email}</p>
-      <p>Subject: ${subject}</p>
-      <p>Message:</p>
+      <p>件名: ${subject}</p>
+      <p>お問い合わせ内容:</p>
       <p>${text}</p>
     `,
     });
     console.log("メール送信成功 : ", data);
-    res.render("users/after-inquiry", { subject, text });
+
+    // ユーザーへ確認メール送信
+    const userMailData = await resend.emails.send({
+      from: "onboarding@novelverse.net",
+      to: email,
+      subject: `お問い合わせ内容の確認: ${subject}`,
+      html: `
+      <p>以下の内容でお問い合わせを受け付けました。</p>
+      <p>件名: ${subject}</p>
+      <p>お問い合わせ内容:</p>
+      <p>${text}</p>
+      <p>ご連絡ありがとうございます。内容を確認の上、必要に応じて回答させていただきます。</p>
+    `,
+    });
+    console.log("ユーザーへの確認メール送信成功 : ", userMailData);
+
+    let topImg = "";
+    if (res.locals.currentUser) {
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg = loginUser.image;
+    }
+
+    res.render("users/after-inquiry", { topImg });
   } catch (err) {
     console.log("メール送信エラー : ", err);
   }
