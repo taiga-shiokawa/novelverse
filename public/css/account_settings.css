@@ -216,3 +216,151 @@ textarea{
     padding-right: 10px;
 }
 
+@media screen and (max-width: 768px) {
+    main {
+        margin-right: 20px;
+    }
+    .container {
+        flex-direction: column;
+        padding: 10px;
+        align-items: center;
+    }
+
+    .right_title h2 {
+        max-width: 90%;
+        margin-left: 5px;
+        text-align: center;
+    }
+
+    .right_container {
+        width: 100%;
+        margin-right: 0;
+        padding-left: 0;
+        order: 1;
+    }
+
+    .right_box {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .photo_setting {
+        width: 100%;
+        margin-bottom: 30px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: auto;
+        order: 1;
+    }
+
+    .account_setting {
+        width: 90%;
+        order: 2;
+        margin: 0 auto;
+    }
+    
+    .left_container {
+        width: 90%;
+        max-width: none;
+        order: 3;
+        margin: 30px auto 0;
+        height: auto;
+    }
+
+    .top_img {
+        width: 150px;
+        height: 150px;
+    }
+
+    #top_img_delete_btn {
+        padding-left: 0;
+        margin-top: 10px;
+    }
+
+    .img_set_form, #img_set_form {
+        height: auto;
+        align-items: center;
+        width: 90%;
+    }
+
+    .help_list {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding-left: 0;
+    }
+
+    .help_list li {
+        width: 100%;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+
+    .section_title {
+        text-align: center;
+        padding-bottom: 15px;
+    }
+
+    .photo_setting .caption_label {
+        display: block;
+        text-align: center;
+    }
+
+    .photo_setting .btn {
+        margin-top: 20px;
+        width: 90%;
+        margin-right: 40px;
+        max-width: none;
+    }
+
+    input[type="file"] {
+        width: 100%;
+        text-align: center;
+    }
+
+    .account_setting input, 
+    .account_setting textarea {
+        margin-right: 50px;
+        max-width: none;
+    }
+
+    .account_setting .colums_label {
+        width: 100%;
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .account_setting .ta_box {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .account_setting textarea {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .account_setting .caption_label {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    .account_setting input,
+    .account_setting textarea {
+        margin-top: 5px;
+    }
+
+    .account_setting .btn {
+        width: 90%;
+        margin-right: 50px;
+        max-width: none;
+    }
+
+    .pass_label {
+        padding-left: 0;
+        display: block;
+        margin-top: 5px;
+    }
+}
