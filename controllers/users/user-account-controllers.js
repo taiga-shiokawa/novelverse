@@ -12,10 +12,10 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 module.exports.renderAccountDeletion = async (req, res) => {
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const username = loginUser.username;
+  const email = loginUser.email;
   const topImg = loginUser.image;
   res.render("users/account-deletion", {
-    username,
+    email,
     topImg,
     csrfToken: req.csrfToken(),
   });
@@ -24,14 +24,21 @@ module.exports.renderAccountDeletion = async (req, res) => {
 module.exports.accountDeletion = async (req, res, next) => {
   console.log(`deletion`);
   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const { password, opinion } = req.body; //formに入力した値
-  passport.authenticate("local", async (err, user, info) => {
+  const { password, email, opinion } = req.body; //formに入力した値
+
+  const user = await User.findOne({ email: email });
+  console.log("ユーザーが見つかりました", user);
+
+  console.log("入力パスワード", password);
+  passport.authenticate("user", async (err, user, info) => {
     if (err) {
       // エラーがあれば次のエラーハンドラーに渡す
+      console.log("アカウント削除中にエラーが起きました", err);
       return next(err);
     }
     if (!user) {
       req.flash("error", "パスワードが間違っています");
+      console.log("パスワードが間違っています");
       return res.redirect("/user/account/deletion"); // リダイレクト先
     }
 
@@ -49,6 +56,7 @@ module.exports.accountDeletion = async (req, res, next) => {
           return next(err);
         }
         req.flash("success", "アカウントを削除しました");
+        console.log("アカウントを削除しました");
         res.redirect("/user/login"); // リダイレクト先
       });
     } catch (error) {
