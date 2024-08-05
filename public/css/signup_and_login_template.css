@@ -170,12 +170,6 @@ footer ul li {
 /* レスポンシブデザイン用のスタイル */
 @media screen and (max-width: 768px) {
 
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
-
   .header_wrapper {
     flex-direction: column;
     height: auto;
@@ -202,6 +196,7 @@ footer ul li {
   .hamburger-menu {
     display: block;
     position: fixed;
+    margin-right: 50px;
     top: 10px;
     right: 10px;
     width: 30px;
@@ -296,7 +291,7 @@ footer ul li {
 
   footer ul {
     flex-direction: column;
-    margin-left: 0;
+    margin: 0;
     padding: 0;
   }
 

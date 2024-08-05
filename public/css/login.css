@@ -76,7 +76,8 @@ main{
 @media screen and (max-width: 767px) {
     .container {
         flex-direction: column-reverse;
-        padding: 50px 20px;
+        /* padding: 50px 20px; */
+        margin-right: auto;
     }
 
     .left_container, .right_container {
