@@ -1,0 +1,17 @@
+<p>小説の数 <%= count %></p>
+<div class="genre_list">
+    <form>
+        <% if(genreList && genreList.length > 0){ %>
+            <% for( let genre of genreList ){ %>
+                <form action="/admin-novel-management/genre_delete" method="POST">
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                        <input type="hidden" name="genreid" value="<%= genre._id %>">
+                        <input type="hidden" name="genreName" value="<%= genre.genre_name %>">
+                        <p><%= genre.genre_name %></p>
+                        <button>削除</button>
+                </form>
+        <% } else } %>
+                <p>登録されているジャンルはありません</p>
+        <% } %>
+    </form>
+</div>
