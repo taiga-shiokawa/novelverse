@@ -256,8 +256,8 @@ textarea{
 
     .account_setting {
         width: 90%;
+        margin-right: 20px;
         order: 2;
-        margin: 0 auto;
     }
     
     .left_container {
