@@ -120,6 +120,10 @@
 /* 例: 768px以下の画面サイズに対するスタイル */
 @media (max-width: 768px) {
 
+  main {
+    margin-right: auto;
+  }
+
   .mobile_only{
     display: block;
   }

@@ -217,9 +217,6 @@ textarea{
 }
 
 @media screen and (max-width: 768px) {
-    main {
-        margin-right: auto;
-    }
     .container {
         flex-direction: column;
         padding: 10px;
@@ -264,7 +261,7 @@ textarea{
         width: 90%;
         max-width: none;
         order: 3;
-        margin: 30px auto 0;
+        margin: 30px;
         height: auto;
     }
 
