@@ -10,7 +10,7 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 //管理者ログインに遷移
 module.exports.renderAdminLogin = (req, res) => {
-  res.render("admins/admin-login");
+  res.render("admins/admin-login", {csrfToken: req.csrfToken()});
 };
 
 module.exports.adminLogin = async (req, res, next) => {
@@ -53,7 +53,7 @@ module.exports.adminLogin = async (req, res, next) => {
 
 // 管理者追加画面へ遷移
 module.exports.renderAddAdmin = (req, res) => {
-  res.render("admins/admin-add");
+  res.render("admins/admin-add"), {csrfToken: req.csrfToken()};
 };
 
 module.exports.addAdmin = async (req, res) => {

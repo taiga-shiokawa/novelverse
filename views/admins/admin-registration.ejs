@@ -7,7 +7,8 @@
         管理者新規登録ページ（仮）
     </h2>
     <a href="/admin/admin_login">ログイン画面へ</a>
-    <form action="/admin/registration_admin?_method=PUT" method="POST">
+    <form action="/admin/registration_admin" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <input type="file" id="photoInput" name="photo" accept="image/*">
         <label class="colums_label">管理者コード</label><span class="caption_label required_label">※必須</span>
         <input type="text" name="admin_code" required />

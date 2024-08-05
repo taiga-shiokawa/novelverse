@@ -6,6 +6,7 @@
     <a href="/admin/registration_admin">新規登録へ</a>
     <h1>Novelverse<br>管理者専用</h1>
     <form action="/admin/admin_login" method="post">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label class="colums_label">管理者コード：</label><br />
         <input type="text" name="admin_code" required />
         <br /><br />

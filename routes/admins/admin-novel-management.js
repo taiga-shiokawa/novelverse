@@ -5,6 +5,7 @@ const multer = require("multer");
 const { storage } = require("../../cloudinary/cloudinary");
 const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 const AdminNovles = require('../../controllers/admins/admin-novels-controllers');
+const { adminIsLoggedIn } = require("../../middleware");
 
 const router = express.Router();
 
@@ -133,13 +134,13 @@ router.post("/cover/delete", async (req, res) => {
 
 
 //ジャンル追加画面に遷移 / 実装
-// router.route("/genre_add")
-//    .get(  adminIsLoggedIn , AdminNovles.renderAddGenres )   
-  //  .post(  adminIsLoggedIn , AdminNovles.addGenres )   
+router.route("/genre_add")
+   .get(  adminIsLoggedIn , AdminNovles.renderAddGenres )   
+   .post(  adminIsLoggedIn , AdminNovles.addGenres )   
 
 //ジャンル削除画面に遷移 / 実装
-//router.route("/genre_delete")
-   // .get( adminIsLoggedIn , AdminNovles.renderGenreDeletion )
-  //  .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
+router.route("/genre_delete")
+   .get( adminIsLoggedIn , AdminNovles.renderGenreDeletion )
+   .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
 
 module.exports = router;
