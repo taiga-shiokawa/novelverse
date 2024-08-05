@@ -228,7 +228,7 @@ textarea{
 
     .right_title h2 {
         max-width: 90%;
-        margin-left: 5px;
+        margin-left: 20px;
         text-align: center;
     }
 
@@ -276,6 +276,7 @@ textarea{
     #top_img_delete_btn {
         padding-left: 0;
         margin-top: 10px;
+        color: black;
     }
 
     .img_set_form, #img_set_form {

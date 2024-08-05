@@ -343,6 +343,7 @@ footer ul li {
 
   .hamburger-menu {
     display: block;
+    margin-right: 10px;
     position: fixed;
     top: 10px;
     right: 25px;
@@ -541,6 +542,7 @@ footer ul li {
 .openbtn1{
   font-size: 11px;
   position: fixed;
+  margin-right: 10px;
   z-index: 999;/*ボタンを最前面に*/
   cursor: pointer;
   right: 50px;
