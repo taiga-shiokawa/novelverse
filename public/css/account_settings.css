@@ -309,7 +309,7 @@ textarea{
 
     .photo_setting .btn {
         margin-top: 20px;
-        width: 90%;
+        width: 100%;
         margin-right: 40px;
         max-width: none;
     }
@@ -353,7 +353,7 @@ textarea{
     }
 
     .account_setting .btn {
-        width: 90%;
+        width: 100%;
         margin-right: 50px;
         max-width: none;
     }

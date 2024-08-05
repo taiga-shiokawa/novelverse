@@ -9,6 +9,7 @@ html, body {
 }
 
 body{
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
@@ -253,6 +254,12 @@ footer ul li {
 /* レスポンシブデザイン用のスタイル */
 @media screen and (max-width: 768px) {
 
+  body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
   .mobile_only{
     display: inline-block;
   }
@@ -298,6 +305,7 @@ footer ul li {
 }
 
   .container{
+    flex: 1;
     padding-top: 0px;
   }
 
@@ -417,6 +425,14 @@ footer ul li {
     font-size: 18px;
     display: block;  
     padding: 10px 0;  
+  }
+
+  footer {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
   }
 
   footer ul {
