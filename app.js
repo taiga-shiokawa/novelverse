@@ -18,8 +18,8 @@ const methodOverride = require("method-override");
 const mongoSanitize = require("express-mongo-sanitize");
 const csrf = require("csurf");
 const cookieParser = require("cookie-parser");
-const { createClient } = require('redis');
-const RedisStore = require('connect-redis').default;
+const { createClient } = require("redis");
+const RedisStore = require("connect-redis").default;
 
 // ローカルモジュール
 const getGenreName = require("./common/genres"); // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
@@ -55,7 +55,7 @@ const start = async () => {
 
 // Redisクライアントの初期化
 let redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379'
+  url: process.env.REDIS_URL || "redis://localhost:6379",
 });
 redisClient.connect().catch(console.error);
 
@@ -63,7 +63,7 @@ redisClient.connect().catch(console.error);
 let redisStore = new RedisStore({
   client: redisClient,
   prefix: "myapp:",
-})
+});
 
 // commonフォルダのgenres.jsからジャンル名を読み込み
 async function loadGenres() {
@@ -123,22 +123,22 @@ const sessionConfig = {
   cookie: {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    sameSite: 'lax',
+    sameSite: "lax",
     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // Cookieの有効期限を1週間後に設定
     maxAge: 1000 * 60 * 60 * 24 * 7, // Coolieの"最大"有効期限を1週間に設定
   },
 };
 
 // 本番環境でのみ適用される追加設定
-if (process.env.NODE_ENV === 'production') {
-  app.set('trust proxy', 1);
+if (process.env.NODE_ENV === "production") {
+  app.set("trust proxy", 1);
   sessionConfig.cookie.secure = true;
 }
 
 app.use(cookieParser());
 app.use(session(sessionConfig));
 app.use(flash());
-app.use(csrf({cookie: true}));
+app.use(csrf({ cookie: true }));
 app.use(passport.initialize()); // パスポートを初期化し, ユーザー認証機能を有効にする.
 app.use(passport.session()); // ユーザー認証情報をセッションで維持する
 
@@ -152,9 +152,9 @@ app.use((req, res, next) => {
 passport.use(
   "user",
   new LocalStrategy(
-    { 
-      usernameField: "email", 
-      passwordField: "password" 
+    {
+      usernameField: "email",
+      passwordField: "password",
     },
     User.authenticate()
   )
@@ -175,10 +175,10 @@ passport.use(
 // ログイン直後とログアウト直前にCSRFトークンをログ出力するミドルウェア
 app.use((req, res, next) => {
   const originalRender = res.render;
-  res.render = function() {
-    console.log('Current CSRF token:', req.csrfToken());
+  res.render = function () {
+    console.log("Current CSRF token:", req.csrfToken());
     originalRender.apply(res, arguments);
-  }
+  };
   next();
 });
 
@@ -230,31 +230,31 @@ app.use(async (req, res, next) => {
 });
 
 // WELCOMEルート
-app.get('/', (req, res) => {
-  res.redirect('/novel/home');
+app.get("/", (req, res) => {
+  res.redirect("/novel/home");
 });
 
 // ブックマーク追加を直接叩いた時
 app.get("/user/account/bookmark", (req, res) => {
-  res.redirect('/novel/home');
+  res.redirect("/novel/home");
 });
 
 // ブックマークキャンセルを直接叩いた時
 app.get("/user/account/bookmark/cancel", (req, res) => {
-  res.redirect('/novel/home');
+  res.redirect("/novel/home");
 });
 
 // サイト案内 -> ノベルバースとは
 app.get("/app-info", async (req, res, next) => {
   let topImg = "";
-    
+
   try {
-    if(res.locals.currentUser){
+    if (res.locals.currentUser) {
       const { id } = res.locals.currentUser; //ログイン中のユーザーのID
       const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
+      topImg = loginUser.image;
     }
-    res.render("users/app-info", {topImg});
+    res.render("users/app-info", { topImg });
   } catch (error) {
     console.log(error);
     next(error);
@@ -264,10 +264,10 @@ app.get("/app-info", async (req, res, next) => {
 // サイト案内 -> 運営者について
 app.get("/admin-info", async (req, res) => {
   let topImg = "";
-  if(res.locals.currentUser){
+  if (res.locals.currentUser) {
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
+    topImg = loginUser.image;
   }
   res.render("users/admin-info", { topImg });
 });
@@ -275,10 +275,10 @@ app.get("/admin-info", async (req, res) => {
 // 利用規約
 app.get("/terms-and-conditions", async (req, res) => {
   let topImg = "";
-  if(res.locals.currentUser){
+  if (res.locals.currentUser) {
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
+    topImg = loginUser.image;
   }
   res.render("common/terms_and_conditions", { topImg });
 });
@@ -286,10 +286,10 @@ app.get("/terms-and-conditions", async (req, res) => {
 // プライバシーポリシー
 app.get("/privacy-policy", async (req, res) => {
   let topImg = "";
-  if(res.locals.currentUser){
+  if (res.locals.currentUser) {
     const { id } = res.locals.currentUser; //ログイン中のユーザーのID
     const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
+    topImg = loginUser.image;
   }
   res.render("common/privacy_policy", { topImg });
 });
@@ -306,27 +306,28 @@ app.use("/admin-author", adminAuthorRouter); // 管理者著者関連API
 app.use("/admin-novel-management", novelManagementRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
 
-
-
 // 共通エラーページ
 app.get("/error", (req, res) => {
   res.render("errors/error", { csrfToken: req.csrfToken() });
 });
 
 app.use((err, req, res, next) => {
-  if (err.code !== 'EBADCSRFTOKEN') return next(err);
-  
-  // CSRFトークンエラーの処理
-  console.error('CSRF error:', err);
-  console.error('Request body:', req.body);
-  console.error('CSRF token from form:', req.body._csrf);
-  console.error('CSRF token from request:', req.csrfToken());
-  console.error('Headers:', req.headers);
-  console.error('Session:', req.session);
+  if (err.code !== "EBADCSRFTOKEN") return next(err);
 
-  req.flash('error', 'セキュリティトークンが無効です。もう一度お試しください。');
+  // CSRFトークンエラーの処理
+  console.error("CSRF error:", err);
+  console.error("Request body:", req.body);
+  console.error("CSRF token from form:", req.body._csrf);
+  console.error("CSRF token from request:", req.csrfToken());
+  console.error("Headers:", req.headers);
+  console.error("Session:", req.session);
+
+  req.flash(
+    "error",
+    "セキュリティトークンが無効です。もう一度お試しください。"
+  );
   res.status(403);
-  res.redirect('back');
+  res.redirect("back");
 });
 
 // ExpressErrorクラスを使用してエラーメッセージとステータスコードを取得
@@ -358,3 +359,16 @@ async function startServer() {
   );
 }
 startServer();
+
+// Redisシャットダウン検出ログ
+process.on("SIGINT", async () => {
+  console.log("シャットダウン中...");
+  try {
+    await redisClient.quit();
+    console.log("Redisを正常にシャットダウンしました");
+    process.exit(0);
+  } catch (err) {
+    console.log("Redisのシャットダウン中にエラーが起きました", err);
+    process.exit(1);
+  }
+});
