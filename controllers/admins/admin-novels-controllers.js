@@ -3,58 +3,70 @@ const Novel = require('../../models/Novels');
 const ObjectId = require('mongodb').ObjectId;
 
 
-// // ジャンル追加画面へ遷移
-// module.exports.renderAddGenres= async ( req , res ) => {
-//   const genreList = await Genre.find({});
-//   const count = await Novel.estimatedDocumentCount();
-//   res.render("admins/genre-add" , {  genreList , count , csrfToken: req.csrfToken()});
-// }
+// ジャンル追加画面へ遷移
+module.exports.renderAddGenres= async ( req , res ) => {
+  const genreList = await Genre.find({});
+  const count = await Novel.estimatedDocumentCount(); 
+  const message = "";
+  res.render("admins/genre-add" , {  genreList , count , message , csrfToken: req.csrfToken()});
+}
 
-// // ジャンル削除画面へ遷移
-// module.exports.renderGenreDeletion = async ( req , res ) => {
-//   const genreList = await Genre.find({});
-//   const count = await Novel.estimatedDocumentCount();
-//   res.render("admins/genre-delete" , {  genreList , count , csrfToken: req.csrfToken()});
-// }
+// ジャンル追加実装
+module.exports.addGenres= async ( req , res ) => {
+  const { addGenre } = req.body;
+  const currentGenreList = await Genre.find({ genre_name: addGenre });
+  console.log(`currentGenreList:${currentGenreList}`);
+  let message = "";
+  if(currentGenreList.length == 0){
+    const genre = new Genre({ genre_name: addGenre });
+    const saveGenre = await genre.save(); 
+    message = `ジャンル「${addGenre}」を追加しました`;
+  } else {
+    message = addGenre + "はすでに存在しています";
+  }
+
+  const genreList = await Genre.find({});
+  const count = await Novel.estimatedDocumentCount(); 
+  
+  res.render("admins/genre-add" , {  genreList , count , message , csrfToken: req.csrfToken()});
+}
 
 
+// ジャンル削除画面へ遷移
+module.exports.renderGenreDeletion = async ( req , res ) => {
+  const genreList = await Genre.find({});
+  const count = await Novel.estimatedDocumentCount();
+  const message = "";
+  res.render("admins/genre-delete" , {  genreList , count , message , csrfToken: req.csrfToken()});
+}
 
+// ジャンル削除 実装
+module.exports.deleteGenres = async ( req , res ) => {
+  const { genreId , genreName } = req.body;
+  let message = "";
+  
+  console.log(`1`);
+  //既存の小説に削除予定のジャンルがないか確認
+  const novelList = await Novel.find({ genre: genreId });  
+  try{
 
+    if( genreName == 'その他'){
+      //その他は削除しない
+      message = `「その他」は削除できません`;
+    } else if( novelList.length > 0 ){
+      //あれば削除しない
+      message = `「${genreName}」を選択中の小説があるため、削除できません`;
+    } else {
+      //なければ削除処理
+      await Genre.findByIdAndDelete(genreId);
+      message = `「${genreName}」を削除しました`;
+    }
 
-
-
-// //ジャンル追加画面に遷移 / 実装
-// router.route('/genre_add')
-//     .get(  adminIsLoggedIn , AdminNovles.renderAddGenres )   
-//     .post(  adminIsLoggedIn , AdminNovles.addGenres )   
-
-// //ジャンル削除画面に遷移 / 実装
-// router.route('/genre_delete')
-//     .get( adminIsLoggedIn , AdminNovles.renderGenreDeletion )
-//     .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
-
-// // 著者画面へ遷移
-// module.exports.renderAdminAuthors = async ( req , res ) => {
-//   const authors = await Author.find({});
-//   const count = await Novel.estimatedDocumentCount();
-//   res.render("admins/admin-authors" , {  authors , count });
-// }
-
-// // 著者削除
-// module.exports.authorsDeletion = async (req , res) => {
-//   const delete_author_id = await Author.findById(req.params.id)
-//   const authorId = new ObjectId(delete_author_id);
-//   let count = 0;
-//   //count = await Novel.estimatedDocumentCount(delete_author_id);
-//   //count =  Novel.find({ author: `ObjectId("${delete_author_id}")` }).count()
-//   count = await Novel.find({ author: authorId }).countDocuments();
-//   if( count != 0 ){
-//     req.flash('error' , `この著者の小説が存在するため、削除できません`);
-//   } else {
-//     const deleteAuthor = await Author.findByIdAndDelete(delete_author_id);
-//     req.flash('success' , `${ deleteAuthor.author_name }さんを削除しました`);
-//   }
-
-//   res.redirect("/admin-author/author-index");
-
-// }
+  }catch(e){
+    console.log(e);
+  }
+  
+  const genreList = await Genre.find({});
+  const count = await Novel.estimatedDocumentCount();
+  res.render("admins/genre-delete" , {  genreList , count , message , csrfToken: req.csrfToken()});
+}

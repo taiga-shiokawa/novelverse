@@ -1,9 +1,10 @@
 <p>小説の数 <%= count %></p>
+<p><%= message %></p>
 <div class="add_form">
     <h1>追加</h1>
     <form action="/admin-novel-management/genre_add" method="POST">
         <label class="colums_label">追加するジャンル名</label>
-        <input type="text" name="genre" required />
+        <input type="text" name="addGenre" required />
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit">+</button>
     </form>  
@@ -11,12 +12,12 @@
 <div class="genre_list">
     <form>
         <label for="dropdown">更新後</label>
-        <select id="dropdown" name="options" disabled>
+        <select id="dropdown" name="options">
             <% if(genreList && genreList.length > 0){ %>
                 <% for( let genre of genreList ){ %>
                     <option value="<%= genre.genre_name %>"><%= genre.genre_name %></option>
-                    <% } %><p>小説の数 <%= count %></p>
-            <% } else } %>
+                <% } %>
+            <% } else { %>
                     <option value="none">登録されているジャンルはありません</option>
             <% } %>
         </select>
