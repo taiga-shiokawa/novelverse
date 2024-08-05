@@ -217,6 +217,11 @@ textarea{
 }
 
 @media screen and (max-width: 768px) {
+
+    main {
+        margin-right: auto;
+    }
+    
     .container {
         flex-direction: column;
         padding: 10px;
