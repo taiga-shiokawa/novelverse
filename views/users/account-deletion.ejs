@@ -2,11 +2,12 @@
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
         <main>
             <div class="container">
-                <form action="/user/account/deletion?_method=PUT" method="POST">
+                <form action="/user/account/deletion" method="POST">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <h2 class="delet_title">アカウント削除</h2>
                     <label class="colums_label">パスワード　<span class="required_label caption_label">必須</span></label>
                     <input type="password" name="password" class="password" placeholder="password" required />
-                    <input type="hidden" name="username" value=<%= username %>
+                    <input type="hidden" name="email" value=<%= email %>
                     <br>
                     <div class="textarea_box">
                         <label class="colums_label">削除理由　　<span class="caption_label">任意</span></label>

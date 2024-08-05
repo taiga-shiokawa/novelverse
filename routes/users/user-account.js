@@ -8,7 +8,7 @@ const upload = multer({ storage });
 
 router.route('/deletion')
     .get(isLoggedIn , userAccount.renderAccountDeletion )   // アカウント削除画面へ遷移
-    .put(isLoggedIn , userAccount.accountDeletion );        // アカウント削除
+    .post(isLoggedIn , userAccount.accountDeletion );        // アカウント削除
 
 router.route('/setting')
     .get(isLoggedIn , userAccount.renderAccountSetting )    // アカウント設定画面へ遷移
