@@ -121,7 +121,7 @@
 @media (max-width: 768px) {
 
   main {
-    margin-right: auto;
+    margin: auto;
   }
 
   .mobile_only{
