@@ -121,6 +121,10 @@
 @media (max-width: 768px) {
 
   main {
+    margin-right: auto;
+  }
+
+  .book_info {
     margin: auto;
   }
 
@@ -178,6 +182,7 @@
     display: flex;
     flex-wrap: wrap;
     padding: 0;
+    margin: auto;
   }
   
   .book-list li a{
@@ -205,9 +210,9 @@
 
   .book-item{
     display: flex;
-    width: 100%;
+    width: 90%;
     padding: 0 40px;
-    margin: 0 auto;
+    margin: auto;
   }
 
   .book-item span{
@@ -220,6 +225,7 @@
 
   .bookmark-button {
     display: none;
+    margin: auto;
   }
   
   .bookmark_button {

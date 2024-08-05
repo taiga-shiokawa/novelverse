@@ -345,7 +345,7 @@ footer ul li {
     display: block;
     position: fixed;
     top: 10px;
-    right: 25px;
+    right: auto;
     width: 30px;
     height: 20px;
     cursor: pointer;
@@ -542,7 +542,7 @@ footer ul li {
   position: fixed;
   z-index: 999;/*ボタンを最前面に*/
   cursor: pointer;
-  right: 50px;
+  right: 30px;
   width: 100px;
   top: 10px;
   border:none;

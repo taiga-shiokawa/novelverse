@@ -198,7 +198,7 @@ footer ul li {
     position: fixed;
     margin-right: auto;
     top: 10px;
-    right: 10px;
+    right: auto;
     width: 30px;
     height: 20px;
     cursor: pointer;
