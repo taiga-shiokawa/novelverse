@@ -302,8 +302,11 @@ app.use("/user", userLogoutRouter); // ユーザーログアウトAPI
 app.use("/admin", adminRouter); // 管理者自身関係API
 app.use("/admin-user-management", adminUserManagementRouter); // 管理者ユーザー管理関係API
 app.use("/admin-management", adminManagementRouter); // 管理者の管理関係API
-app.use("/admin-author", adminAuthorRouter); // 管理者小説関連API
+app.use("/admin-author", adminAuthorRouter); // 管理者著者関連API
+app.use("/admin-novel-management", novelManagementRouter); // 管理者小説関連API
 app.use("/board", boardRouter); // 掲示板
+
+
 
 // 共通エラーページ
 app.get("/error", (req, res) => {
