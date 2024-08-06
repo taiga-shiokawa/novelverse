@@ -1,25 +1,26 @@
 <% layout("layouts/admin-common-template") %>
+
 <p>小説の数 <%= count %></p>
 <p><%= message %></p>
 <div class="add_form">
     <h1>追加</h1>
-    <form action="/admin-novel-management/genre_add" method="POST">
-        <label class="colums_label">追加するジャンル名</label>
-        <input type="text" name="addGenre" required />
+    <form action="/admin-author/author_add" method="POST">
+        <label class="colums_label">追加する著者名</label>
+        <input type="text" name="addAuthor" required />
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <button type="submit">+</button>
     </form>  
 </div>
-<div class="genre_list">
+<div class="author_list">
     <form>
         <label for="dropdown">更新後</label>
         <select id="dropdown" name="options">
-            <% if(genreList && genreList.length > 0){ %>
-                <% for( let genre of genreList ){ %>
-                    <option value="<%= genre.genre_name %>"><%= genre.genre_name %></option>
+            <% if(authorList && authorList.length > 0){ %>
+                <% for( let author of authorList ){ %>
+                    <option value="<%= author.author_name %>"><%= author.author_name %></option>
                 <% } %>
             <% } else { %>
-                    <option value="none">登録されているジャンルはありません</option>
+                    <option value="none">登録されている著者はありません</option>
             <% } %>
         </select>
     </form>

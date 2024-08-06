@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="話題の新刊から名作まで、幅広いジャンルの小説を紹介。あらすじや著者情報、読者レビューを掲載。おすすめの一冊が必ず見つかる小説ファン必見のサイトです。">
+    <title>ノベルバース</title>
+    <link rel="icon" href="https://res.cloudinary.com/dogup1dum/image/upload/v1722607998/Novelverse/t4hlnplwwpynvh6ft7yi.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin_template.css" />
+    <!-- <%- head %> -->
+  </head>
+  <body>
+    <header>
+      <div class="site_logo">
+          <img class="site_img" src="https://res.cloudinary.com/dogup1dum/image/upload/v1721915725/Novelverse/e9tdgl5j1xuva1fog3x6.png" alt="" />
+      </div>
+    </header>
+    <main>
+      <div class="template">
+        <div class="side_bar">
+          <ul>
+            <li><a href="/admin/dashboard_admin">ダッシュボード</a></li>
+            <li><a href="/novel/management/all">小説管理</a></li>
+            <li><a href="/admin-author/author-index">著者管理</a></li>
+            <li><a href="/admin-novel-management/genre_add">ジャンル管理</a></li>
+            <li><a href="/admin-user-management/user-management">ユーザー管理</a></li>
+            <li><a href="/admin-management/admin-management">管理者管理</a></li>
+
+            
+            <li><a href="#">サイト情報管理</a></li>
+          </ul>
+        </div>
+        <div class="main_container">
+          <div class="page_title">
+            <h1><%= pageTitle %></h1>
+          </div>
+          <div class="page_container">
+            <%- body %>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <p>フッター、ユーザー側と同じなので、変更する必要あり</p>
+        <ul>
+          <label class="footer_label">ノベルバースについて</label>
+          <li><a href="/app-info">→ ノベルバースとは</a></li>
+          <li><a href="/terms-and-conditions">→ 利用規約</a></li>
+          <li><a href="/privacy-policy">→ プライバシーポリシー</a></li>
+          <li><a href="/admin-info">→ 運営者</a></li>
+          <li><a href="/board/info">→ 掲示板とは</a></li>
+        </ul>
+        <ul>
+          <label class="footer_label">サポート</label>
+          <li><a href="/user/account/inquiry">→ ご意見・お問い合わせ</a></li>
+        </ul>
+    </footer>
+  </body>
+
+  <script>
+    console.log('CSRF token in logout form:', '<%= csrfToken %>');
+    </script>
+
+  <!-- <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const hamburger = document.querySelector('.hamburger-menu');
+      const nav = document.querySelector('.nav-container');
+
+      hamburger.addEventListener('click', function() {
+        nav.classList.toggle('active');
+        hamburger.classList.toggle('active');
+      });
+
+      // ナビゲーションリンクをクリックしたらメニューを閉じる
+      const navLinks = document.querySelectorAll('.site-nav a');
+      navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+          nav.classList.remove('active');
+          hamburger.classList.remove('active');
+        });
+      });
+    });
+
+    
+  // ボタンのクリックイベントリスナーを追加
+document.querySelector('.openbtn1').addEventListener('click', function () {
+  // ボタン自身に active クラスをトグル
+  this.classList.toggle('active');
+  // ナビゲーションに panelactive クラスをトグル
+  document.querySelector('#g-nav').classList.toggle('panelactive');
+});
+
+// ナビゲーションのリンクがクリックされたときの処理
+document.querySelectorAll('#g-nav a').forEach(function (link) {
+  link.addEventListener('click', function () {
+    // ボタンの active クラスを削除
+    document.querySelector('.openbtn1').classList.remove('active');
+    // ナビゲーションの panelactive クラスを削除
+    document.querySelector('#g-nav').classList.remove('panelactive');
+  });
+});
+  </script> -->
+</html>
+
+

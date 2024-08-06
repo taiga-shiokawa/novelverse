@@ -4,7 +4,8 @@ const Admin = require('../../models/Admins');
 module.exports.renderAdminManagement = async ( req , res ) => {
   const admins = await Admin.find({});
   const selectingAdmin = null;
-  res.render("admins/admin-management" , { admins , selectingAdmin});
+  const pageTitle = "管理者管理画面";
+  res.render("admins/admin-management" , { pageTitle , admins , selectingAdmin});
 }
 
 // 特定のユーザーの情報を一覧表示させて、管理者管理画面へ遷移
@@ -12,7 +13,8 @@ module.exports.renderAdminManagementAndDetail = async ( req , res ) => {
   const admins = await Admin.find({});
   const selectingAdmin = await Admin.findById(req.params.id)
   const current_admin_code = req.session.admin_code;
-  res.render("admins/admin-management" , { admins , selectingAdmin , current_admin_code });
+  const pageTitle = "管理者管理画面";
+  res.render("admins/admin-management" , { pageTitle , admins , selectingAdmin , current_admin_code });
 }
 
 module.exports.accountDeletion = async (req , res) => {

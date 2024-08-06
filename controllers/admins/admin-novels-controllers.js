@@ -8,7 +8,8 @@ module.exports.renderAddGenres= async ( req , res ) => {
   const genreList = await Genre.find({});
   const count = await Novel.estimatedDocumentCount(); 
   const message = "";
-  res.render("admins/genre-add" , {  genreList , count , message , csrfToken: req.csrfToken()});
+  const pageTitle = "ジャンル追加";
+  res.render("admins/genre-add" , { pageTitle ,  genreList , count , message , csrfToken: req.csrfToken()});
 }
 
 // ジャンル追加実装
@@ -27,8 +28,9 @@ module.exports.addGenres= async ( req , res ) => {
 
   const genreList = await Genre.find({});
   const count = await Novel.estimatedDocumentCount(); 
+  const pageTitle = "ジャンル追加";
   
-  res.render("admins/genre-add" , {  genreList , count , message , csrfToken: req.csrfToken()});
+  res.render("admins/genre-add" , { pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
 }
 
 
@@ -37,7 +39,8 @@ module.exports.renderGenreDeletion = async ( req , res ) => {
   const genreList = await Genre.find({});
   const count = await Novel.estimatedDocumentCount();
   const message = "";
-  res.render("admins/genre-delete" , {  genreList , count , message , csrfToken: req.csrfToken()});
+  const pageTitle = "ジャンル削除";
+  res.render("admins/genre-delete" , {  pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
 }
 
 // ジャンル削除 実装
@@ -65,8 +68,8 @@ module.exports.deleteGenres = async ( req , res ) => {
   }catch(e){
     console.log(e);
   }
-  
+  const pageTitle = "ジャンル削除";
   const genreList = await Genre.find({});
   const count = await Novel.estimatedDocumentCount();
-  res.render("admins/genre-delete" , {  genreList , count , message , csrfToken: req.csrfToken()});
+  res.render("admins/genre-delete" , {  pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
 }

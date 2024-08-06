@@ -14,7 +14,8 @@ const upload = multer({ storage });
 
 // 小説登録画面へ遷移
 router.get("/registration", (req, res) => {
-  res.render("admins/novel-registration", { csrfToken: req.csrfToken() });
+  const pageTitle = "小説追加";
+  res.render("admins/novel-registration", { pageTitle , csrfToken: req.csrfToken() });
 });
 
 // 小説登録処理
@@ -41,14 +42,16 @@ router.post("/registration", (req, res, next) => {
     return res.redirect("/novel/management/registration");
   } catch (err) {
     console.log("小説の登録に失敗しました。", err);
-    return res.render("admins/novel-registration", { csrfToken: req.csrfToken() });
+    const pageTitle = "小説追加";
+    return res.render("admins/novel-registration", {  pageTitle , csrfToken: req.csrfToken() });
   }
 });
 
 router.get("/all", async (req, res) => {
   try {
     const novels = await Novel.find({}).populate("author").populate("genre");
-    res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
+    const pageTitle = "小説一覧・削除";
+    res.render("admins/admin-novel-edit", { pageTitle , novels, csrfToken: req.csrfToken() });
   } catch (err) {
     console.log(err);
   }
@@ -82,7 +85,8 @@ router.post("/delete", async (req, res) => {
     res.redirect("/novel/management/all");
   } catch (err) {
     console.error(err);
-    res.render("admins/admin-novel-edit", { novels, csrfToken: req.csrfToken() });
+    const pageTitle = "小説一覧・削除";
+    res.render("admins/admin-novel-edit", { pageTitle , novels, csrfToken: req.csrfToken() });
   }
 });
 
@@ -103,7 +107,8 @@ router.get("/cover/delete/", async (req, res) => {
       }
       console.log("-------------------");
     });
-    res.render("admins/admin-novel-management", { novels });
+    const pageTitle = "小説管理" ; 
+    res.render("admins/admin-novel-management", { pageTitle , novels });
   } catch (err) {
     console.log(err);
   }

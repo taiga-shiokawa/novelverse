@@ -6,7 +6,8 @@ const ObjectId = require('mongodb').ObjectId;
 module.exports.renderAdminAuthors = async ( req , res ) => {
   const authors = await Author.find({});
   const count = await Novel.estimatedDocumentCount();
-  res.render("admins/admin-authors" , {  authors , count });
+  const pageTitle = "著者管理画面";
+  res.render("admins/admin-authors" , {  pageTitle , authors , count });
 }
 
 // 著者削除
@@ -26,4 +27,33 @@ module.exports.authorsDeletion = async (req , res) => {
 
   res.redirect("/admin-author/author-index");
 
+}
+
+// 著者追加画面へ遷移
+module.exports.renderAddAuthor= async ( req , res ) => {
+  const authorList = await Author.find({});
+  const count = await Novel.estimatedDocumentCount(); 
+  const message = "";
+  const pageTitle = "著者追加";
+  res.render("admins/author-add" , { pageTitle ,authorList , count , message , csrfToken: req.csrfToken()});
+}
+
+// 著者追加実装
+module.exports.addAuthor= async ( req , res ) => {
+  const { addAuthor } = req.body;
+  const currentAuthorList = await Author.find({ author_name: addAuthor });
+  let message = "";
+  if(currentAuthorList.length == 0){
+    const author = new Author({ author_name: addAuthor });
+    await author.save(); 
+    message = `著者「${addAuthor}」を追加しました`;
+  } else {
+    message = addAuthor + "はすでに存在しています";
+  }
+
+  const pageTitle = "著者追加";
+  const authorList = await Author.find({});
+  const count = await Novel.estimatedDocumentCount(); 
+  
+  res.render("admins/author-add" , { pageTitle, authorList , count , message , csrfToken: req.csrfToken()});
 }

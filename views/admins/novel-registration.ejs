@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>小説投稿</title>
-</head>
-<body>
+<% layout("layouts/admin-common-template") %>
+
   <form action="/novel/management/registration?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
     <div>
       <label for="title">タイトル</label>
@@ -71,5 +65,4 @@
 
     <button type="submit">登録</button>
   </form>
-</body>
-</html>
+  <% scripts = '<script src="/js/home.js"></script>' %> 
