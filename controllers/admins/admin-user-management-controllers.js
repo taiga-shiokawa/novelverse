@@ -8,7 +8,8 @@ module.exports.renderUserManagement = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = null;
   const count = await User.estimatedDocumentCount();
-  res.render("admins/user-management" , {users , selectingUser , count});
+  const pageTitle = "ユーザー管理画面";
+  res.render("admins/user-management" , { pageTitle , users , selectingUser , count});
 }
 
 // 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
@@ -16,7 +17,8 @@ module.exports.renderUserManagementAndDetail = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = await User.findById(req.params.id)
   const count = await User.estimatedDocumentCount();
-  res.render("admins/user-management" , {users , selectingUser , count });
+  const pageTitle = "ユーザー管理画面";
+  res.render("admins/user-management" , { pageTitle ,users , selectingUser , count });
 }
 
 module.exports.accountDeletion = async (req , res) => {
