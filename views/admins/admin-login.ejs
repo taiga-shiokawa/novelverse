@@ -1,11 +1,11 @@
-
+<% layout("layouts/admin-common-template") %>
 
 <!-- 特定のCSS -->
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
 <main>
-    <a href="/admin/registration_admin">新規登録へ</a>
+    <a href="/admin/registration-admin">新規登録へ</a>
     <h1>Novelverse<br>管理者専用</h1>
-    <form action="/admin/admin_login" method="post">
+    <form action="/admin/admin-login" method="post">
       <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label class="colums_label">管理者コード：</label><br />
         <input type="text" name="admin_code" required />

@@ -14,6 +14,7 @@ module.exports.renderAdminLogin = (req, res) => {
   res.render("admins/admin-login", { pageTitle , csrfToken: req.csrfToken()});
 };
 
+// 管理者ログイン処理
 module.exports.adminLogin = async (req, res, next) => {
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;
@@ -24,7 +25,7 @@ module.exports.adminLogin = async (req, res, next) => {
 
   if (!admin) {
     req.flash("error", "ログインに失敗しました");
-    return res.redirect("/admin/admin_login");
+    return res.redirect("/admin/admin-login");
   }
 
   passport.authenticate("admin", (err, admin, info) => {
@@ -33,7 +34,7 @@ module.exports.adminLogin = async (req, res, next) => {
     }
     if (!admin) {
       req.flash("error", "管理者コードまたはパスワードが間違っています");
-      return res.redirect("/admin/admin_login");
+      return res.redirect("/admin/admin-login");
     }
 
     req.logIn(admin, (err) => {
@@ -41,7 +42,7 @@ module.exports.adminLogin = async (req, res, next) => {
         return next(err);
       }
       // ここで保持していた returnTo を使用
-      const redirectUrl = returnTo || "/admin/dashboard_admin";
+      const redirectUrl = returnTo || "/admin/dashboard";
       // セッションから returnTo を削除
       delete req.session.returnTo;
       console.log("Redirecting to:", redirectUrl);
@@ -58,6 +59,7 @@ module.exports.renderAddAdmin = (req, res) => {
   res.render("admins/admin-add"), { pageTitle , csrfToken: req.csrfToken()};
 };
 
+// 管理者追加処理
 module.exports.addAdmin = async (req, res) => {
   const { admin_code, name, email, birthday, password } = req.body;
   let role = "admin";
@@ -79,6 +81,7 @@ module.exports.renderRegistrationAdmin = (req, res) => {
   res.render("admins/admin-registration" , { pageTitle });
 };
 
+// 管理者新規登録処理
 module.exports.registrationAdmin = async (req, res) => {
   const { admin_code, name, email, birthday, password } = req.body;
   let role = "admin";
@@ -94,15 +97,16 @@ module.exports.registrationAdmin = async (req, res) => {
     const registerAdmin = await Admin.register(admin, password);
     req.flash("success", "管理者を登録しました。");
     const pageTitle = "ログイン画面";
-    res.redirect("/admin/admin_login" , {pageTitle});
+    res.redirect("/admin/admin-login" , {pageTitle});
   } catch (err) {
     console.log(err);
     const pageTitle = "管理者新規登録";
     req.flash("error", "登録中にエラーが発生しました");
-    res.redirect("/admin/registration_admin" , {pageTitle});
+    res.redirect("/admin/registration-admin" , {pageTitle});
   }
 };
 
+// ダッシュボード画面へ遷移
 module.exports.renderDashboardAdmin = (req, res) => {
   const pageTitle = "ダッシュボード";
   res.render("admins/admin-dashboard" , {pageTitle});
@@ -117,6 +121,6 @@ module.exports.adminLogout = (req, res, next) => {
     const pageTitle = "ログイン画面";
     delete req.session.admin_code;
     req.flash("success", "ログアウトしました");
-    res.redirect("/admin/admin_login" , {pageTitle});
+    res.redirect("/admin/admin-login" , {pageTitle});
   });
 };
