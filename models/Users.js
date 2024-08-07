@@ -20,6 +20,9 @@ const userSchema = new Schema({
   birthday: {
     type: Date,
   },
+  lastLoginDate: {
+    type: Date
+  },
   image: [
     {
       url: String,
@@ -35,6 +38,8 @@ const userSchema = new Schema({
   lockUntil: { type: Number },
 });
 
+// スキーマにインデックスを定義
+userSchema.index({ lastLoginDate: 1 });
 
 userSchema.plugin(passportLocalMongoose, { usernameField: "email" });
 const MAX_LOGIN_ATTEMPTS = 5;

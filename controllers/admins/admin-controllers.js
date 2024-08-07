@@ -1,5 +1,6 @@
 const Admin = require("../../models/Admins");
 const User = require("../../models/Users");
+const Novel = require("../../models/Novels");
 const passport = require("passport");
 // サードパーティ(外部のライブラリなど)モジュール
 const { Resend } = require("resend");
@@ -96,20 +97,31 @@ module.exports.registrationAdmin = async (req, res) => {
     });
     const registerAdmin = await Admin.register(admin, password);
     req.flash("success", "管理者を登録しました。");
-    const pageTitle = "ログイン画面";
-    res.redirect("/admin/admin-login" , {pageTitle});
+    res.redirect("/admin/admin-login");
   } catch (err) {
     console.log(err);
     const pageTitle = "管理者新規登録";
     req.flash("error", "登録中にエラーが発生しました");
-    res.redirect("/admin/registration-admin" , {pageTitle});
+    res.redirect("/admin/registration-admin");
   }
 };
 
 // ダッシュボード画面へ遷移
-module.exports.renderDashboardAdmin = (req, res) => {
+module.exports.renderDashboardAdmin = async (req, res) => {
   const pageTitle = "ダッシュボード";
-  res.render("admins/admin-dashboard" , {pageTitle});
+  try {
+    const userCount = await User.countDocuments();
+    const novelCount = await Novel.countDocuments();
+    // 過去24時間以内にログインしたユーザーをアクティブとしてカウント
+    const oneDayAgo = new Date(new Date().setDate(new Date().getDate() - 1));
+    const activeUser = await User.countDocuments({lastLoginDate: {$gte: oneDayAgo}});
+
+    console.log(`総ユーザー数：${userCount}`, `小説総数：${novelCount}`, `総アクティブユーザー：${activeUser}`);
+    res.render("admins/admin-dashboard" , {pageTitle, userCount, novelCount, activeUser});
+  } catch (err) {
+    console.log(err);
+    res.redirect("/admin/dashboard");
+  }
 };
 
 // ログアウト

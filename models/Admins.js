@@ -21,12 +21,6 @@ const adminSchema = new Schema({
   birthday: {
     type: Date,
   },
-  image: [
-    {
-      url: String,
-      filename: String,
-    },
-  ],
   role: {
     type: String,
     default: "admin",
