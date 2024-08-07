@@ -150,39 +150,19 @@ router.route("/genre-delete")
    .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
 
 // 小説詳細画面へ遷移
-router.route("/admin-detail")
+router.route("/admin-detail/:id")
    .get( adminIsLoggedIn , AdminNovles.renderAdminNovelDetails )
 
-// 作家名取得（非同期）
-router.route("/get-author-names")
-   .get( adminIsLoggedIn , AdminNovles.getAuthorNames )
 
 // 検索結果画面へ遷移&処理
-router.route("/get-author-names")
+router.route("/search")
    .get( adminIsLoggedIn , AdminNovles.renderAdminSearchResultAndSearchProcess )
 
 // ジャンル別小説一覧画面へ遷移&取得
-router.route("/render-admin-genre-novel-list-and-novel-get")
+router.route("/genre/:id")
    .get( adminIsLoggedIn , AdminNovles.renderAdminGenreNovelListAndNovelGet )
 
 
 
-// ジャンル別小説一覧画面へ遷移&取得
-module.exports.renderAdminGenreNovelListAndGNovelGet = catchAsync(
-  async (req, res) => {
-    const genreId = req.params.id;
-    let pageTitle = "";
-    const genre = await Genre.findById(genreId);
-    if (genre) {
-      pageTitle = genre.genre_name;
-    }
-    const novelByGenreList = await Novel.find({ genre: genreId })
-      .sort({_id: -1})
-      .populate("author")
-      .populate("genre");
-    console.log(novelByGenreList);
-    res.render("admins/admin-novel-genre-list", { novelByGenreList, pageTitle, csrfToken: req.csrfToken() });
-  }
-);
 
 module.exports = router;

@@ -1,0 +1,101 @@
+<% layout("layouts/admin-common-template") %>
+
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/novel_detail.css">' %>
+
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
+
+  <div class="container">
+    <form data-novel-id="<%= novelDetails._id %>" action="" method="POST">
+      <img class="cover_img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
+      <button type="submit">画像変更</button>
+    </form>
+    <div class="info_container">
+      <div class="title_header">
+        <form data-novel-id="<%= novelDetails._id %>" action="" method="POST">
+          <div>
+            <label for="title">タイトル</label>
+            <input type="text" name="novel[title]" id="title" value="<%= novelDetails.title %>" required>
+          </div>
+          <div>
+            <label for="summary">概要</label>
+            <input type="text" name="novel[summary]" value="<%= novelDetails.summary %>" id="summary" required>
+          </div>
+          <div>
+            <lebel>現在は<%= novelDetails.is_new %></lebel>
+            <label><input type="checkbox" name="novel[is_new]">新作</label><br>
+          </div>
+          <div>
+            <label for="pages">ページ数</label>
+            <input type="number" name="novel[pages]" id="pages" value="<%= novelDetails.pages %>" required>
+          </div>
+          <div>
+            <label for="publisher_name">出版社名</label>
+            <input type="text" name="novel[publisher_name]" value="<%= novelDetails.publisher_name %>" id="publisher_name" required>
+          </div>
+          <div>
+            <label for="publication_date">出版日</label>
+            <input type="date" name="novel[publication_date]" id="publication_date" value="<%= new Date(novelDetails.publication_date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) %> "required>
+          </div>
+          <div>
+            <label for="price">価格</label>
+            <input type="number" name="novel[price]" id="price" value="<%= novelDetails.price %>"  required>
+          </div>
+          <div>
+            <label for="amazon_url">AmazonURL</label>
+            <input type="text" name="novel[amazon_url]" id="amazon_url" value="<%= novelDetails.amazon_url %>">
+          </div>
+          <div>
+            <lebel>現在は<%= novelDetails.novel_type %></lebel>
+            <select name="novel[novel_type]" id="novel_type" required>
+              <option value="文庫">文庫</option>
+              <option value="単行本">単行本</option>
+              <option value="ライトノベル">ライトノベル</option>
+            </select>
+          </div>
+          <div>
+            <lebel>現在は<%= novelDetails.is_recommend %></lebel>
+            <label><input type="checkbox" value="<%= novelDetails.is_recommend%>" name="novel[is_recommend]">おすすめ</label><br>
+          </div>
+          <div>
+            <lebel>現在は<%= novelDetails.author._id %></lebel>
+            <label for="author">著者</label>authors
+            <select name="novel[author]" id="author" value="<%= novelDetails.author.author_name %>" required>
+              <% authors.forEach(author => { %>
+                <lebel>現在は<%= author._id %></lebel>
+                <%if( author._id  == novelDetails.author._id ){%>
+                  <% console.log(author._id);%>
+                  <option value="<%= author._id %>" selected><%= author.author_name %></option>
+                  <%}else{%>
+                  <option value="<%= author._id %>"><%= author.author_name %></option>
+                  <%}%>
+
+              <% }); %>
+            </select>
+          </div>
+          <div>
+            <lebel>現在は<%= novelDetails.genre.genre_name %></lebel>
+            <label for="genre">ジャンル</label>
+            <select name="novel[genre]" id="genre">
+              <% genres.forEach(genre => { %>
+                <%if( genre._id  == novelDetails.genre._id ){%>
+                  <option value="<%= genre._id %>" selected><%= genre.genre_name %></option>
+                  <%}else{%>
+                    <option value="<%= genre._id %>"><%= genre.genre_name %></option>
+                  <%}%>
+              <% }); %>
+            </select>
+          </div>
+      
+          <button type="submit">変更</button>
+        </form>
+      </div>
+      <div>
+        
+<!-- 特定のJavaScript -->
+<% scripts = '<script src="/js/home.js"></script>' %> 
+<% scripts = '<script src="/js/bookmark-add.js"></script>' %>
