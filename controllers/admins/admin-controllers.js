@@ -112,12 +112,17 @@ module.exports.renderDashboardAdmin = async (req, res) => {
   try {
     const userCount = await User.countDocuments();
     const novelCount = await Novel.countDocuments();
-    // 過去24時間以内にログインしたユーザーをアクティブとしてカウント
-    const oneDayAgo = new Date(new Date().setDate(new Date().getDate() - 1));
-    const activeUser = await User.countDocuments({lastLoginDate: {$gte: oneDayAgo}});
+    // 当日のアクティブユーザー数をカウント
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);  // その日の午前0時に設定
+    const todayActiveUser = await User.countDocuments({lastLoginDate: {$gte: today}});
+    // 7日前の日時を計算し1週間のアクティブユーザー数をカウント
+    const oneWeekAgo = new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    const oneWeekActiveUser = await User.countDocuments({lastLoginDate: {$gte: oneWeekAgo}});
 
-    console.log(`総ユーザー数：${userCount}`, `小説総数：${novelCount}`, `総アクティブユーザー：${activeUser}`);
-    res.render("admins/admin-dashboard" , {pageTitle, userCount, novelCount, activeUser});
+    console.log(`総ユーザー数：${userCount}`, `小説総数：${novelCount}`, `総アクティブユーザー：${todayActiveUser}`);
+    res.render("admins/admin-dashboard" , {pageTitle, userCount, novelCount, todayActiveUser, oneWeekActiveUser});
   } catch (err) {
     console.log(err);
     res.redirect("/admin/dashboard");
