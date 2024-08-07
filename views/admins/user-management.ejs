@@ -4,11 +4,25 @@
 <main>
     <div class="container">
         <div class="left_container">
+            <!-- 検索ボックス -->
+             <div>
+                <form action="/admin-user-management/user-search" method="get">
+                    <!-- <input type="hidden" name="_csrf" value="<%= csrfToken %>"> -->
+                    <input type="text" name="search" placeholder="ユーザー名で検索">
+                    <button type="submit">検索</button>
+                </form>
+             </div>
             <p>総ユーザー数 <%= count %></p>
             <h2>全ユーザー</h2>
-            <% for (let user of users ){%>
-                <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
-            <% } %> 
+            <% if (users.length > 0) { %>
+                <% for (let user of users ){%>
+                    <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+                <% } %> 
+            <% } else { %>
+                <% for (let user of searchUser ){%>
+                    <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+                <% } %> 
+            <% } %>
         </div>
         <div class="right_container">
             <% if(!selectingUser){ %>

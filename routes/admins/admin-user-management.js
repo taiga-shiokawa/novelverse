@@ -15,6 +15,9 @@ router.route('/user-management/:id')
 router.route('/deletion')
     .post( adminIsLoggedIn , AdminUserManagement.accountDeletion )       // アカウント削除
     // .delete( adminIsLoggedIn , AdminUserManagement.accountDeletion )       // .deleteは不要？？
+
+router.route('/user-search')
+    .get(adminIsLoggedIn, AdminUserManagement.userSearch);  // ユーザー検索
     
 
 

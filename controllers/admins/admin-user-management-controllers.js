@@ -7,9 +7,10 @@ const passport = require("passport");
 module.exports.renderUserManagement = async ( req , res ) => {
   const users = await User.find({});
   const selectingUser = null;
+  const searchUser = null;
   const count = await User.estimatedDocumentCount();
   const pageTitle = "ユーザー管理画面";
-  res.render("admins/user-management" , { pageTitle , users , selectingUser , count});
+  res.render("admins/user-management" , { pageTitle , users , selectingUser , count , searchUser});
 }
 
 // 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
@@ -34,5 +35,31 @@ module.exports.accountDeletion = async (req , res) => {
     req.flash('error' , `管理者コードが間違っています`);
     res.redirect(`/admin-user-management/user-management/${delete_user_id}`);
   }
-
 }
+
+
+module.exports.userSearch = async (req, res) => {
+  const searchQuery = req.query.search;
+  const pageTitle = "ユーザー管理画面";
+  const selectingUser = null;
+  const count = await User.estimatedDocumentCount();
+
+  if (!searchQuery || searchQuery.trim() == "") {
+    return res.redirect("/admin-user-management/user-management");
+  }
+
+  try {
+    const regex = new RegExp(searchQuery, "i");
+    const searchUser = await User.find({username: regex});
+    const users = [];
+
+    if (searchUser.length < 1) {
+      return res.redirect("/admin-user-management/user-management");
+    } else {
+      res.render("admins/user-management", {pageTitle, searchUser, selectingUser, count, users});
+    }
+
+  } catch (err) {
+    console.log("ユーザーの検索に失敗しました", err);
+  }
+};
