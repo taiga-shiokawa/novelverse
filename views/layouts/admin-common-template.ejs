@@ -28,9 +28,13 @@
             <li><a href="/admin-novel-management/genre-add">ジャンル管理</a></li>
             <li><a href="/admin-user-management/user-management">ユーザー管理</a></li>
             <li><a href="/admin-management/admin-management">管理者管理</a></li>
-
             
             <li><a href="#">サイト情報管理</a></li>
+            
+            <form action="/admin/logout" method="post">
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <li><button type="submit">ログアウト</button></li>
+            </form>
           </ul>
         </div>
         <div class="main_container">

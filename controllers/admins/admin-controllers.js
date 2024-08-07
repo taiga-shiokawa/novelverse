@@ -131,13 +131,19 @@ module.exports.renderDashboardAdmin = async (req, res) => {
 
 // ログアウト
 module.exports.adminLogout = (req, res, next) => {
+  console.log("Logout route hit");
+  console.log("CSRF token from form:", req.body._csrf);
+  console.log("CSRF token from request:", req.csrfToken());
+  console.log("Session:", req.session);
+
   req.logout(function (err) {
     if (err) {
+      console.error("Logout error:", err);
       return next(err);
     }
-    const pageTitle = "ログイン画面";
+
     delete req.session.admin_code;
     req.flash("success", "ログアウトしました");
-    res.redirect("/admin/admin-login" , {pageTitle});
+    res.redirect("/admin/admin-login");
   });
 };
