@@ -140,29 +140,29 @@ router.post("/cover/delete", async (req, res) => {
 
 
 //ジャンル追加画面に遷移 / 実装
-router.route("/genre_add")
+router.route("/genre-add")
    .get(  adminIsLoggedIn , AdminNovles.renderAddGenres )   
    .post(  adminIsLoggedIn , AdminNovles.addGenres )   
 
 //ジャンル削除画面に遷移 / 実装
-router.route("/genre_delete")
+router.route("/genre-delete")
    .get( adminIsLoggedIn , AdminNovles.renderGenreDeletion )
    .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
 
 // 小説詳細画面へ遷移
-router.route("/admin_detail")
+router.route("/admin-detail")
    .get( adminIsLoggedIn , AdminNovles.renderAdminNovelDetails )
 
 // 作家名取得（非同期）
-router.route("/get_author_names")
+router.route("/get-author-names")
    .get( adminIsLoggedIn , AdminNovles.getAuthorNames )
 
 // 検索結果画面へ遷移&処理
-router.route("/get_author_names")
+router.route("/get-author-names")
    .get( adminIsLoggedIn , AdminNovles.renderAdminSearchResultAndSearchProcess )
 
 // ジャンル別小説一覧画面へ遷移&取得
-router.route("/render_admin_genre_novel_list_and_novel_get")
+router.route("/render-admin-genre-novel-list-and-novel-get")
    .get( adminIsLoggedIn , AdminNovles.renderAdminGenreNovelListAndNovelGet )
 
 

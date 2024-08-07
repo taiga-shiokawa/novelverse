@@ -13,7 +13,11 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 
 // アカウント作成画面へ遷移
 module.exports.goToAccountCreate = (req, res) => {
-  res.render("users/user-signup", { inputData: {}, errors: {}, csrfToken: req.csrfToken() });
+  res.render("users/user-signup", {
+    inputData: {},
+    errors: {},
+    csrfToken: req.csrfToken(),
+  });
 };
 
 // アカウント作成処理
@@ -26,10 +30,10 @@ module.exports.accountCreate = async (req, res) => {
 
   const errors = userAccountCreateValidate(req.body);
   if (errors) {
-    return res.render('users/user-signup', { 
+    return res.render("users/user-signup", {
       inputData: { username, email },
       csrfToken: req.csrfToken(),
-      errors: errors
+      errors: errors,
     });
   }
 
@@ -37,7 +41,10 @@ module.exports.accountCreate = async (req, res) => {
     const user = new User({ username, email, role });
     const existingUser = await User.findOne({ $or: [{ username }, { email }] });
     if (existingUser) {
-      req.flash("creation-error", "ニックネームまたはメールアドレスがすでに使用されています");
+      req.flash(
+        "creation-error",
+        "ニックネームまたはメールアドレスがすでに使用されています"
+      );
       return res.redirect("/user/signup");
     }
     const registerdUser = await User.register(user, password);
@@ -64,24 +71,27 @@ module.exports.goToAfterPage = (req, res) => {
 
 // ログイン画面へ遷移
 module.exports.goToLogin = (req, res) => {
-  res.render("users/user-login", { inputData: {}, errors: {}, csrfToken: req.csrfToken() });
+  res.render("users/user-login", {
+    inputData: {},
+    errors: {},
+    csrfToken: req.csrfToken(),
+  });
 };
 
 // ログイン処理
 module.exports.userLogin = async (req, res, next) => {
-
   const { email } = req.body;
-  
+
   console.log(req.body._csrf);
-  
+
   const errors = userLoginValidate(req.body);
   if (errors) {
-    return res.render('users/user-login', { 
+    return res.render("users/user-login", {
       errors: errors,
-      csrfToken: req.csrfToken()
+      csrfToken: req.csrfToken(),
     });
   }
-  
+
   // if (!req.body._csrf) {
   //   return res.status(403).json({ error: 'CSRFトークンがありません' });
   // }
@@ -91,17 +101,21 @@ module.exports.userLogin = async (req, res, next) => {
   console.log("Original returnTo:", returnTo);
 
   const user = await User.findOne({ email: email });
+  console.log(`ユーザーID：${user._id}`);
 
   // アカウントがロックされているかチェック
   if (user.isLocked) {
-    req.flash("error", "アカウントがロックされています。しばらく待ってから再試行してください。");
-    console.log('Authentication failed:', info);
+    req.flash(
+      "error",
+      "アカウントがロックされています。しばらく待ってから再試行してください。"
+    );
+    console.log("Authentication failed:", info);
     return res.redirect("/user/login");
   }
-  
+
   passport.authenticate("user", async (err, user, info) => {
     if (err) {
-      console.error('Authentication error:', err);
+      console.error("Authentication error:", err);
       return next(err);
     }
     if (!user) {
@@ -112,10 +126,19 @@ module.exports.userLogin = async (req, res, next) => {
       req.flash("error", "メールアドレスまたはパスワードが正しくありません");
       return res.redirect("/user/login");
     }
-    
+
     // ログイン成功時の処理
     user.loginAttempts = 0;
     user.lockUntil = null;
+    await User.updateOne(
+      { _id: user._id },
+      {
+        $set: {
+          lastLoginDate: new Date(),
+          lastActivityDate: new Date(),
+        },
+      }
+    );
     await user.save();
 
     req.logIn(user, (err) => {
