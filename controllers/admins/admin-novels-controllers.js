@@ -1,6 +1,7 @@
 const Genre = require('../../models/Genres');
 const Novel = require('../../models/Novels');
 const ObjectId = require('mongodb').ObjectId;
+const catchAsync = require("../../utils/catchAsync");
 
 
 // ジャンル追加画面へ遷移
@@ -73,3 +74,173 @@ module.exports.deleteGenres = async ( req , res ) => {
   const count = await Novel.estimatedDocumentCount();
   res.render("admins/genre-delete" , {  pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
 }
+
+
+// 小説情報
+
+// // ホーム画面へ遷移
+// module.exports.goToHome = catchAsync(async (req, res) => {
+//   const newNovels = await Novel.find({ is_new: true })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//   const bunkoNovels = await Novel.find({ novel_type: "文庫" })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//   const tankobonNovels = await Novel.find({ novel_type: "単行本" })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//   const lightNovels = await Novel.find({ novel_type: "ライトノベル" })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//   const recommendedNovels = await Novel.find({ is_recommend: true })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//   const otherGenre = await Genre.findOne({ genre_name: "その他" });
+//   const otherNovels = await Novel.find({ genre: otherGenre._id })
+//     .sort({_id: -1})
+//     .populate("author")
+//     .limit(5);
+
+//     let topImg = "";
+    
+//     if(res.locals.currentUser){
+//       const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+//       const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+//       topImg =  loginUser.image;
+//     }
+
+//   res.render("novels/home", {
+//     newNovels,
+//     bunkoNovels,
+//     tankobonNovels,
+//     lightNovels,
+//     recommendedNovels,
+//     otherNovels,
+//     topImg,
+//     csrfToken: req.csrfToken(),
+//   });
+// });
+
+
+// 小説詳細画面へ遷移
+module.exports.renderAdminNovelDetails = catchAsync(async (req, res) => {
+  const id = req.params.id;
+  const novelDetails = await Novel.findById(id)
+    .populate("author")
+    .populate("genre");
+
+  res.render("admins/admin-novel-details", { novelDetails, csrfToken: req.csrfToken() });
+});
+
+// 作家名取得（非同期）
+module.exports.getAuthorNames = async (req, res, next) => {
+  try {
+    const query = req.query.q;
+    if (!query) {
+      return res.json([]);
+    }
+
+    const suggestions = await Author.find({
+      author_name: { $regex: query, $options: "i" },
+    })
+      .limit(50)
+      .lean()
+      .exec();
+
+    const authorNames = suggestions.map((item) => item.author_name);
+    res.json(authorNames);
+  } catch (err) {
+    console.error("作家の取得に失敗しました。", err);
+    next(err); // エラーを Express のエラーハンドリングミドルウェアに渡す
+  }
+};
+
+// 検索結果画面へ遷移&処理
+module.exports.renderAdminSearchResultAndSearchProcess = catchAsync(
+  async (req, res) => {
+    const searchQuery = req.query.search;
+    let pageTitle = "";
+
+    if (!searchQuery || searchQuery.trim() === "") {
+      req.flash("info", "検索結果がありませんでした");
+      pageTitle = "検索結果";
+      return res.render("novels/novel-search-result", {
+        pageTitle,
+        topImg,
+        results: [],
+        messages: req.flash(),
+        csrfToken: req.csrfToken()
+      });
+    }
+
+    try {
+      const regex = new RegExp(searchQuery, "i");
+
+      // 検索クエリに一致する作家を見つける
+      const matchingAuthors = await Author.find({ author_name: regex });
+      const authorIds = matchingAuthors.map((author) => author._id);
+
+      // タイトルまたは一致した作家IDで小説を検索
+      const results = await Novel.find({
+        $or: [{ title: regex }, { author: { $in: authorIds } }],
+      })
+        .sort({_id: -1})
+        .populate("author")
+        .populate("genre")
+        .exec();
+
+      if (results.length < 1) {
+        req.flash("info", "検索結果がありません");
+        pageTitle = "検索結果";
+      } else {
+        pageTitle = `${searchQuery}の検索結果`;
+      }
+
+      res.render("admins/admin-search-result", {
+        results,
+        topImg,
+        pageTitle,
+        messages: req.flash(),
+        csrfToken: req.csrfToken()
+      });
+    } catch (err) {
+      console.error("検索エラー", err);
+      req.flash("error", "検索中にエラーが発生しました");
+      res.status(500).render("admins/admin-search-result", {
+        results: [],
+        topImg,
+        pageTitle: "エラー",
+        messages: req.flash(),
+        csrfToken: req.csrfToken()
+      });
+    }
+  }
+);
+
+// ジャンル別小説一覧画面へ遷移&取得
+module.exports.renderAdminGenreNovelListAndNovelGet = catchAsync(
+  async (req, res) => {
+    const genreId = req.params.id;
+    let pageTitle = "";
+    const genre = await Genre.findById(genreId);
+    if (genre) {
+      pageTitle = genre.genre_name;
+    }
+    const novelByGenreList = await Novel.find({ genre: genreId })
+      .sort({_id: -1})
+      .populate("author")
+      .populate("genre");
+    console.log(novelByGenreList);
+    res.render("admins/admin-novel-genre-list", { novelByGenreList, pageTitle, csrfToken: req.csrfToken() });
+  }
+);

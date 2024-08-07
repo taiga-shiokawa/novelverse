@@ -1,0 +1,68 @@
+<% layout("layouts/admin-common-template") %>
+
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/novel_detail.css">' %>
+
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
+
+<main>
+  <div class="container">
+    <img class="cover_img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
+    <div class="info_container">
+      <div class="title_header">
+        <h1 class="novel_title"><%= novelDetails.title %></h1>
+        <form class="bookmark_form" data-novel-id="<%= novelDetails._id %>">
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <button class="bookmark_button" type="submit">読みたい +</button>
+        </form>
+      </div>
+      <div>
+        <table>
+          <tbody>
+            <tr>
+              <th>著者</th>
+              <td><%= novelDetails.author.author_name %></td>
+            </tr>
+            <tr>
+              <th>あらすじ</th>
+              <td></td>
+            </tr>
+            </tbody>
+          </table>
+          <p class="summary_text"><%= novelDetails.summary %></p>
+      </div>
+      <hr>
+      <table>
+        <tbody>
+          <tr>
+            <th>ジャンル</th>
+            <td><%= novelDetails.genre.genre_name %></td>
+          </tr>
+          <tr>
+            <th>出版情報</th>
+            <td><%= new Date(novelDetails.publication_date).toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' }) %> 
+              <%= novelDetails.publisher_name %></td>
+          </tr>
+          <tr>
+            <th>ページ数</th>
+            <td><%= novelDetails.pages %>ページ</td>
+          </tr>
+          <tr>
+            <th>Amazonリンク</th>
+            <td><a href="<%= novelDetails.amazon_url %>" target="_blank">Amazon</a></td>
+          </tr>
+        </tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+<!-- 特定のJavaScript -->
+<% scripts = '<script src="/js/home.js"></script>' %> 
+<% scripts = '<script src="/js/bookmark-add.js"></script>' %>
