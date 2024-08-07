@@ -1,12 +1,41 @@
 <% layout("layouts/admin-common-template") %>
 <% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-</head>
+
+<!-- サイト内検索ボックス -->
+<form  class="search_form" action="/novel/management/search" method="get">
+  <input type="text" name="search" placeholder="サイト内検索" />
+</form>
+
+  <nav class="site_nav">
+    <ul>
+      <li>
+        <a href="/novel/management/all">全て</a>
+      </li>
+      <li>
+        <label class="site_nav_button" id="genreButton">
+           ジャンル
+        </label>
+        <div class="dropdown_content" id="genreDropdown">
+          <% genres.forEach(genre => { %>
+          <a href="/novel/management/genre/<%= genre._id %>"><%= genre.genre_name %></a>
+          <% }); %>
+        </div>
+      </li>
+      <li>
+        <label class="site_nav_button" id="writerButton">
+          作家
+        </label>
+        <div class="dropdown_content" id="writerDropdown">
+          <div class="writerSearch">
+            <form action="/novel/management/search" method="get">
+              <input type="text" class="nav_input" name="search" id="searchInput" placeholder="作家名で検索">
+            </form>
+            <div id="suggestions" class="suggestions"></div>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </nav>
 <body>
   <h2>小説削除</h2>
   <% for (let novel of novels) { %>
@@ -20,5 +49,6 @@
       <input type="hidden" name="novelId" value="<%= novel._id %>">
       <button type="submit">削除</button>
     </form>
+    <a href="/novel/management/admin-detail/<%= novel._id %>">編集</a>
   <% } %>
   <% scripts = '<script src="/js/home.js"></script>' %> 

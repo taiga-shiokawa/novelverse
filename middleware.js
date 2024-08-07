@@ -17,7 +17,7 @@ module.exports.adminIsLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     console.log(req.path, req.originalUrl);
     req.session.returnTo = req.originalUrl;
-    return res.redirect("/admin/admin_login");
+    return res.redirect("/admin/admin-login");
   }
   if (req.user && req.user.role !== "admin") {
     req.flash("error", "管理者権限が必要です");
