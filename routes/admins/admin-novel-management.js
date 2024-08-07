@@ -6,6 +6,7 @@ const { storage } = require("../../cloudinary/cloudinary");
 const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 const AdminNovles = require('../../controllers/admins/admin-novels-controllers');
 const { adminIsLoggedIn } = require("../../middleware");
+const catchAsync = require("../../utils/catchAsync");
 
 const router = express.Router();
 
@@ -147,5 +148,41 @@ router.route("/genre_add")
 router.route("/genre_delete")
    .get( adminIsLoggedIn , AdminNovles.renderGenreDeletion )
    .post(  adminIsLoggedIn , AdminNovles.deleteGenres )     
+
+// 小説詳細画面へ遷移
+router.route("/admin_detail")
+   .get( adminIsLoggedIn , AdminNovles.renderAdminNovelDetails )
+
+// 作家名取得（非同期）
+router.route("/get_author_names")
+   .get( adminIsLoggedIn , AdminNovles.getAuthorNames )
+
+// 検索結果画面へ遷移&処理
+router.route("/get_author_names")
+   .get( adminIsLoggedIn , AdminNovles.renderAdminSearchResultAndSearchProcess )
+
+// ジャンル別小説一覧画面へ遷移&取得
+router.route("/render_admin_genre_novel_list_and_novel_get")
+   .get( adminIsLoggedIn , AdminNovles.renderAdminGenreNovelListAndNovelGet )
+
+
+
+// ジャンル別小説一覧画面へ遷移&取得
+module.exports.renderAdminGenreNovelListAndGNovelGet = catchAsync(
+  async (req, res) => {
+    const genreId = req.params.id;
+    let pageTitle = "";
+    const genre = await Genre.findById(genreId);
+    if (genre) {
+      pageTitle = genre.genre_name;
+    }
+    const novelByGenreList = await Novel.find({ genre: genreId })
+      .sort({_id: -1})
+      .populate("author")
+      .populate("genre");
+    console.log(novelByGenreList);
+    res.render("admins/admin-novel-genre-list", { novelByGenreList, pageTitle, csrfToken: req.csrfToken() });
+  }
+);
 
 module.exports = router;
