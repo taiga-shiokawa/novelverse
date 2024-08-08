@@ -23,7 +23,7 @@
                     <label class="caption_label">※任意</label>
                     <% if(topImg.length > 0){ %>
                         <div class="imagePreview">
-                            <img class="top_img" src="<%= topImg[0].url %>" alt="現在のトプ画">
+                            <img class="img" src="<%= topImg[0].url %>" alt="現在のトプ画">
                         </div>
                             <form action="/user/account/delete-img?_method=PUT" method="POST">
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
