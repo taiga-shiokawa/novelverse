@@ -22,7 +22,7 @@ function handleFileUpload(event) {
   
   reader.onload = function(e) {
     const imagePreview =  document.querySelector('.imagePreview');
-    imagePreview.innerHTML = `<img  class="top_img" src="${e.target.result}" alt="Preview" />`;
+    imagePreview.innerHTML = `<img class="img" src="${e.target.result}" alt="Preview" />`;
   };
   
   reader.readAsDataURL(file);

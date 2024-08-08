@@ -8,6 +8,7 @@ const AdminNovles = require('../../controllers/admins/admin-novels-controllers')
 const { adminIsLoggedIn } = require("../../middleware");
 const catchAsync = require("../../utils/catchAsync");
 
+
 const router = express.Router();
 
 // アップロードされたファイルの保存先を指定
@@ -152,6 +153,14 @@ router.route("/genre-delete")
 // 小説詳細画面へ遷移
 router.route("/admin-detail/:id")
    .get( adminIsLoggedIn , AdminNovles.renderAdminNovelDetails )
+
+// 表紙画像変更
+router.route("/cover-change")
+  .put( upload.single("image"),adminIsLoggedIn , AdminNovles.changeCoverImg )
+
+// 小説情報変更
+router.route("/novel-info-change")
+   .put( adminIsLoggedIn , AdminNovles.novelInfoChange)
 
 
 // 検索結果画面へ遷移&処理
