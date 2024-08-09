@@ -1,14 +1,16 @@
 <% layout("layouts/admin-common-template") %>
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<main>
-    <div class="container">
-        <div class="left_container">
-            <p>小説の数 <%= count %></p>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_authors.css">' %>
+    <label class="novel_count">小説の数 <%= count %>冊</label>
+    <a class="author_add" href="/admin-author/author_add %>">著者追加</a>
+    <div class="author_list">
+        <ul>
             <% for (let author of  authors ){%>
-                <%= author.author_name %>　<a href="/admin-author/deletion/<%= author._id %>">削除</a><br>
+                <li>
+                    <label class="author_name"><%= author.author_name %></label> <a class="delete_btn" href="/admin-author/deletion/<%= author._id %>">削除</a><br>
+                </li>
             <% } %> 
-        </div>
-    </div> 
-</main>
+        </ul>
+    </div>
+   
 <% scripts = '<script src="/js/home.js"></script>' %> 

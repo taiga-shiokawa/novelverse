@@ -1,0 +1,117 @@
+
+/* 共通 */
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #F6F1DE;
+  font-family: "Noto Sans JP", sans-serif;
+}
+
+header{
+  height: 100px;
+}
+
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+a{
+  text-decoration: none;
+  color: rgb(45, 45, 45);
+  transition: opacity 0.5s ease; 
+}
+
+a:hover{
+  opacity: .7;
+}
+
+li{
+  list-style: none;
+}
+
+.container , .header_wrapper{
+  width: 100%;
+  max-width: 1200px;
+  margin: auto; 
+}
+
+.header_wrapper{
+  display:flex;
+  justify-content: space-between;
+}
+
+main{
+  width: 100%;
+  max-width:1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.site_logo {
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.site_img{
+  width: 100%;
+  max-width: 280px;
+}
+
+.template{
+  display: flex;
+  width: 100%;
+  max-width: 1200px;
+}
+
+/* side_bar */ 
+
+.side_bar{
+  padding-top: 80px;
+  width: 20%;
+  height: 500px;
+  background-color: #fff;
+}
+
+.side_bar a {
+  color: rgb(45, 45, 45);
+  font-size: 16px;
+  transition: opacity 0.5s ease; 
+}
+
+.side_bar li{
+  margin-bottom: 20px;
+}
+
+.side_bar p{
+  font-size: 24px;
+}
+
+.logout{
+  background-color: transparent;
+  transition: opacity 0.5s ease; 
+  border: none;
+  font-size: 16px;
+  color: rgb(45, 45, 45);
+  padding-left: 0;
+}
+
+.side_bar a:hover , .logout:hover{
+  opacity: .7;
+}
+
+/* main_container */ 
+
+.main_container{
+  width: 80%;
+}
+
+.page_title{
+  padding-left: 40px;
+}

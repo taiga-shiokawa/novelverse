@@ -1,33 +1,30 @@
 <% layout("layouts/admin-common-template") %>
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_novel_registration.css">' %>
 
   <form action="/novel/management/registration?_csrf=<%= csrfToken %>" method="post" enctype="multipart/form-data">
     <div>
       <label for="title">タイトル</label>
-      <input type="text" name="novel[title]", id="title" required>
+      <input class="input_text" type="text" name="novel[title]", id="title" required>
     </div>
     <div>
       <label for="summary">概要</label>
-      <input type="text" name="novel[summary]", id="summary" required>
-    </div>
-    <div>
-      <label><input type="checkbox" name="novel[is_new]">新作</label><br>
+      <input class="input_text" type="text" name="novel[summary]", id="summary" required>
     </div>
     <div>
       <label for="pages">ページ数</label>
-      <input type="number" name="novel[pages]" id="pages" required>
+      <input class="input_text" type="number" name="novel[pages]" id="pages" required>
     </div>
     <div>
       <label for="publisher_name">出版社名</label>
-      <input type="text" name="novel[publisher_name]" id="publisher_name" required>
+      <input class="input_text" type="text" name="novel[publisher_name]" id="publisher_name" required>
     </div>
     <div>
       <label for="publication_date">出版日</label>
-      <input type="date" name="novel[publication_date]" id="publication_date" required>
+      <input class="input_text" type="date" name="novel[publication_date]" id="publication_date" required>
     </div>
     <div>
       <label for="price">価格</label>
-      <input type="number" name="novel[price]" id="price" required>
+      <input class="input_text" type="number" name="novel[price]" id="price" required>
     </div>
     <div>
       <label for="cover">表紙</label>
@@ -35,21 +32,18 @@
     </div>
     <div>
       <label for="amazon_url">AmazonURL</label>
-      <input type="text" name="novel[amazon_url]" id="amazon_url">
+      <input class="input_text" type="text" name="novel[amazon_url]" id="amazon_url">
     </div>
     <div>
-      <select name="novel[novel_type]" id="novel_type" required>
+      <select class="input_text" name="novel[novel_type]" id="novel_type" required>
         <option value="文庫">文庫</option>
         <option value="単行本">単行本</option>
         <option value="ライトノベル">ライトノベル</option>
       </select>
     </div>
     <div>
-      <label><input type="checkbox" name="novel[is_recommend]">おすすめ</label><br>
-    </div>
-    <div>
       <label for="author">著者</label>authors
-      <select name="novel[author]" id="author" required>
+      <select class="input_text" name="novel[author]" id="author" required>
         <% authors.forEach(author => { %>
         <option value="<%= author._id %>"><%= author.author_name %></option>
         <% }); %>
@@ -57,13 +51,17 @@
     </div>
     <div>
       <label for="genre">ジャンル</label>
-      <select name="novel[genre]" id="genre">
+      <select class="input_text" name="novel[genre]" id="genre">
         <% genres.forEach(genre => { %>
         <option value="<%= genre._id %>"><%= genre.genre_name %></option>
         <% }); %>
       </select>
     </div>
+    <div>
+      <label><input type="checkbox" name="novel[is_new]"><span class="check_label">新作</span>
+        <label><input type="checkbox" name="novel[is_recommend]"><span class="check_label">おすすめ</span>
+    </div>
 
-    <button type="submit">登録</button>
+    <button  class="form_btn" type="submit">登録</button>
   </form>
   <% scripts = '<script src="/js/home.js"></script>' %> 

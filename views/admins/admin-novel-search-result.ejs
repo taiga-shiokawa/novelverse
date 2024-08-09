@@ -1,5 +1,5 @@
 <% layout("layouts/admin-common-template") %>
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_novel_list.css">' %>
 <%= success %>
 
 <% 
@@ -8,9 +8,9 @@ function getCoverUrl(novel) {
 } 
 %>
 
-   <!-- サイト内検索ボックス -->
-   <form  class="search_form" action="/novel/management/search" method="get">
-    <input type="text" name="search" placeholder="サイト内検索" />
+<div class="list_container">
+  <form  class="search_form" action="/novel/management/search" method="get">
+    <input type="text" name="search" placeholder="小説検索" />
   </form>
   
     <nav class="site_nav">
@@ -43,25 +43,14 @@ function getCoverUrl(novel) {
         </li>
       </ul>
     </nav>
-
-<!-- コンテンツ -->
-  <div class="container">
-    <section class="section">
-      <div class="section_container">
-        <div class="section_top">
-          <div class="section_right">
-            <span class="yellow"></span>
-          </div>
-          <span></span>
-        </div>
-        <div class="book-list">
-        <% if( results.length > 0 ) { %>
-          <ul>
-            <% for (let novel of results) { %>
+    <div class="book_list">
+      <% if( results.length > 0 ) { %>
+        <ul>
+          <% for (let novel of results) { %>
             <li class="wrap_book_list">
               <a class="detail_link" href="/novel/management/admin-detail/<%= novel._id %>">
-                <div class="book-item">
-                  <div class="book-cover">
+                <div class="book_item">
+                  <div class="book_cover">
                       <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
                   </div>
                   <span class="book_info">
@@ -72,14 +61,10 @@ function getCoverUrl(novel) {
               </a>
             </li>
           <% } %>
-          </ul>
+        </ul>
         <% } else { %>
-          <br>
           <%= messages.info %>
         <% } %>
-        </div>
-      </div>
-    </section>
+    </div>
   </div>
-
 <% scripts = '<script src="/js/home.js"></script>' %> 

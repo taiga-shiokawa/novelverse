@@ -1,0 +1,14 @@
+
+.dashboard_container{
+    width: 90%;
+    height: 20%;
+    background-color: #fff;
+    margin-bottom: 20px;
+    padding-left: 30px;
+    padding-top: 10px;
+}
+
+.dashboard{
+    height: 500px;
+    padding-left: 30px;
+}

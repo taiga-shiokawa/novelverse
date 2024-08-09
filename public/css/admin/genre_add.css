@@ -1,0 +1,57 @@
+
+.add_container{
+    display: flex;
+}
+.novel_count{
+    padding: 30px;
+}
+
+.add_form , .genre_list{
+    height: 400px;
+    width: 40%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.arrow{
+    width: 20%;
+    margin: auto 0;
+}
+
+.arrow p{
+    text-align: center;
+}
+
+.addGenre{
+    border: none; 
+    height: 40px;
+    width: 200px;
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
+.add_btn{
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    background-color: #545454;
+    font-size: 30px;
+    margin-left: 5px;
+    transition:opacity 0.5s ease;
+}
+
+.add_btn:hover{
+opacity: .7;
+}
+
+.add_container form{
+margin: 0 auto;
+}
+
+.colums_label{
+    margin-bottom: 5px;
+    display: inline-block;
+}

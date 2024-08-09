@@ -1,20 +1,26 @@
 <% layout("layouts/admin-common-template") %>
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<p><%= message %></p>
-<p>小説の数 <%= count %></p>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_genres.css">' %>
+
+<label class="novel_count">小説の数 <%= count %>冊</label>
+<a href="/admin-novel-management/genre-add">ジャンル追加</a>
+<label><%= message %></label>
 <div class="genre_list">
         <% if(genreList && genreList.length > 0){ %>
+                <ul>
             <% for( let genre of genreList ){ %>
-                <form action="/admin-novel-management/genre_delete" method="POST">
-                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                        <input type="hidden" name="genreId" value="<%= genre._id %>">
-                        <input type="hidden" name="genreName" value="<%= genre.genre_name %>">
-                        <p><%= genre.genre_name %></p>
-                        <button>削除</button>
-                </form>
-                <% } %>
+                <li>
+                        <form action="/admin-novel-management/genre_delete" method="POST">
+                                
+                                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                <input type="hidden" name="genreId" value="<%= genre._id %>">
+                                <input type="hidden" name="genreName" value="<%= genre.genre_name %>">
+                                <label class="genre_name"><%= genre.genre_name %></label>
+                                <button class="delete_btn">削除</button>
+                        </form>
+                </li>
+                        <% } %>
         <% } else { %>
                 <p>登録されているジャンルはありません</p>
         <% } %>
 </div>
-<% scripts = '<script src="/js/home.js"></script>' %> s
+<% scripts = '<script src="/js/home.js"></script>' %>

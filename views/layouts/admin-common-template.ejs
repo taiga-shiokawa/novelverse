@@ -9,31 +9,31 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/css/admin_template.css" />
-    <!-- <%- head %> -->
+    <link rel="stylesheet" href="/css/admin/admin_template.css" />
+    <%- head %>
   </head>
   <body>
     <header>
-      <div class="site_logo">
+      <div class="header_wrapper">
+        <div class="site_logo">
           <img class="site_img" src="https://res.cloudinary.com/dogup1dum/image/upload/v1721915725/Novelverse/e9tdgl5j1xuva1fog3x6.png" alt="" />
+        </div>
       </div>
     </header>
     <main>
       <div class="template">
         <div class="side_bar">
           <ul>
+            <li><p>管理者パネル</p></li>
             <li><a href="/admin/dashboard">ダッシュボード</a></li>
             <li><a href="/novel/management/all">小説管理</a></li>
             <li><a href="/admin-author/author-index">著者管理</a></li>
-            <li><a href="/admin-novel-management/genre-add">ジャンル管理</a></li>
+            <li><a href="/admin-novel-management/genre-delete">ジャンル管理</a></li>
             <li><a href="/admin-user-management/user-management">ユーザー管理</a></li>
             <li><a href="/admin-management/admin-management">管理者管理</a></li>
-            
-            <li><a href="#">サイト情報管理</a></li>
-            
             <form action="/admin/logout" method="post">
               <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-              <li><button type="submit">ログアウト</button></li>
+              <li><button class="logout" type="submit">ログアウト</button></li>
             </form>
           </ul>
         </div>
@@ -49,54 +49,9 @@
     </main>
     <footer>
     </footer>
-    <script src="/js/navbar-search-input.js"></script>
-    <script src="/js/navbar.js"></script>
+    <!-- <script src="/js/navbar-search-input.js"></script>
+    <script src="/js/navbar.js"></script> -->
   </body>
-
-  <script>
-    console.log('CSRF token in logout form:', '<%= csrfToken %>');
-    </script>
-    
-
-  <!-- <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      const hamburger = document.querySelector('.hamburger-menu');
-      const nav = document.querySelector('.nav-container');
-
-      hamburger.addEventListener('click', function() {
-        nav.classList.toggle('active');
-        hamburger.classList.toggle('active');
-      });
-
-      // ナビゲーションリンクをクリックしたらメニューを閉じる
-      const navLinks = document.querySelectorAll('.site-nav a');
-      navLinks.forEach(link => {
-        link.addEventListener('click', function() {
-          nav.classList.remove('active');
-          hamburger.classList.remove('active');
-        });
-      });
-    });
-
-    
-  // ボタンのクリックイベントリスナーを追加
-document.querySelector('.openbtn1').addEventListener('click', function () {
-  // ボタン自身に active クラスをトグル
-  this.classList.toggle('active');
-  // ナビゲーションに panelactive クラスをトグル
-  document.querySelector('#g-nav').classList.toggle('panelactive');
-});
-
-// ナビゲーションのリンクがクリックされたときの処理
-document.querySelectorAll('#g-nav a').forEach(function (link) {
-  link.addEventListener('click', function () {
-    // ボタンの active クラスを削除
-    document.querySelector('.openbtn1').classList.remove('active');
-    // ナビゲーションの panelactive クラスを削除
-    document.querySelector('#g-nav').classList.remove('panelactive');
-  });
-});
-  </script> -->
 </html>
 
 

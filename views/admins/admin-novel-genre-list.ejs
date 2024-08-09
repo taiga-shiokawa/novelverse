@@ -1,15 +1,14 @@
 <% layout("layouts/admin-common-template") %>
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_novel_list.css">' %>
 <% 
 function getCoverUrl(novel) { 
   return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
 } 
 %>
-
-   <!-- サイト内検索ボックス -->
-<form  class="search_form" action="/novel/management/search" method="get">
-  <input type="text" name="search" placeholder="サイト内検索" />
-</form>
+<div class="list_container">
+  <form  class="search_form" action="/novel/management/search" method="get">
+    <input type="text" name="search" placeholder="小説検索" />
+  </form>
 
   <nav class="site_nav">
     <ul>
@@ -42,45 +41,31 @@ function getCoverUrl(novel) {
     </ul>
   </nav>
 
-
-
-<div class="container">
-    <section class="section">
-      <div class="section_container">
-        <div class="section_top">
-          <div class="section_right">
-            <span class="yellow"></span>
-            <% if (pageTitle) { %>
-              <h2><%= pageTitle %></h2>
-            <% } %>
-          </div>
-          <span></span>
-        </div>
-        <div class="book-list">
-          <% if (novelByGenreList && novelByGenreList.length > 0) { %>
-          <ul>
-              <% for (let novel of novelByGenreList) { %>
-              <li class="wrap_book_list">
-                <a class="detail_link" href="/novel/management/admin-detail/<%= novel._id %>">
-                  <div class="book-item">
-                    <div class="book-cover">
-                        <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
-                    </div>
-                    <span class="book_info">
-                      <p class="novel_name"><%= novel.title %></p>
-                      <p class="author_name"><%= novel.author.author_name %></p>
-                    </span>
+  <div class="book_list">
+    <% if (novelByGenreList && novelByGenreList.length > 0) { %>
+      <ul>
+        <% for (let novel of novelByGenreList) { %>
+          <li class="wrap_book_list">
+              <a class="detail_link" href="/novel/management/admin-detail/<%= novel._id %>">
+                <div class="book_item">
+                  <div class="book_cover">
+                      <img src="<%= getCoverUrl(novel) %>" alt="<%= novel.title %>の表紙" />
                   </div>
-                </a>
-              </li>
-            <% } %>
-          </ul>
-        <% } else { %>
-          <p><%= pageTitle %>の小説が登録されていません</p>
-        <% } %>
-        </div>
-      </div>
-    </section>
+                  <span class="book_info">
+                    <p class="novel_name"><%= novel.title %></p>
+                    <p class="author_name"><%= novel.author.author_name %></p>
+                  </span>
+                </div>
+              </a>
+            </li>
+          <% } %>
+        </ul>
+      <% } else { %>
+        <p class="no_novel"><%= pageTitle %>の小説が登録されていません</p>
+      <% } %>
   </div>
-</main>
+
+
+
+
 <% scripts = '<script src="/js/home.js"></script>' %>

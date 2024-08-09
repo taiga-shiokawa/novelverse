@@ -1,0 +1,95 @@
+/* 小説検索フォーム */
+
+.search_form{
+  padding-left: 30px;
+  height: 120px;
+}
+
+.search_form input {
+  border: none;
+  padding: 5px 5px 5px 10px;
+  height: 32px;
+  width: 270px;
+  border-radius: 5px;
+}
+
+
+/* ID関係のテキスト */
+.id_info{
+  font-size: 12px;
+}
+
+.book_cover img {
+  height: 260px;
+  width: 180px;
+  object-fit: cover;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3); /* ボックスシャドウ */
+}
+
+.book_list li{
+  width: 100%;
+  max-width: 25%;
+  transition: opacity 0.5s ease;
+  margin-bottom: 60px;
+}
+
+.wrap_book_list{
+  margin-top: 60px;
+}
+
+.book_list ul{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.book_list li a{
+  display: flex;
+  justify-content: center;
+  color: #332405;
+}
+
+.book_list li p { 
+  margin: 0 ;  
+}
+
+.novel_name{
+  letter-spacing: 1px;
+}
+
+
+.delete_btn{
+  margin-left: 10px;
+  margin-top: 10px;
+  background-color: #a40000;
+  color: #fff;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius:5px ;
+  display: inline-block;
+  font-size: 12px;
+}
+
+#edit_btn{
+  font-size: 12px;
+  line-height: 30px;
+  margin-top: 10px;
+  background-color: #127b04;
+  color: #fff;
+  width: 60px;
+  height: 30px;
+  border: none;
+  border-radius:5px ;
+}
+
+.btn_wrapper{
+  display: flex;
+}
+
+.delete_btn:hover ,#edit_btn:hover{
+  opacity: .7;
+}
+
+.no_novel{
+  padding-left: 40px;
+}

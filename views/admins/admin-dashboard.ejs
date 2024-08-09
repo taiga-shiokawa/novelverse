@@ -1,14 +1,21 @@
 <% layout("layouts/admin-common-template") %>
-
-<!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<main>
-    <h1>
-        ダッシュボード
-    </h1>
-    <div>総ユーザー数：<%= userCount %></div>
-    <div>小説総数：<%= novelCount %></div>
-    <div>今日のアクティブ数：<%= todayActiveUser %></div>
-    <div>今週のアクティブ数：<%= oneWeekActiveUser %></div>
-</main>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_dashboard.css">' %>
+    <div class="dashboard">
+        <div class="dashboard_container">
+            <label class="section">総ユーザー数</label>
+            <label class="count"><%= userCount %>人</label>
+        </div>
+        <div class="dashboard_container">
+            <label class="section">小説総数</label>
+            <label class="count"><%= novelCount %>冊</label>
+        </div>
+        <div class="dashboard_container">
+            <label class="section">今日のアクティブ数</label>
+            <label class="count"><%= todayActiveUser %></label>
+        </div>
+        <div class="dashboard_container">
+            <label class="section">今週のアクティブ数</label>
+            <label class="count"><%= oneWeekActiveUser %></label>
+        </div>
+    </div>
 <% scripts = '<script src="/js/home.js"></script>' %> 

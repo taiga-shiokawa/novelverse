@@ -1,38 +1,37 @@
 <% layout("layouts/admin-common-template") %>
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<main>
-    <div class="container">
+<% head = '<link rel="stylesheet" href="/css/admin/admin_management.css">' %>
+    <div class="management_container">
         <div class="left_container">
-            <h2>全管理者</h2>
-            <% for (let admin of admins ){%>
-                <a href="/admin-management/admin-management/<%= admin._id %>"><%= admin.name %></a>
-            <% } %> 
+            <h2 class="section_title">全管理者</h2>
+            <ul>
+                <% for (let admin of admins ){%>
+                    <li>
+                        <a href="/admin-management/admin-management/<%= admin._id %>"><%= admin.name %></a>
+                    </li>
+                <% } %> 
+            </ul>
+            
         </div>
         <div class="right_container">
             <% if(!selectingAdmin){ %>
-                <h3 class="section_title">管理者情報</h3>
+                <h2 class="section_title">管理者情報</h2>
                 選択中の管理者はいません。
             <% }else{ %>
                 <h3 class="section_title"><%= selectingAdmin.name %>の管理者情報</h3>
                 <div class="account_setting">
-                    <p><label class="colums_label">管理者コード</label>　<%= selectingAdmin.admin_code %></p>
-                    <br><br>
-                    <p><label class="colums_label">名前</label>　<%= selectingAdmin.name %></p>
-                    <br><br>
+                    <label class="colums_label">管理者コード</label><label><%= selectingAdmin.admin_code %></label><br>
+                    <label class="colums_label">名前</label><label><%= selectingAdmin.name %></label><br>
                     <label class="colums_label">メールアドレス</label>
-                    <p><%= selectingAdmin.email %></p>
-                    <br><br>
+                    <label><%= selectingAdmin.email %></label><br>
                     <% if(selectingAdmin.birthday){%>
-                        <p><label class="colums_label">生年月日</label> <%= new Date(selectingAdmin.birthday).toISOString().slice(0, 10) %></p>
+                        <label class="colums_label">生年月日</label><label><%= new Date(selectingAdmin.birthday).toISOString().slice(0, 10) %></label>
                     <% } else { %>
-                        <p><label class="colums_label">生年月日</label> 未設定</p>
+                        <label class="colums_label">生年月日</label> <label>未設定</label>
                     <% } %>
-                    <br><br>
                     <% if(selectingAdmin.admin_code != current_admin_code){ %>
-                        <a class="btn js-modal-open">削除</a>
-                    <% } %>
-                    <!-- モーダル本体 -->
+                        <a id="modal_open" class="btn js-modal-open">削除</a>
+                        <!-- モーダル本体 -->
                     <div class="modal js-modal">
                         <div class="modal-container">
                             <!-- モーダルを閉じるボタン -->
@@ -44,17 +43,22 @@
                                     <form action="/admin-management/deletion?_method=DELETE" method="POST">
                                         <input type="hidden" name="delete_admin_id" value="<%= selectingAdmin._id %>">
                                         <input type="hidden" name="delete_admin_name" value="<%= selectingAdmin.name %>">
-                                        <label>管理者コード：</label>　<input type="text" name="admin_code">
+                                        <label>管理者コード</label><br><input class="admin_code" type="text" name="admin_code">
                                         <button class="modal_btn" type="submit">はい</button>
-                                        <a class="js-modal-close-button modal_btn_a">いいえ</a>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
+                        <% } else { %>
+                        <p class="caption">※ログイン中の管理者は削除できません</p>
+                    <% } %>
+                    
                 </div>
             <% } %>
         </div>
     </div> 
-</main>
-<% scripts = '<script src="/js/account_deletion.js"></script>' %> 
+
+
+    <script src="/js/account_deletion.js"></script>
+    <% scripts = '<script src="/js/account_deletion.js"></script>' %> 
