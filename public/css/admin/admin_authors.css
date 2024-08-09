@@ -1,0 +1,36 @@
+
+.author_list{
+    margin-top: 20px;
+    margin-left: 30px;
+    height: 450px;
+    width: 700px;
+    overflow-y: scroll;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.novel_count{
+    padding: 30px;
+}
+
+.author_list li{
+    margin-bottom: 10px;
+}
+
+.author_name{
+    width: 150px;
+    display: inline-block;
+}
+  
+.delete_btn{
+    font-size: 12px;
+    line-height: 20px;
+    background-color: #a40000;
+    text-align: center;
+    color: #fff;
+    width: 40px;
+    height: 20px;
+    display: inline-block;
+    border: none;
+    border-radius:5px ;
+  }

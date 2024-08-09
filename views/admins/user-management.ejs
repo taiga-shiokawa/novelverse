@@ -1,51 +1,51 @@
 <% layout("layouts/admin-common-template") %>
 <!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
-<main>
-    <div class="container">
-        <div class="left_container">
-            <!-- 検索ボックス -->
-             <div>
-                <form action="/admin-user-management/user-search" method="get">
-                    <input type="text" name="search" placeholder="ユーザー名で検索">
-                    <button type="submit">検索</button>
-                </form>
-             </div>
-            <p>総ユーザー数 <%= count %></p>
-            <h2>全ユーザー</h2>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_management.css">' %>
+<div class="management_container">
+    <div class="left_container">
+        <div>
+            <form class="search_form" action="/admin-user-management/user-search" method="get">
+                <input type="text" name="search" placeholder="ユーザー名で検索">
+                <button class="search_btn" type="submit">検索</button>
+            </form>
+        </div>
+        <p class="user_count">総ユーザー数 <%= count %></p>
+        <h2 class="section_title">全ユーザー</h2>
+        <ul>
             <% if (users.length > 0) { %>
                 <% for (let user of users ){%>
-                    <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+                    <li>
+                        <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+                    </li>
                 <% } %> 
             <% } else { %>
-                <% for (let user of searchUser ){%>
-                    <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
-                <% } %> 
+                    <% for (let user of searchUser ){%>
+                        <li>
+                            <a href="/admin-user-management/user-management/<%= user._id %>"><%= user.username %></a>
+                        </li>
+                    <% } %> 
             <% } %>
-        </div>
-        <div class="right_container">
+        </ul>
+    </div>
+    <div class="right_container">
             <% if(!selectingUser){ %>
-                <h3 class="section_title">ユーザー情報</h3>
+                <h2 class="section_title">ユーザー情報</h2>
                 選択中のユーザーはいません。
             <% }else{ %>
-                <h3 class="section_title"><%= selectingUser.username %>のユーザー情報</h3>
+                <h2 class="section_title"><%= selectingUser.username %>のユーザー情報</h2>
                 <div class="account_setting">
-                    <p><label class="colums_label">ニックネーム</label>　<%= selectingUser.username %></p>
-                    <br><br>
+                    <label class="colums_label">ニックネーム</label><label><%= selectingUser.username %></label><br>
                     <label class="colums_label">メールアドレス</label>
-                    <p><%= selectingUser.email %></p>
-                    <br><br>
+                    <label><%= selectingUser.email %></label><br>
                     <% if(selectingUser.self_introdaction){%>
-                        <p><label class="colums_label">自己紹介</label><%= selectingUser.self_introdaction %></p>
+                        <label class="colums_label">自己紹介</label><label><%= selectingUser.self_introdaction %></label><br>
                     <% } else { %>
-                        <p><label class="colums_label">自己紹介</label> 未設定</p>
+                        <label class="colums_label">自己紹介</label><label>未設定</label><br>
                     <% } %>
-                    
-                    <br>
                     <% if(selectingUser.birthday){%>
-                        <p><label class="colums_label">生年月日</label> <%= new Date(selectingUser.birthday).toISOString().slice(0, 10) %></p>
+                        <label class="colums_label">生年月日</label> <label><%= new Date(selectingUser.birthday).toISOString().slice(0, 10) %></label>
                     <% } else { %>
-                        <p><label class="colums_label">生年月日</label> 未設定</p>
+                        <label class="colums_label">生年月日</label> <label>未設定</label><br>
                     <% } %>
                     <br><br>
                     <a class="btn js-modal-open">削除</a>
@@ -61,9 +61,8 @@
                                     <form action="/admin-user-management/deletion?_method=DELETE" method="POST">
                                         <input type="hidden" name="delete_user_id" value="<%= selectingUser._id %>">
                                         <input type="hidden" name="delete_user_name" value="<%= selectingUser.username %>">
-                                        <label>管理者コード：</label>　<input type="text" name="admin_code">
+                                        <label>管理者コード</label>　<input class="admin_code" type="text" name="admin_code">
                                         <button class="modal_btn" type="submit">はい</button>
-                                        <a class="js-modal-close-button modal_btn_a">いいえ</a>
                                     </form>
                                 </div>
                             </div>
@@ -73,4 +72,5 @@
             <% } %>
         </div>
     </div> 
+    <script src="/js/account_deletion.js"></script>
     <% scripts = '<script src="/js/home.js"></script>' %> 

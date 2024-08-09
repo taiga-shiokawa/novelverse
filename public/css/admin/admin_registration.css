@@ -1,0 +1,113 @@
+
+/* 共通 */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #F6F1DE;
+    font-family: "Noto Sans JP", sans-serif;
+}
+
+body{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+a{
+    text-decoration: none;
+    color: rgb(45, 45, 45);
+    transition: opacity 0.5s ease; 
+    line-height: 100px;
+}
+
+a:hover{
+    opacity: .7;
+}
+
+.container , .header_wrapper{
+    width: 100%;
+    max-width: 1200px;
+    margin: auto; 
+}
+
+.header_wrapper{
+    display:flex;
+    justify-content: space-between;
+}
+
+main{
+    height: 100%;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.site_logo {
+    height: 120px;
+    display: flex;
+    align-items: center;
+}
+
+.site_img{
+    width: 100%;
+    max-width: 280px;
+  }
+
+/* form関係 */
+
+.section_title {
+    letter-spacing: 5px;
+    font-size: 24px;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.registration_form {
+    width: 100%;
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+.registration_form > label{
+    display: inline-block;
+    letter-spacing: 3px;
+    width: 200px;
+    padding: 8px;
+    font-size: 16px;
+    color: rgb(45, 45, 45);
+}
+
+.registration_form > input{
+    border: none; 
+    height: 40px;
+    width: 300px;
+    padding-left: 10px;
+    margin-bottom: 30px;
+}
+
+.required_label{
+    color: #920000;
+    font-size: 12px;
+}
+
+/* ログインボタン */
+.form_btn{
+    letter-spacing: 5px;
+    line-height: 60px;
+    border:none;
+    color: #fff;
+    background-color:#505F00;
+    text-align: center;
+    width: 100%;
+    max-width: 240px;
+    display: block;
+    margin: 20px auto;
+    transition: opacity 0.5s ease; 
+}
+
+.form_btn:hover{
+    opacity: .8;
+} 

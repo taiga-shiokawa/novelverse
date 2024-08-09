@@ -1,0 +1,80 @@
+/* formを横並びにする */
+.edit_form{
+  display: flex;
+}
+
+.photo_setting{
+  width: 40%;
+  padding-left: 30px;
+}
+
+.info_edit{
+  width: 60%;
+}
+
+/* 表紙の画像 */
+.img{
+  
+  margin: 0 auto;
+  height: 390px;
+  width: 270px;
+  object-fit: cover;
+}
+
+.input_text {
+  border: none; 
+  height: 40px;
+  width: 300px;
+  padding-left: 10px;
+  margin-bottom: 30px;
+}
+
+textarea {
+  border: none; 
+  min-height: 200px;
+  width: 300px;
+  padding-left: 10px;
+  margin-bottom: 30px;
+}
+
+.info_edit label{
+width: 200px;
+display: inline-block;
+}
+
+.ta_box{
+  display: flex;
+  align-items:flex-start;
+}
+
+/* ボタン */
+.form_btn{
+  letter-spacing: 5px;
+  line-height: 60px;
+  border:none;
+  color: #fff;
+  background-color:#505F00;
+  text-align: center;
+  width: 100%;
+  max-width: 240px;
+  display: block;
+  margin: 20px auto;
+  transition: opacity 0.5s ease; 
+}
+
+.form_btn:hover{
+  opacity: .8;
+} 
+
+.check{
+  display: flex;
+}
+
+.check input {
+  width: 20px;
+}
+
+.check span {
+  margin-right: 30px;
+  display: inline;
+}

@@ -1,28 +1,55 @@
-<% layout("layouts/admin-common-template") %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="話題の新刊から名作まで、幅広いジャンルの小説を紹介。あらすじや著者情報、読者レビューを掲載。おすすめの一冊が必ず見つかる小説ファン必見のサイトです。">
+    <title>ノベルバース</title>
+    <link rel="icon" href="https://res.cloudinary.com/dogup1dum/image/upload/v1722607998/Novelverse/t4hlnplwwpynvh6ft7yi.png" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/admin/admin_registration.css">
+  </head>
+  <body>
+    <header>
+      <div class="header_wrapper">
+        <div class="site_logo">
+          <img class="site_img" src="https://res.cloudinary.com/dogup1dum/image/upload/v1721915725/Novelverse/e9tdgl5j1xuva1fog3x6.png" alt="" />
+        </div>
+        <a href="/admin/admin-login">ログインへ</a>
+      </div>
+    </header>
+    <main>
+        <div class="container">
+            <h2 class="section_title">
+                管理者新規登録ページ
+            </h2>
+            <form class="registration_form" action="/admin/registration-admin" method="POST">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <label class="colums_label">管理者コード</label><span class="required_label">※必須</span>
+                <input type="text" name="admin_code" required />
+                <br><br>
+                <label class="colums_label">名前</label><span class="required_label">※必須</span>
+                <input type="text" name="name" required/>
+                <br><br>
+                <label class="colums_label">メールアドレス</label><span class="required_label">※必須</span>
+                <input type="text" name="email" required/>
+                <br><br>
+                <label class="colums_label">生年月日</label><span class="required_label">※必須</span>
+                <input type="date" name="birthday" required/>
+                <br><br>
+                <label class="colums_label">パスワード</label><span class="required_label">※必須</span>
+                <input type="password" name="password" required/>
+                <button class="form_btn" type="submit">管理者新規登録</button>
+            </form>
+        </div>
+    </main>
+    <footer> 
+    </footer>
+   </body>
+</html>
 
-<!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/account_deletion.css">' %>
 
-    <h2>
-        管理者新規登録ページ（仮）
-    </h2>
-    <a href="/admin/admin-login">ログイン画面へ</a>
-    <form action="/admin/registration-admin" method="POST">
-        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        <label class="colums_label">管理者コード</label><span class="caption_label required_label">※必須</span>
-        <input type="text" name="admin_code" required />
-        <br><br>
-        <label class="colums_label">名前</label><span class="caption_label required_label">※必須</span>
-        <input type="text" name="name" required/>
-        <br><br>
-        <label class="colums_label">メールアドレス</label><span class="caption_label required_label">※必須</span>
-        <input type="text" name="email" required/>
-        <br><br>
-        <label class="colums_label">生年月日</label><span class="caption_label required_label">※必須</span>
-        <input type="date" name="birthday" required/>
-        <br><br>
-        <label class="colums_label">パスワード</label><span class="caption_label required_label">※必須</span>
-        <input type="password" name="password" required/>
-        <button class="btn" type="submit">追加</button>
-    </form>
-    <% scripts = '<script src="/js/home.js"></script>' %> 
+
+    

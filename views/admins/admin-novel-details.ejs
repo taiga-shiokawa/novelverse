@@ -1,7 +1,5 @@
 <% layout("layouts/admin-common-template") %>
-
-<!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/novel_detail.css">' %>
+<% head = '<link rel="stylesheet" href="/css/admin/admin_novel_detail.css">' %>
 
 <% 
 function getCoverUrl(novel) { 
@@ -9,105 +7,106 @@ function getCoverUrl(novel) {
 } 
 %>
 
-  <div class="container">
-    <div class="photo_setting">
-      <h3 class="section_title">写真</h3>
-      <label class="caption_label">※任意</label>
-          <div class="imagePreview">
-            <img class="img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
-          </div>
-          <form class="img_set_form" action="/novel/management/cover-change?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
-            <input type="hidden" name="novelId" value="<%= novelDetails._id %>">
-            <input type="file" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
-            <button class="btn" type="submit">画像変更</button>
-          </form>
+<div class="edit_form">
+  <div class="photo_setting">
+      <div class="imagePreview">
+        <img class="img" src="<%= getCoverUrl(novelDetails) %>" alt="小説画像">
+      </div>
+      <form class="img_set_form" action="/novel/management/cover-change?_csrf=<%= csrfToken %>&_method=PUT" method="POST" enctype="multipart/form-data">
+        <input type="hidden" name="novelId" value="<%= novelDetails._id %>">
+        <input type="file" name="image" onchange="handleFileUpload(event)"  accept=".jpg,.jpeg,.png,.gif"  required/>
+        <button class="form_btn" type="submit">画像変更</button>
+      </form>
   </div> 
+  <div class="info_edit">
+    <form data-novel-id="<%= novelDetails._id %>" action="/novel/management/novel-info-change?_method=PUT" method="POST">
+      <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+      <input type="hidden" name="novelId" value="<%= novelDetails._id %>">
+    <div>
+      <label for="title">タイトル</label>
+      <input class="input_text" type="text" name="novel[title]" id="title" value="<%= novelDetails.title %>" required>
+    </div>
+    <div class="ta_box">
+      <label for="summary">概要</label>
+      <textarea  name="novel[summary]" maxlength="140" id="summary" required><%= novelDetails.summary %></textarea>
+    </div>
+    <div>
+      <label for="pages">ページ数</label>
+      <input class="input_text" type="number" name="novel[pages]" id="pages" value="<%= novelDetails.pages %>" required>
+    </div>
+    <div>
+      <label for="publisher_name">出版社名</label>
+      <input class="input_text" type="text" name="novel[publisher_name]" value="<%= novelDetails.publisher_name %>" id="publisher_name" required>
+    </div>
+    <div>
+      <label for="publication_date">出版日</label>
+      <% if(novelDetails.publication_date){%>
+        <input class="input_text" type="date" name="novel[publication_date]" id="publication_date" value="<%= new Date(novelDetails.publication_date).toISOString().slice(0, 10) %>"　required>
+        <% } else { %>
+          <input class="input_text" type="date" name="novel[publication_date]" required>
+      <% } %>
+    </div>
+    <div>
+      <label for="price">価格</label>
+      <input class="input_text" type="number" name="novel[price]" id="price" value="<%= novelDetails.price %>"  required>
+    </div>
+    <div>
+      <label for="amazon_url">AmazonURL</label>
+      <input class="input_text" type="text" name="novel[amazon_url]" id="amazon_url" value="<%= novelDetails.amazon_url %>">
+    </div>
+    <div>
+      <label for="amazon_url">小説のタイプ</label>
+      <select  class="input_text" name="novel[novel_type]" id="novel_type" required>
+        <option value="文庫">文庫</option>
+        <option value="単行本">単行本</option>
+        <option value="ライトノベル">ライトノベル</option>
+      </select>
+    </div>
+    <div>
+      <label for="author">著者</label>
+      <select class="input_text" name="novel[author]" id="author" value="<%= novelDetails.author.author_name %>" required>
+        <% authors.forEach(author => { %>
+          <%if( author.author_name  == novelDetails.author.author_name ){ %>
+            <option value="<%= author._id %>" selected><%= author.author_name %></option>
+            <% }else{ %>
+            <option value="<%= author._id %>"><%= author.author_name %></option>
+          <% } %>
+        <% }); %>
+      </select>
+    </div>
+    <div>
+      <label for="genre">ジャンル</label>
+      <select class="input_text" name="novel[genre]" id="genre">
+        <% genres.forEach(genre => { %>
+          <%if( genre.genre_name  == novelDetails.genre.genre_name ){%>
+            <option value="<%= genre._id %>" selected><%= genre.genre_name %></option>
+            <%}else{%>
+              <option value="<%= genre._id %>"><%= genre.genre_name %></option>
+            <%}%>
+        <% }); %>
+      </select>
+    </div>
+    <div class="check">
+      <%if( novelDetails.is_recommend ){ %>
+        <input type="checkbox" name="novel[is_recommend]" checked> <span>おすすめ</span>
+        <% }else{ %>
+        <input type="checkbox" name="novel[is_recommend]"> <span>おすすめ</span>
+      <% } %>
+      <%if( novelDetails.is_new ){ %>
+       <input type="checkbox" name="novel[is_new]" checked> <span>新作</span>
+        <% }else{ %>
+          <input type="checkbox" name="novel[is_new]"> <span class="check_label">新作</span>
+      <% } %>
+      </div>
+    <button class="form_btn" type="submit">変更</button>
+  </form>
+  </div>
+
+</div>
 
 
-          <form data-novel-id="<%= novelDetails._id %>" action="/novel/management/novel-info-change?_method=PUT" method="POST">
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-            <input type="hidden" name="novelId" value="<%= novelDetails._id %>">
-          <div>
-            <label for="title">タイトル</label>
-            <input type="text" name="novel[title]" id="title" value="<%= novelDetails.title %>" required>
-          </div>
-          <div>
-            <label for="summary">概要</label>
-            <input type="text" name="novel[summary]" value="<%= novelDetails.summary %>" id="summary" required>
-          </div>
-          <div>
-            <%if( novelDetails.is_new ){ %>
-              <label><input type="checkbox" name="novel[is_new]" checked>新作</label><br>
-              <% }else{ %>
-                <input type="checkbox" name="novel[is_new]">新作<br>
-            <% } %>
-          </div>
-          <div>
-            <label for="pages">ページ数</label>
-            <input type="number" name="novel[pages]" id="pages" value="<%= novelDetails.pages %>" required>
-          </div>
-          <div>
-            <label for="publisher_name">出版社名</label>
-            <input type="text" name="novel[publisher_name]" value="<%= novelDetails.publisher_name %>" id="publisher_name" required>
-          </div>
-          <div>
-            <label for="publication_date">出版日</label>
-            <% if(novelDetails.publication_date){%>
-              <input type="date" name="novel[publication_date]" id="publication_date" value="<%= new Date(novelDetails.publication_date).toISOString().slice(0, 10) %>"　required>
-              <% } else { %>
-                <input type="date" name="novel[publication_date]" required>
-            <% } %>
-          </div>
-          <div>
-            <label for="price">価格</label>
-            <input type="number" name="novel[price]" id="price" value="<%= novelDetails.price %>"  required>
-          </div>
-          <div>
-            <label for="amazon_url">AmazonURL</label>
-            <input type="text" name="novel[amazon_url]" id="amazon_url" value="<%= novelDetails.amazon_url %>">
-          </div>
-          <div>
-            <lebel>現在は<%= novelDetails.novel_type %></lebel>
-            <select name="novel[novel_type]" id="novel_type" required>
-              <option value="文庫">文庫</option>
-              <option value="単行本">単行本</option>
-              <option value="ライトノベル">ライトノベル</option>
-            </select>
-          </div>
-          <div>
-            <%if( novelDetails.is_recommend ){ %>
-              <input type="checkbox" name="novel[is_recommend]" checked>おすすめ<br>
-              <% }else{ %>
-              <input type="checkbox" name="novel[is_recommend]">おすすめ<br>
-            <% } %>
-          </div>
-          <div>
-            <label for="author">著者</label>authors
-            <select name="novel[author]" id="author" value="<%= novelDetails.author.author_name %>" required>
-              <% authors.forEach(author => { %>
-                <%if( author.author_name  == novelDetails.author.author_name ){ %>
-                  <option value="<%= author._id %>" selected><%= author.author_name %></option>
-                  <% }else{ %>
-                  <option value="<%= author._id %>"><%= author.author_name %></option>
-                <% } %>
-              <% }); %>
-            </select>
-          </div>
-          <div>
-            <lebel>現在は<%= novelDetails.genre.genre_name %></lebel>
-            <label for="genre">ジャンル</label>
-            <select name="novel[genre]" id="genre">
-              <% genres.forEach(genre => { %>
-                <%if( genre.genre_name  == novelDetails.genre.genre_name ){%>
-                  <option value="<%= genre._id %>" selected><%= genre.genre_name %></option>
-                  <%}else{%>
-                    <option value="<%= genre._id %>"><%= genre.genre_name %></option>
-                  <%}%>
-              <% }); %>
-            </select>
-          </div>
-          <button type="submit">変更</button>
-        </form>
+
+          
         
 <!-- 特定のJavaScript -->
 <% scripts = '<script src="/js/account_setting.js"></script>' %> 
