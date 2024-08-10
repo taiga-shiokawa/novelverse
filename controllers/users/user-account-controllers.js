@@ -1,19 +1,23 @@
-const User = require("../../models/Users");
-const Bookmark = require("../../models/Bookmark");
-const DeletionReason = require("../../models/Deletion_reasons");
-const passport = require("passport");
-const { cloudinary } = require("../../cloudinary/cloudinary");
-const { Resend } = require("resend");
+// サードパーティモジュール
+const passport        = require("passport");
+const { cloudinary }  = require("../../cloudinary/cloudinary");
+const { Resend }      = require("resend");
 require("dotenv").config();
+
+// ローカルモジュール
+const User            = require("../../models/Users");
+const Bookmark        = require("../../models/Bookmark");
+const DeletionReason  = require("../../models/Deletion_reasons");
+const userAccountSettingValidate = require("../../utils/user-account-setting-validation");
 
 // Resend環境変数
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 module.exports.renderAccountDeletion = async (req, res) => {
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const email = loginUser.email;
-  const topImg = loginUser.image;
+  const { id }    = res.locals.currentUser;      //ログイン中のユーザーのID
+  const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+  const email     = loginUser.email;
+  const topImg    = loginUser.image;
   res.render("users/account-deletion", {
     email,
     topImg,
@@ -22,9 +26,7 @@ module.exports.renderAccountDeletion = async (req, res) => {
 };
 
 module.exports.accountDeletion = async (req, res, next) => {
-  console.log(`deletion`);
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const { password, email, opinion } = req.body; //formに入力した値
+  const { password, email, opinion } = req.body;
 
   const user = await User.findOne({ email: email });
   console.log("ユーザーが見つかりました", user);
@@ -39,7 +41,7 @@ module.exports.accountDeletion = async (req, res, next) => {
     if (!user) {
       req.flash("error", "パスワードが間違っています");
       console.log("パスワードが間違っています");
-      return res.redirect("/user/account/deletion"); // リダイレクト先
+      return res.redirect("/user/account/deletion");
     }
 
     try {
@@ -57,20 +59,20 @@ module.exports.accountDeletion = async (req, res, next) => {
         }
         req.flash("success", "アカウントを削除しました");
         console.log("アカウントを削除しました");
-        res.redirect("/user/login"); // リダイレクト先
+        res.redirect("/user/login");
       });
     } catch (error) {
       console.error("アカウント削除中にエラーが発生しました:", error);
       req.flash("error", "アカウント削除に失敗しました");
-      res.redirect("/user/account/deletion"); // リダイレクト先
+      res.redirect("/user/account/deletion");
     }
   })(req, res, next); // passport.authenticateミドルウェアを呼び出す
 };
 
 module.exports.renderAccountSetting = async (req, res) => {
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg = loginUser.image;
+  const { id }    = res.locals.currentUser;      //ログイン中のユーザーのID
+  const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+  const topImg    = loginUser.image;
   if (!loginUser) {
     req.flash("error", "ユーザーは見つかりませんでした");
     return res.redirect(`/user/login`);
@@ -83,11 +85,23 @@ module.exports.renderAccountSetting = async (req, res) => {
 };
 
 module.exports.accountSetting = async (req, res) => {
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const user = await User.findById(id);
-  await User.findByIdAndUpdate(id, { ...req.body.user });
-  req.flash("success", "アカウントを更新しました");
-  res.redirect("/user/account/setting");
+  const { id }    = res.locals.currentUser;  //ログイン中のユーザーのID
+  const loginUser = await User.findById(id);
+  const topImg    = loginUser.image;
+  const errors    = userAccountSettingValidate(req.body);
+  if (errors) {
+    // console.log(errors);
+    return res.render("users/account-settings", {
+      loginUser,
+      topImg,
+      csrfToken: req.csrfToken(),
+      errors: errors,
+    });
+  } else {
+    await User.findByIdAndUpdate(id, { ...req.body.user });
+    req.flash("success", "アカウントを更新しました");
+    res.redirect("/user/account/setting");
+  }
 };
 
 module.exports.accountSettingImg = async (req, res) => {
@@ -110,10 +124,10 @@ module.exports.accountSettingImg = async (req, res) => {
 
 module.exports.deleteSettingImg = async (req, res) => {
   try {
-    const { id } = res.locals.currentUser;
+    const { id }    = res.locals.currentUser;
     const userImgId = req.body.imgId;
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    const topImg = loginUser.image;
+    const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+    const topImg  = loginUser.image;
 
     console.log(`topImg ${userImgId}`);
     // Cloudinaryから画像を削除
@@ -122,9 +136,7 @@ module.exports.deleteSettingImg = async (req, res) => {
       await cloudinary.uploader.destroy(topImg[0].filename);
     }
 
-    loginUser.image = loginUser.image.filter(
-      (c) => c._id.toString() !== userImgId
-    );
+    loginUser.image = loginUser.image.filter((c) => c._id.toString() !== userImgId);
     await loginUser.save();
     res.redirect("/user/account/setting");
   } catch (err) {
@@ -139,9 +151,9 @@ module.exports.deleteSettingImg = async (req, res) => {
 };
 
 module.exports.renderPasswordChange = async (req, res) => {
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg = loginUser.image;
+  const { id }    = res.locals.currentUser;      //ログイン中のユーザーのID
+  const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+  const topImg    = loginUser.image;
   res.render("users/password-change", { topImg, csrfToken: req.csrfToken() });
 };
 
@@ -186,16 +198,14 @@ module.exports.passwordChange = async (req, res, next) => {
     });
   } catch (error) {
     console.error("Password update error:", error);
-    res
-      .status(500)
-      .json({ message: "パスワードの更新中にエラーが発生しました" });
+    res.status(500).json({ message: "パスワードの更新中にエラーが発生しました" });
   }
 };
 
 module.exports.addBookmark = async (req, res) => {
   try {
     const novelId = req.body.novelId;
-    const userId = req.user._id;
+    const userId  = req.user._id;
 
     // 既存のブックマークを確認
     let bookmark = await Bookmark.findOne({ user: userId, novel: novelId });
@@ -216,16 +226,14 @@ module.exports.addBookmark = async (req, res) => {
     res.json({ success: true, message: "ブックマークに追加しました" });
   } catch (err) {
     console.error(err);
-    res
-      .status(500)
-      .json({ success: false, message: "サーバーエラーが発生しました" });
+    res.status(500).json({ success: false, message: "サーバーエラーが発生しました" });
   }
 };
 
 module.exports.renderNovelHome = async (req, res) => {
-  const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-  const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-  const topImg = loginUser.image.url;
+  const { id }    = res.locals.currentUser;      //ログイン中のユーザーのID
+  const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+  const topImg    = loginUser.image.url;
   res.redirect("/novel/home", { topImg, csrfToken: req.csrfToken() });
 };
 
@@ -240,11 +248,10 @@ module.exports.renderBookmarkLists = async (req, res) => {
       },
     });
 
-    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    const topImg = loginUser.image;
-
-    const novels = bookmarks.map((bookmark) => bookmark.novel);
+    const { id }    = res.locals.currentUser;   //ログイン中のユーザーのID
+    const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+    const topImg    = loginUser.image;
+    const novels    = bookmarks.map((bookmark) => bookmark.novel);
     res.render("users/bookmark-list", {
       novels,
       topImg,
@@ -258,7 +265,7 @@ module.exports.renderBookmarkLists = async (req, res) => {
 module.exports.cancelBookmark = async (req, res) => {
   try {
     const novelId = req.body.novelId;
-    const userId = req.user._id;
+    const userId  = req.user._id;
 
     // 既存のブックマークを確認して削除
     let result = await Bookmark.findOneAndDelete({
@@ -287,9 +294,9 @@ module.exports.cancelBookmark = async (req, res) => {
 // ご意見・お問い合わせ画面へ遷移
 module.exports.goToInquiry = async (req, res) => {
   if (res.locals.currentUser) {
-    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    const topImg = loginUser.image;
+    const { id }    = res.locals.currentUser;      //ログイン中のユーザーのID
+    const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+    const topImg    = loginUser.image;
     res.render("users/inquiry-page", { topImg, csrfToken: req.csrfToken() });
   }
 };
@@ -312,7 +319,7 @@ module.exports.inquiry = async (req, res) => {
       from: "onboarding@novelverse.net",
       to: "taiga.hr12@gmail.com",
       subject: `${subject}`,
-      html: `
+      html   : `
       <p>From: ${email}</p>
       <p>件名: ${subject}</p>
       <p>お問い合わせ内容:</p>
@@ -338,9 +345,9 @@ module.exports.inquiry = async (req, res) => {
 
     let topImg = "";
     if (res.locals.currentUser) {
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg = loginUser.image;
+      const { id }    = res.locals.currentUser;   //ログイン中のユーザーのID
+      const loginUser = await User.findById(id);  //ログイン中のユーザーの情報を全て取得
+      topImg          = loginUser.image;
     }
 
     res.render("users/after-inquiry", { topImg });
