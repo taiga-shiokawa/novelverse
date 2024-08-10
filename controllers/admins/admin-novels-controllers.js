@@ -1,8 +1,15 @@
+const express = require("express");
 const Genre = require('../../models/Genres');
 const Novel = require('../../models/Novels');
 const Author = require('../../models/Authors');
 const ObjectId = require('mongodb').ObjectId;
 const catchAsync = require("../../utils/catchAsync");
+const { storage } = require("../../cloudinary/cloudinary");
+const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
+const router = express.Router();
+const multer = require("multer");
+const upload = multer({ storage });
+const { adminIsLoggedIn } = require("../../middleware");
 
 module.exports.renderNovelRegistration = catchAsync(async (req, res) => {
   const pageTitle = "小説追加";
@@ -37,10 +44,6 @@ module.exports.novelRegistration = catchAsync(async (req, res, next ) => {
   }
 });
 
-// 表紙削除
-router.route("/cover/delete/")
-.get(  adminIsLoggedIn , AdminNovles.renderNovelCoverDelete )   
-.post(  adminIsLoggedIn , AdminNovles.novelCoverDelete ) 
 
 module.exports.renderNovelCoverDelete = catchAsync(async (req, res, next ) => {
   try {

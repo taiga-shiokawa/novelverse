@@ -1,13 +1,13 @@
 const express = require("express");
 const Novel = require("../../models/Novels");
 const { cloudinary } = require("../../cloudinary/cloudinary");
-const multer = require("multer");
 const { storage } = require("../../cloudinary/cloudinary");
 const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
 const AdminNovles = require('../../controllers/admins/admin-novels-controllers');
 const { adminIsLoggedIn } = require("../../middleware");
-const catchAsync = require("../../utils/catchAsync");
 const router = express.Router();
+
+const multer = require("multer");
 // アップロードされたファイルの保存先を指定
 const upload = multer({ storage });
 
