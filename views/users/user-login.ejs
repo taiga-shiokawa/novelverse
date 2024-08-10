@@ -5,6 +5,9 @@
 <main>
   <div class="container">
     <div class="left_container">
+      <% if ((errors && errors.email) || (errors && errors.password)) { %>
+        <div class="error-message">メールアドレスまたはパスワードが間違っています</div>
+      <% } %>
       <form action="/user/login" method="post">
         <input type="hidden" name="_csrf" value="<%= csrfToken %>">
         <label class="colums_label">メールアドレス</label><br />
