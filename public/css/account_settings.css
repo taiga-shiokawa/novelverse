@@ -145,7 +145,7 @@ main a{
     margin-top: auto;
 }
 
-.top_img {
+.top_img ,.img {
     width: 100%;
     display: block;
     width: 200px;
