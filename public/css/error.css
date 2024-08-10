@@ -8,10 +8,8 @@
   color: #332405;
 }
 
-.error-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.error-content h1 {
+  text-align: center;
 }
 
 .go-to-home {
