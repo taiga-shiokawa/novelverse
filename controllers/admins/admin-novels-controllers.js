@@ -1,15 +1,14 @@
-const express = require("express");
-const Genre = require('../../models/Genres');
-const Novel = require('../../models/Novels');
-const Author = require('../../models/Authors');
-const ObjectId = require('mongodb').ObjectId;
-const catchAsync = require("../../utils/catchAsync");
-const { storage } = require("../../cloudinary/cloudinary");
+const express       = require("express");
+const Genre         = require('../../models/Genres');
+const Novel         = require('../../models/Novels');
+const Author        = require('../../models/Authors');
+const ObjectId      = require('mongodb').ObjectId;
+const catchAsync    = require("../../utils/catchAsync");
+const { storage }   = require("../../cloudinary/cloudinary");
+const router        = express.Router();
+const multer        = require("multer");
+const upload        = multer({ storage });
 const novelRegisrationtAndUpdateValidate = require("../../utils/novel-registration-and-update-validation");   // 小説投稿と更新のバリデーション
-const router = express.Router();
-const multer = require("multer");
-const upload = multer({ storage });
-const { adminIsLoggedIn } = require("../../middleware");
 
 module.exports.renderNovelRegistration = catchAsync(async (req, res) => {
   const pageTitle = "小説追加";
@@ -25,7 +24,6 @@ module.exports.novelRegistration = catchAsync(async (req, res, next ) => {
   next();
 }, upload.single("cover"), novelRegisrationtAndUpdateValidate, async (req, res) => {
   const novelData = req.body.novel;
-
   // チェックボックスの値をMongoDBのBoolean型に合うように変換
   novelData.is_new = novelData.is_new === "on";
   novelData.is_recommend = novelData.is_recommend === "on";
@@ -44,24 +42,23 @@ module.exports.novelRegistration = catchAsync(async (req, res, next ) => {
   }
 });
 
-
 module.exports.renderNovelCoverDelete = catchAsync(async (req, res, next ) => {
   try {
     const novels = await Novel.find({}).populate("author").limit(1);
     // coverの詳細をコンソールに表示
-    novels.forEach((novel, index) => {
-      console.log(`Novel ${index + 1}:`);
-      console.log("Title:", novel.title);
-      console.log("Cover:", novel.cover);
-      if (novel.cover && novel.cover.length > 0) {
-        console.log("Cover URL:", novel.cover[0].url);
-        console.log("Cover Filename:", novel.cover[0].filename);
-        console.log("Cover ID:", novel.cover[0]._id);
-      } else {
-        console.log("No cover image found");
-      }
-      console.log("-------------------");
-    });
+    // novels.forEach((novel, index) => {
+    //    console.log(`Novel ${index + 1}:`);
+    //    console.log("Title:", novel.title);
+    //    console.log("Cover:", novel.cover);
+    //   if (novel.cover && novel.cover.length > 0) {
+    //    console.log("Cover URL:", novel.cover[0].url);
+    //    console.log("Cover Filename:", novel.cover[0].filename);
+    //    console.log("Cover ID:", novel.cover[0]._id);
+    // } else {
+    //    console.log("No cover image found");
+    //   }
+    //    console.log("-------------------");
+    // });
     const pageTitle = "小説管理" ; 
     res.render("admins/admin-novel-management", { pageTitle , novels });
   } catch (err) {
@@ -72,8 +69,6 @@ module.exports.renderNovelCoverDelete = catchAsync(async (req, res, next ) => {
 module.exports.novelCoverDelete = catchAsync(async (req, res, next ) => {
   try {
     const { coverId } = req.body;
-    console.log("CoverId: ", coverId);
-
     const novel = await Novel.findOne({ "cover._id": coverId });
 
     // Cloudinaryから画像を削除
@@ -116,7 +111,6 @@ module.exports.renderAddGenres= async ( req , res ) => {
 module.exports.addGenres= async ( req , res ) => {
   const { addGenre } = req.body;
   const currentGenreList = await Genre.find({ genre_name: addGenre });
-  console.log(`currentGenreList:${currentGenreList}`);
   let message = "";
   if(currentGenreList.length == 0){
     const genre = new Genre({ genre_name: addGenre });
@@ -147,23 +141,20 @@ module.exports.deleteGenres = async ( req , res ) => {
   const { genreId , genreName } = req.body;
   let message = "";
   
-  console.log(`1`);
   //既存の小説に削除予定のジャンルがないか確認
   const novelList = await Novel.find({ genre: genreId });  
   try{
-
     if( genreName == 'その他'){
       //その他は削除しない
       message = `「その他」は削除できません`;
     } else if( novelList.length > 0 ){
-      //あれば削除しない
+      //選択中のジャンルを小説があれば削除しない
       message = `「${genreName}」を選択中の小説があるため、削除できません`;
     } else {
       //なければ削除処理
       await Genre.findByIdAndDelete(genreId);
       message = `「${genreName}」を削除しました`;
     }
-
   }catch(e){
     console.log(e);
   }
@@ -180,7 +171,6 @@ module.exports.renderAdminNovelDetails = catchAsync(async (req, res) => {
     .populate("author")
     .populate("genre");
     const pageTitle = "書籍詳細・編集";
-
   res.render("admins/admin-novel-details", { pageTitle , novelDetails, csrfToken: req.csrfToken() });
 });
 
@@ -212,7 +202,6 @@ module.exports.renderAdminSearchResultAndSearchProcess = catchAsync(
   async (req, res) => {
     const searchQuery = req.query.search;
     let pageTitle = "";
-
     if (!searchQuery || searchQuery.trim() === "") {
       req.flash("info", "検索結果がありませんでした");
       pageTitle = "検索結果";
@@ -286,33 +275,22 @@ module.exports.renderAdminGenreNovelListAndNovelGet = catchAsync(
 
 // 表紙画像変更
 module.exports.changeCoverImg = catchAsync(async (req, res) => {
-
   const novelId = req.body.novelId;
   const novel = await Novel.findById(novelId);
-
   //このIDの小説が存在するかチェック
   if (!novel) {
     return res.status(404).json({ message: "Novel not found" });
   }
-
   try {
-
-    console.log(`変更後のreq.file.pathは${req.file.path}`);
-    console.log(`変更後のreq.file.filenameは${req.file.filename}`);
     await Novel.findByIdAndUpdate(novelId, {
       cover: { url: req.file.path, filename: req.file.filename },
     });
-
     req.flash("success", "表紙画像を変更しました");
-
     const novelDetails = await Novel.findById(novelId)
     .populate("author")
     .populate("genre");
     const pageTitle = "書籍詳細・編集";
-
-  res.render("admins/admin-novel-details", { pageTitle , novelDetails, csrfToken: req.csrfToken() });  
-  
-
+    res.render("admins/admin-novel-details", { pageTitle , novelDetails, csrfToken: req.csrfToken() });
   } catch (err) {
     req.flash("error", "表紙画像の変更に失敗しました");
     console.error(err);
@@ -327,13 +305,10 @@ module.exports.novelInfoChange = catchAsync(async (req, res) => {
   req.body.novel.is_recommend = req.body.novel.is_recommend === "on";
   await Novel.findByIdAndUpdate(novelId, { ...req.body.novel });
   req.flash("success", "小説の情報を更新しました");
-
-  const id = req.params.id;
+  // const id = req.params.id;
   const novelDetails = await Novel.findById(novelId)
     .populate("author")
     .populate("genre");
-    const pageTitle = "書籍詳細・編集";
-
-  res.render("admins/admin-novel-details", { pageTitle , novelDetails, csrfToken: req.csrfToken() });  
-  
+  const pageTitle = "書籍詳細・編集";
+  res.render("admins/admin-novel-details", { pageTitle , novelDetails, csrfToken: req.csrfToken() });
 });

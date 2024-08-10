@@ -72,7 +72,6 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
   }
 
   let topImg = await setTopImage(res);
-
   const novels = await Novel.find(query).sort({_id: -1}).populate("author").populate("genre");
   res.render("novels/novel-lists", { novels, topImg , pageTitle, csrfToken: req.csrfToken(), });
 });
@@ -83,10 +82,8 @@ module.exports.goToNovelDetails = catchAsync(async (req, res) => {
   const novelDetails = await Novel.findById(id)
     .populate("author")
     .populate("genre");
-  console.log(novelDetails);
 
   let topImg = await setTopImage(res);
-
   res.render("novels/novel-details", { novelDetails, topImg, csrfToken: req.csrfToken() });
 });
 
@@ -97,14 +94,12 @@ module.exports.getAuthorNames = async (req, res, next) => {
     if (!query) {
       return res.json([]);
     }
-
     const suggestions = await Author.find({
       author_name: { $regex: query, $options: "i" },
     })
       .limit(50)
       .lean()
       .exec();
-
     const authorNames = suggestions.map((item) => item.author_name);
     res.json(authorNames);
   } catch (err) {
@@ -114,85 +109,77 @@ module.exports.getAuthorNames = async (req, res, next) => {
 };
 
 // 検索結果画面へ遷移&処理
-module.exports.goToSearchResultAndSearchProcess = catchAsync(
-  async (req, res) => {
-    const searchQuery = req.query.search;
-    let pageTitle = "";
-    let topImg = await setTopImage(res);
-
-    if (!searchQuery || searchQuery.trim() === "") {
-      req.flash("info", "検索結果がありませんでした");
-      pageTitle = "検索結果";
-      return res.render("novels/novel-search-result", {
-        pageTitle,
-        topImg,
-        results: [],
-        messages: req.flash(),
-        csrfToken: req.csrfToken()
-      });
-    }
-
-    try {
-      const regex = new RegExp(searchQuery, "i");
-
-      // 検索クエリに一致する作家を見つける
-      const matchingAuthors = await Author.find({ author_name: regex });
-      const authorIds = matchingAuthors.map((author) => author._id);
-
-      // タイトルまたは一致した作家IDで小説を検索
-      const results = await Novel.find({
-        $or: [{ title: regex }, { author: { $in: authorIds } }],
-      })
-        .sort({_id: -1})
-        .populate("author")
-        .populate("genre")
-        .exec();
-
-      if (results.length < 1) {
-        req.flash("info", "検索結果がありません");
-        pageTitle = "検索結果";
-      } else {
-        pageTitle = `${searchQuery}の検索結果`;
-      }
-
-      res.render("novels/novel-search-result", {
-        results,
-        topImg,
-        pageTitle,
-        messages: req.flash(),
-        csrfToken: req.csrfToken()
-      });
-    } catch (err) {
-      console.error("検索エラー", err);
-      req.flash("error", "検索中にエラーが発生しました");
-      res.status(500).render("novels/novel-search-result", {
-        results: [],
-        topImg,
-        pageTitle: "エラー",
-        messages: req.flash(),
-        csrfToken: req.csrfToken()
-      });
-    }
+module.exports.goToSearchResultAndSearchProcess = catchAsync( async (req, res) => {
+  const searchQuery = req.query.search;
+  let pageTitle = "";
+  let topImg = await setTopImage(res);
+  if (!searchQuery || searchQuery.trim() === "") {
+    req.flash("info", "検索結果がありませんでした");
+    pageTitle = "検索結果";
+    return res.render("novels/novel-search-result", {
+      pageTitle,
+      topImg,
+      results: [],
+      messages: req.flash(),
+      csrfToken: req.csrfToken()
+    });
   }
-);
+  try {
+    const regex = new RegExp(searchQuery, "i");
 
-// ジャンル別小説一覧画面へ遷移&取得
-module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
-  async (req, res) => {
-    const genreId = req.params.id;
-    let pageTitle = "";
-    const genre = await Genre.findById(genreId);
-    if (genre) {
-      pageTitle = genre.genre_name;
-    }
+    // 検索クエリに一致する作家を見つける
+    const matchingAuthors = await Author.find({ author_name: regex });
+    const authorIds = matchingAuthors.map((author) => author._id);
 
-    let topImg = await setTopImage(res);
-    
-    const novelByGenreList = await Novel.find({ genre: genreId })
+    // タイトルまたは一致した作家IDで小説を検索
+    const results = await Novel.find({
+      $or: [{ title: regex }, { author: { $in: authorIds } }],
+    })
       .sort({_id: -1})
       .populate("author")
-      .populate("genre");
-    console.log(novelByGenreList);
-    res.render("novels/novel-genre-list", { novelByGenreList,topImg,  pageTitle, csrfToken: req.csrfToken() });
+      .populate("genre")
+      .exec();
+
+    if (results.length < 1) {
+      req.flash("info", "検索結果がありません");
+      pageTitle = "検索結果";
+    } else {
+      pageTitle = `${searchQuery}の検索結果`;
+    }
+
+    res.render("novels/novel-search-result", {
+      results,
+      topImg,
+      pageTitle,
+      messages: req.flash(),
+      csrfToken: req.csrfToken()
+    });
+  } catch (err) {
+    console.error("検索エラー", err);
+    req.flash("error", "検索中にエラーが発生しました");
+    res.status(500).render("novels/novel-search-result", {
+      results: [],
+      topImg,
+      pageTitle: "エラー",
+      messages: req.flash(),
+      csrfToken: req.csrfToken()
+    });
   }
-);
+});
+
+// ジャンル別小説一覧画面へ遷移&取得
+module.exports.goToByGenreNovelListAndGNovelGet = catchAsync( async (req, res) => {
+  const genreId = req.params.id;
+  let pageTitle = "";
+  const genre = await Genre.findById(genreId);
+  if (genre) {
+    pageTitle = genre.genre_name;
+  }
+  let topImg = await setTopImage(res);
+  const novelByGenreList = await Novel.find({ genre: genreId })
+    .sort({_id: -1})
+    .populate("author")
+    .populate("genre");
+  console.log(novelByGenreList);
+  res.render("novels/novel-genre-list", { novelByGenreList,topImg,  pageTitle, csrfToken: req.csrfToken() });
+});
