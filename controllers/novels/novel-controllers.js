@@ -39,13 +39,15 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     .populate("author")
     .limit(5);
 
-    const topImg = setTopImage();
+    //const topImg = setTopImage();
+
+    let topImg= "";
     
-    // if(res.locals.currentUser){
-    //   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    //   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    //   topImg =  loginUser.image;
-    // }
+    if(res.locals.currentUser){
+      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+      topImg =  loginUser.image;
+    }
 
   res.render("novels/home", {
     newNovels,
