@@ -1,34 +1,29 @@
-const Admin = require('../../models/Admins');
 const User = require('../../models/Users');
-const passport = require("passport");
-
 
 // ユーザー管理画面へ遷移
 module.exports.renderUserManagement = async ( req , res ) => {
-  const users = await User.find({});
+  const users         = await User.find({});
   const selectingUser = null;
-  const searchUser = null;
-  const count = await User.estimatedDocumentCount();
-  const pageTitle = "ユーザー管理画面";
+  const searchUser    = null;
+  const count         = await User.estimatedDocumentCount();
+  const pageTitle     = "ユーザー管理画面";
   res.render("admins/user-management" , { pageTitle , users , selectingUser , count , searchUser});
 }
 
 // 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
 module.exports.renderUserManagementAndDetail = async ( req , res ) => {
-  const users = await User.find({});
+  const users         = await User.find({});
   const selectingUser = await User.findById(req.params.id)
-  const count = await User.estimatedDocumentCount();
-  const pageTitle = "ユーザー管理画面";
+  const count         = await User.estimatedDocumentCount();
+  const pageTitle     = "ユーザー管理画面";
   res.render("admins/user-management" , { pageTitle ,users , selectingUser , count });
 }
 
 module.exports.accountDeletion = async (req , res) => {
-  console.log('削除画面');
   const { admin_code, delete_user_id , delete_user_name } = req.body;
   const current_admin_code = req.session.admin_code;
-
   if( admin_code == current_admin_code ){
-    const deleteUser = await User.findByIdAndDelete(delete_user_id);
+    await User.findByIdAndDelete(delete_user_id);
     req.flash('success' , `${delete_user_name }さんのアカウントを削除しました`);
     res.redirect("/admin-user-management/user-management");
   }else{
@@ -37,21 +32,20 @@ module.exports.accountDeletion = async (req , res) => {
   }
 }
 
-
 module.exports.userSearch = async (req, res) => {
-  const searchQuery = req.query.search;
-  const pageTitle = "ユーザー管理画面";
+  const searchQuery   = req.query.search;
+  const pageTitle     = "ユーザー管理画面";
   const selectingUser = null;
-  const count = await User.estimatedDocumentCount();
+  const count         = await User.estimatedDocumentCount();
 
   if (!searchQuery || searchQuery.trim() == "") {
     return res.redirect("/admin-user-management/user-management");
   }
 
   try {
-    const regex = new RegExp(searchQuery, "i");
+    const regex      = new RegExp(searchQuery, "i");
     const searchUser = await User.find({username: regex});
-    const users = [];
+    const users      = [];
 
     if (searchUser.length < 1) {
       return res.redirect("/admin-user-management/user-management");

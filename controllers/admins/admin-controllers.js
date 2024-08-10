@@ -1,6 +1,6 @@
-const Admin = require("../../models/Admins");
-const User = require("../../models/Users");
-const Novel = require("../../models/Novels");
+const Admin    = require("../../models/Admins");
+const User     = require("../../models/Users");
+const Novel    = require("../../models/Novels");
 const passport = require("passport");
 // サードパーティ(外部のライブラリなど)モジュール
 const { Resend } = require("resend");
@@ -37,7 +37,6 @@ module.exports.adminLogin = async (req, res, next) => {
       req.flash("error", "管理者コードまたはパスワードが間違っています");
       return res.redirect("/admin/admin-login");
     }
-
     req.logIn(admin, (err) => {
       if (err) {
         return next(err);
@@ -63,10 +62,10 @@ module.exports.renderAddAdmin = (req, res) => {
 // 管理者追加処理
 module.exports.addAdmin = async (req, res) => {
   const { admin_code, name, email, birthday, password } = req.body;
-  let role = "admin";
+  let role        = "admin";
   const pageTitle = "管理者追加";
   try {
-    const admin = new Admin({ admin_code, name, email, birthday, role });
+    const admin         = new Admin({ admin_code, name, email, birthday, role });
     const registerAdmin = await Admin.register(admin, password);
     req.flash("success", "管理者を登録しました。");
   } catch (err) {
@@ -108,9 +107,9 @@ module.exports.registrationAdmin = async (req, res) => {
 
 // ダッシュボード画面へ遷移
 module.exports.renderDashboardAdmin = async (req, res) => {
-  const pageTitle = "ダッシュボード";
+  const pageTitle    = "ダッシュボード";
   try {
-    const userCount = await User.countDocuments();
+    const userCount  = await User.countDocuments();
     const novelCount = await Novel.countDocuments();
     // 当日のアクティブユーザー数をカウント
     const today = new Date();
