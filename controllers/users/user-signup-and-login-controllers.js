@@ -1,12 +1,12 @@
 // サードパーティ(外部のライブラリなど)モジュール
-const { Resend } = require("resend");
+const { Resend }  = require("resend");
+const passport    = require("passport");
 require("dotenv").config();
-const passport = require("passport");
-const userAccountCreateValidate = require("../../utils/user-account-create-validation");
-const userLoginValidate = require("../../utils/user-login-validation");
 
 // ローカルモジュール
-const User = require("../../models/Users");
+const User                      = require("../../models/Users");
+const userLoginValidate         = require("../../utils/user-login-validation");
+const userAccountCreateValidate = require("../../utils/user-account-create-validation");
 
 // Resend環境変数
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -24,9 +24,6 @@ module.exports.goToAccountCreate = (req, res) => {
 module.exports.accountCreate = async (req, res) => {
   const { username, email, password } = req.body;
   let role = "user";
-
-  console.log(password);
-  console.log(req.body._csrf);
 
   const errors = userAccountCreateValidate(req.body);
   if (errors) {
@@ -91,10 +88,6 @@ module.exports.userLogin = async (req, res, next) => {
       csrfToken: req.csrfToken(),
     });
   }
-
-  // if (!req.body._csrf) {
-  //   return res.status(403).json({ error: 'CSRFトークンがありません' });
-  // }
 
   // セッションの外で returnTo を保持
   const returnTo = req.session.returnTo;

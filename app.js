@@ -24,18 +24,18 @@ const session           = require("express-session");        // アプリのセ�
 // ローカルモジュール
 const Admin                       =   require("./models/Admins");                         // ユーザーの認証のためUserモデルをインポート
 const adminRouter                 =   require("./routes/admins/admin");                   // 管理者関連ルーター
-const adminUserManagementRouter   =   require("./routes/admins/admin-user-management");   // 管理者ユーザー管理関係ルーター
-const adminManagementRouter       =   require("./routes/admins/admin-management");        // 管理者の管理関係ルーター
 const adminAuthorRouter           =   require("./routes/admins/admin-author");            // 管理者の著者関係ルーター
+const adminManagementRouter       =   require("./routes/admins/admin-management");        // 管理者の管理関係ルーター
+const adminUserManagementRouter   =   require("./routes/admins/admin-user-management");   // 管理者ユーザー管理関係ルーター
 const boardRouter     =   require("./routes/boards/boards");
 const ExpressError    =   require("./utils/ExpressError");
 const getGenreName    =   require("./common/genres");         // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
 const getAuthorName   =   require("./common/authors");        // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきた作家名を表示する
-const novelManagementRouter   =   require("./routes/admins/admin-novel-management");  // 小説管理ルーター
 const novelRouter             =   require("./routes/novels/novels");                  // 小説関連ルーター
+const novelManagementRouter   =   require("./routes/admins/admin-novel-management");  // 小説管理ルーター
 const User                =   require("./models/Users");                              // ユーザーの認証のためUserモデルをインポート
-const userAccountRouter   =   require("./routes/users/user-account");                 // ユーザーアカウント関連ルーター
 const userLogoutRouter    =   require("./routes/users/user-logout");                  // ユーザーのログアウトルーター
+const userAccountRouter   =   require("./routes/users/user-account");                 // ユーザーアカウント関連ルーター
 const userSignupAndLogin  =   require("./routes/users/user-signup-and-login");        // ユーザー登録とログインルーター
 
 const app = express();

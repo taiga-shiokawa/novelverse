@@ -1,5 +1,5 @@
 // サードパーティ(外部のライブラリなど)モジュール
-const express = require("express");
+const express   = require("express");
 const rateLimit = require("express-rate-limit");
 
 // ローカルモジュール
@@ -29,18 +29,15 @@ const loginLimiter = rateLimit({
   skipFailedRequests: true,
 });
 
-router
-  .route("/signup")
+router.route("/signup")
   .get(goToAccountCreate) // アカウント作成画面へ遷移
-  .post(accountCreate); // アカウント作成処理
+  .post(accountCreate);   // アカウント作成処理
 
-router
-  .route("/login")
-  .get(goToLogin) // ログイン画面へ遷移
-  .post(loginLimiter, userLogin); // ログイン処理
+router.route("/login")
+  .get(goToLogin)                   // ログイン画面へ遷移
+  .post(loginLimiter, userLogin);   // ログイン処理
 
-router
-  .route("/after_page") // アカウント作成後ページ
-  .get(goToAfterPage);
+router.route("/after_page") 
+  .get(goToAfterPage);  // アカウント作成後ページ
 
 module.exports = router;
