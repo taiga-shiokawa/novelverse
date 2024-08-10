@@ -4,6 +4,7 @@ const Author = require("../../models/Authors");
 const Genre = require("../../models/Genres");
 const User = require("../../models/Users");
 const catchAsync = require("../../utils/catchAsync");
+const setTopImage = require("../../utils/setTopImage");
 
 // ホーム画面へ遷移
 module.exports.goToHome = catchAsync(async (req, res) => {
@@ -38,13 +39,13 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     .populate("author")
     .limit(5);
 
-    let topImg = "";
+    const topImg = setTopImage();
     
-    if(res.locals.currentUser){
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
-    }
+    // if(res.locals.currentUser){
+    //   const { id } = res.locals.currentUser; //ログイン中のユーザーのID
+    //   const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
+    //   topImg =  loginUser.image;
+    // }
 
   res.render("novels/home", {
     newNovels,
