@@ -1,11 +1,12 @@
+const User = require('../models/Users');
 
-// 未ログイン時のリダイレクト処理
-module.exports.setTopImage = async (req, res ) => {
+const setTopImage = async ( res ) => {
     try{
-        if(res.locals.currentUser){
+        if(res){
             const { id } = res.locals.currentUser; //ログイン中のユーザーのID
             const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-            return loginUser.image;
+            topImg =  loginUser.image;
+            return topImg;
         }
         return "";
     }catch(e){
@@ -13,3 +14,5 @@ module.exports.setTopImage = async (req, res ) => {
         return "";
     }
 };
+
+module.exports = setTopImage;

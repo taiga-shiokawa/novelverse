@@ -39,15 +39,7 @@ module.exports.goToHome = catchAsync(async (req, res) => {
     .populate("author")
     .limit(5);
 
-    //const topImg = setTopImage();
-
-    let topImg= "";
-    
-    if(res.locals.currentUser){
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
-    }
+    let topImg = await setTopImage(res);
 
   res.render("novels/home", {
     newNovels,
@@ -79,13 +71,7 @@ module.exports.seeMoreNovelList = catchAsync(async (req, res) => {
     pageTitle = "その他";
   }
 
-  let topImg = "";
-    
-    if(res.locals.currentUser){
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
-    }
+  let topImg = await setTopImage(res);
 
   const novels = await Novel.find(query).sort({_id: -1}).populate("author").populate("genre");
   res.render("novels/novel-lists", { novels, topImg , pageTitle, csrfToken: req.csrfToken(), });
@@ -99,13 +85,7 @@ module.exports.goToNovelDetails = catchAsync(async (req, res) => {
     .populate("genre");
   console.log(novelDetails);
 
-  let topImg = "";
-    
-  if(res.locals.currentUser){
-    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
-  }
+  let topImg = await setTopImage(res);
 
   res.render("novels/novel-details", { novelDetails, topImg, csrfToken: req.csrfToken() });
 });
@@ -138,14 +118,7 @@ module.exports.goToSearchResultAndSearchProcess = catchAsync(
   async (req, res) => {
     const searchQuery = req.query.search;
     let pageTitle = "";
-
-    let topImg = "";
-    
-    if(res.locals.currentUser){
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
-    }
+    let topImg = await setTopImage(res);
 
     if (!searchQuery || searchQuery.trim() === "") {
       req.flash("info", "検索結果がありませんでした");
@@ -213,13 +186,7 @@ module.exports.goToByGenreNovelListAndGNovelGet = catchAsync(
       pageTitle = genre.genre_name;
     }
 
-    let topImg = "";
-    
-    if(res.locals.currentUser){
-      const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-      const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-      topImg =  loginUser.image;
-    }
+    let topImg = await setTopImage(res);
     
     const novelByGenreList = await Novel.find({ genre: genreId })
       .sort({_id: -1})
