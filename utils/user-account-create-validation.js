@@ -1,4 +1,4 @@
-const BaseJoi = require("joi");
+const BaseJoi   = require("joi");
 const extention = require("../utils/sanitize-html");
 
 const Joi = BaseJoi.extend(extention); // XSS攻撃を避けるためのsanitize-html.js(escapeHTML())をJoiに継承させる

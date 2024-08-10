@@ -1,10 +1,10 @@
-const express = require("express");
-const router = express.Router({ mergeParams : true});
-const { isLoggedIn } = require("../../middleware");
-const userAccount = require("../../controllers/users/user-account-controllers");
-const multer = require("multer");
-const { storage } = require("../../cloudinary/cloudinary");
-const upload = multer({ storage });
+const express           = require("express");
+const { isLoggedIn }    = require("../../middleware");
+const userAccount       = require("../../controllers/users/user-account-controllers");
+const multer            = require("multer");
+const router            = express.Router({ mergeParams : true});
+const { storage }       = require("../../cloudinary/cloudinary");
+const upload            = multer({ storage });
 
 router.route('/deletion')
     .get(isLoggedIn , userAccount.renderAccountDeletion )   // アカウント削除画面へ遷移
