@@ -72,13 +72,13 @@ module.exports.addAdmin = async (req, res) => {
     console.log(err);
     req.flash("error", "更新中にエラーが発生しました");
   }
-  res.render("admins/admin-add" , { pageTitle });
+  res.render("admins/admin-add" , { pageTitle   , csrfToken: req.csrfToken()});
 };
 
 // 管理者追加画面へ遷移
 module.exports.renderRegistrationAdmin = (req, res) => {
   const pageTitle = "管理者新規登録";
-  res.render("admins/admin-registration" , { pageTitle });
+  res.render("admins/admin-registration" , { pageTitle  , csrfToken: req.csrfToken()});
 };
 
 // 管理者新規登録処理

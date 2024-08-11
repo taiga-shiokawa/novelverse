@@ -71,7 +71,7 @@ module.exports.renderNovelCoverDelete = catchAsync(async (req, res, next ) => {
   }
 });
 
-module.exports.novelCoverDelete = catchAsync(async (req, res, next ) => {
+module.exports.novelCoverDelete = async (req, res, next ) => {
   try {
     const { coverId } = req.body;
     const novel = await Novel.findOne({ "cover._id": coverId });
@@ -90,7 +90,7 @@ module.exports.novelCoverDelete = catchAsync(async (req, res, next ) => {
   } catch (err) {
     console.log(err);
   }  
-});
+};
 
 // 小説一覧・削除
 module.exports.renderNovelAll = catchAsync(async (req, res ) => {
@@ -114,22 +114,28 @@ module.exports.renderAddGenres= async ( req , res ) => {
 
 // ジャンル追加実装
 module.exports.addGenres= async ( req , res ) => {
-  const { addGenre } = req.body;
-  const currentGenreList = await Genre.find({ genre_name: addGenre });
-  let message = "";
-  if(currentGenreList.length == 0){
-    const genre = new Genre({ genre_name: addGenre });
-    const saveGenre = await genre.save(); 
-    message = `ジャンル「${addGenre}」を追加しました`;
-  } else {
-    message = addGenre + "はすでに存在しています";
-  }
+  try{
+    const { addGenre } = req.body;
+    const currentGenreList = await Genre.find({ genre_name: addGenre });
+    let message = "";
+    if(currentGenreList.length == 0){
+      const genre = new Genre({ genre_name: addGenre });
+      const saveGenre = await genre.save(); 
+      message = `ジャンル「${addGenre}」を追加しました`;
+    } else {
+      message = addGenre + "はすでに存在しています";
+    }
 
-  const genreList = await Genre.find({});
-  const count = await Novel.estimatedDocumentCount(); 
-  const pageTitle = "ジャンル追加";
-  
-  res.render("admins/genre-add" , { pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
+    const genreList = await Genre.find({});
+    const count = await Novel.estimatedDocumentCount(); 
+    const pageTitle = "ジャンル追加";
+    
+    res.render("admins/genre-add" , { pageTitle , genreList , count , message , csrfToken: req.csrfToken()});
+
+  }catch(e){
+    console.log(e);
+    res.redirect("/novel/management/all");
+  }
 }
 
 // ジャンル削除画面へ遷移

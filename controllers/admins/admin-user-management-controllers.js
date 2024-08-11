@@ -7,7 +7,7 @@ module.exports.renderUserManagement = async ( req , res ) => {
   const searchUser    = null;
   const count         = await User.estimatedDocumentCount();
   const pageTitle     = "ユーザー管理画面";
-  res.render("admins/user-management" , { pageTitle , users , selectingUser , count , searchUser});
+  res.render("admins/user-management" , { pageTitle , users , selectingUser , count , searchUser , csrfToken: req.csrfToken()});
 }
 
 // 特定のユーザーの情報を一覧表示させて、ユーザー管理画面へ遷移
@@ -16,7 +16,7 @@ module.exports.renderUserManagementAndDetail = async ( req , res ) => {
   const selectingUser = await User.findById(req.params.id)
   const count         = await User.estimatedDocumentCount();
   const pageTitle     = "ユーザー管理画面";
-  res.render("admins/user-management" , { pageTitle ,users , selectingUser , count });
+  res.render("admins/user-management" , { pageTitle ,users , selectingUser , count , csrfToken: req.csrfToken()});
 }
 
 module.exports.accountDeletion = async (req , res) => {
@@ -50,7 +50,7 @@ module.exports.userSearch = async (req, res) => {
     if (searchUser.length < 1) {
       return res.redirect("/admin-user-management/user-management");
     } else {
-      res.render("admins/user-management", {pageTitle, searchUser, selectingUser, count, users});
+      res.render("admins/user-management", {pageTitle, searchUser, selectingUser, count, users , csrfToken: req.csrfToken()});
     }
 
   } catch (err) {

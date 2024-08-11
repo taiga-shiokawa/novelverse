@@ -9,7 +9,7 @@
                 <ul>
             <% for( let genre of genreList ){ %>
                 <li>
-                        <form action="/admin-novel-management/genre_delete" method="POST">
+                        <form action="/admin-novel-management/genre-delete" method="POST">
                                 
                                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                 <input type="hidden" name="genreId" value="<%= genre._id %>">
