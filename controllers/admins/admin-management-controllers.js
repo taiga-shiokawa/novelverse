@@ -28,7 +28,7 @@ module.exports.accountDeletion = async (req , res) => {
     req.flash('error' , `管理者コードが間違っています`);
     res.redirect(`/admin-management/admin-management/${delete_admin_id}`);
   } else {
-    const deleteAdmin = await Admin.findByIdAndDelete(delete_admin_id);
+    await Admin.findByIdAndDelete(delete_admin_id);
     req.flash('success' , `${delete_admin_name }さんのアカウントを削除しました`);
     res.redirect("/admin-management/admin-management");
   }

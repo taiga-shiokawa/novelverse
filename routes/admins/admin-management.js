@@ -14,5 +14,7 @@ router.route('/admin-management/:id')
 
 router.route('/deletion')
     .post( adminIsLoggedIn , AdminManagement.accountDeletion )    
+    .delete( adminIsLoggedIn , AdminManagement.accountDeletion )    
+
     
 module.exports = router;
