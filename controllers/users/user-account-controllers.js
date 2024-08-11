@@ -6,6 +6,7 @@ require("dotenv").config();
 
 // ローカルモジュール
 const User            = require("../../models/Users");
+const setTopImage = require("../../utils/setTopImage");
 const Bookmark        = require("../../models/Bookmark");
 const DeletionReason  = require("../../models/Deletion_reasons");
 const userAccountSettingValidate = require("../../utils/user-account-setting-validation");

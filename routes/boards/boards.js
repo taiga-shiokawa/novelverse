@@ -1,27 +1,18 @@
+// サードパーティモジュール
 const express = require("express");
+
+// ローカルモジュール
+const Board = require("../../controllers/boards/board-controllers"); 
 const User = require("../../models/Users");
 const router = express.Router();
 
-// 掲示板の説明画面へ遷移
-router.get("/info", async (req, res) => {
-  let topImg = "";
-  if(res.locals.currentUser){
-    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
-  }
-  res.render("boards/board-info", { topImg, csrfToken: req.csrfToken() });
-});
+router.route("/info")
+    .get(Board.renderBoardInfo);  // 掲示板の説明画面へ遷移
 
-// 掲示板へ遷移
-router.get("/home", async (req, res) => {
-  let topImg = "";
-  if(res.locals.currentUser){
-    const { id } = res.locals.currentUser; //ログイン中のユーザーのID
-    const loginUser = await User.findById(id); //ログイン中のユーザーの情報を全て取得
-    topImg =  loginUser.image;
-  }
-  res.render("boards/board-home", { topImg, csrfToken: req.csrfToken() });
-});
+router.route("/home")
+    .get(Board.renderBoardHome);  // 掲示板へ遷移
+
+router.route("/reviews/:id")
+    .get(Board.renderBoardReviews); // 各小説の掲示板へ
 
 module.exports = router;
