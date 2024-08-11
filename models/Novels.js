@@ -40,9 +40,6 @@ const novelSchema = new Schema({
   amazon_url: {
     type: String,
   },
-  like: {
-    type: Number,
-  },
   cover: [
     {
       url: String,

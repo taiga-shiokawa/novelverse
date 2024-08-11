@@ -15,10 +15,10 @@ router.route('/setting')
     .put(isLoggedIn , userAccount.accountSetting );         // アカウント設定
 
 router.route('/setting-img')
-    .put(upload.single("image"), userAccount.accountSettingImg);    // 小説登録処理
+    .put(upload.single("image"), userAccount.accountSettingImg);    // トプ画設定
 
 router.route('/delete-img')
-    .put(isLoggedIn ,userAccount.deleteSettingImg);    // 小説削除
+    .put(isLoggedIn ,userAccount.deleteSettingImg);    // トプ画削除
 
 router.route('/password_change')
     .get(isLoggedIn , userAccount.renderPasswordChange )    // アカウント設定画面へ遷移

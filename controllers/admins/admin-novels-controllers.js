@@ -15,23 +15,28 @@ module.exports.renderNovelRegistration = catchAsync(async (req, res) => {
   res.render("admins/novel-registration", { pageTitle , csrfToken: req.csrfToken() });
 });
 
-module.exports.novelRegistration = catchAsync(async (req, res, next ) => {
+module.exports.novelRegistration = async (req, res, next ) => {
   console.log("Route reached");
   console.log("Request body:", req.body);
   console.log("Request query:", req.query);
   console.log("Request file:", req.file);
   console.log("CSRF token from query:", req.query._csrf);
-  next();
-}, upload.single("cover"), novelRegisrationtAndUpdateValidate, async (req, res) => {
+//  next();
+//}, novelRegisrationtAndUpdateValidate, async (req, res) => {
   const novelData = req.body.novel;
   // チェックボックスの値をMongoDBのBoolean型に合うように変換
   novelData.is_new = novelData.is_new === "on";
   novelData.is_recommend = novelData.is_recommend === "on";
   const novel = new Novel(req.body.novel);
+  console.log("1" );
   if (req.file) {
     novel.cover = { url: req.file.path, filename: req.file.filename };
   }
+  console.log("2" );
+  console.log(novel.cover.url);
+  console.log("3");
   try {
+    console.log("4");
     const saveNovel = await novel.save();
     console.log("小説の登録に成功しました。", saveNovel);
     return res.redirect("/novel/management/registration");
@@ -40,7 +45,7 @@ module.exports.novelRegistration = catchAsync(async (req, res, next ) => {
     const pageTitle = "小説追加";
     return res.render("admins/novel-registration", {  pageTitle , csrfToken: req.csrfToken() });
   }
-});
+};
 
 module.exports.renderNovelCoverDelete = catchAsync(async (req, res, next ) => {
   try {
