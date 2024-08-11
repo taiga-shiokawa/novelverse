@@ -1,0 +1,125 @@
+.container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  max-width: 1200px;
+  padding: 100px 40px;
+  margin: 0 auto;
+  font-family: "Noto Sans JP", sans-serif;
+  color: #332405;
+}
+
+.cover_img{
+  margin: auto 0;
+  height: 390px;
+  width: 270px;
+  object-fit: cover;
+  margin-right: 60px;
+}
+
+.info_container{
+  width: 100%;
+  max-width: 700px;
+}
+
+.title_header{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.novel_title {
+  padding: 0;
+  margin: 0 0 10px;
+  font-size: 28px;
+}
+
+hr {
+  width: 100%;
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #332405;
+}
+
+.bookmark_button {
+  height: 40px;
+  width: 180px;
+  background-color: #505F00;
+  color: white;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.5s ease;
+}
+
+.bookmark_button:hover{
+  opacity: .7;
+}
+
+.summary_text {
+  text-align: left;
+  width: 100%;
+  min-height: 150px;
+  margin: 10px 0 20px;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 2px;
+  resize: vertical;
+}
+
+.info_container tr{
+  font-size: 14px;
+  text-align-last: left;
+}
+
+.info_container th{
+  width: 200px;
+}
+
+/* スマホ用レスポンシブデザイン */
+@media screen and (max-width: 767px) {
+  .container {
+    flex-direction: column;
+    padding: 40px 20px;
+  }
+
+  .cover_img {
+    margin: 0 auto 20px;
+    height: 500px;
+    width: 310px;
+  }
+
+  .info_container {
+    max-width: 100%;
+  }
+
+  .title_header {
+    display: flex;
+    align-items: center;
+  }
+
+  .title_header h1 {
+    font-size: 23px;
+  }
+
+  .novel_title {
+    font-size: 24px;
+    margin-bottom: 15px;
+  }
+
+  .bookmark_button {
+    margin-top: 10px;
+  }
+
+  .info_container th {
+    width: 100px;
+  }
+
+  .info_container td {
+    padding-left: 10px;
+  }
+
+  .summary_text {
+    min-height: 100px;
+  }
+}

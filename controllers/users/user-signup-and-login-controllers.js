@@ -94,10 +94,9 @@ module.exports.userLogin = async (req, res, next) => {
   console.log("Original returnTo:", returnTo);
 
   const user = await User.findOne({ email: email });
-  console.log(`ユーザーID：${user._id}`);
 
   // アカウントがロックされているかチェック
-  if (user.isLocked) {
+  if (user && user.isLocked) {
     req.flash(
       "error",
       "アカウントがロックされています。しばらく待ってから再試行してください。"

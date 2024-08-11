@@ -1,0 +1,33 @@
+<% layout("layouts/common-template") %>
+<!-- 特定のCSS -->
+<% head = '<link rel="stylesheet" href="/css/board_reviews.css">' %>
+<% 
+function getCoverUrl(novel) { 
+  return novel.cover && novel.cover.length > 0 && novel.cover[0].url ? novel.cover[0].url :'https://dummyimage.com/280x300/000/fff'; 
+} 
+%>
+
+<main>
+  <div class="container">
+    <img class="cover_img" src="<%= getCoverUrl(novel) %>" alt="小説画像">
+    <div class="info_container">
+      <div class="title_header">
+        <h1 class="novel_title"><%= novel.title %></h1>
+      </div>
+      <div>
+        <form action="/board/review-post" method="post">
+          <textarea name="review-content" id="review-content" cols="80" rows="5"></textarea><br>
+          <button type="submit">投稿</button>
+        </form>
+        <textarea name="review-content" id="review-content" cols="80" rows="5"><%=  %></textarea><br>
+        <div class="review-likes-date">
+          <button>いいね</button>
+          <p>10</p>
+          <p>2024/8/11</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<% scripts = '<script src=""></script>' %> 
