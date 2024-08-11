@@ -4,7 +4,7 @@
 <label><%= message %></label>
 <div class="add_container">
     <div class="add_form">
-        <form action="/admin-novel-management/genre_add" method="POST">
+        <form action="/admin-novel-management/genre-add" method="POST">
             <label class="colums_label">追加するジャンル名</label><br>
             <input  class="addGenre" type="text" name="addGenre" required />
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">

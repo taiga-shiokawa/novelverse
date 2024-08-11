@@ -1,11 +1,11 @@
 const Admin = require('../../models/Admins');
 
-// ユーザー管理画面へ遷移
+// 管理者管理画面へ遷移
 module.exports.renderAdminManagement = async ( req , res ) => {
   const admins = await Admin.find({});
   const selectingAdmin = null;
   const pageTitle = "管理者管理画面";
-  res.render("admins/admin-management" , { pageTitle , admins , selectingAdmin});
+  res.render("admins/admin-management" , { pageTitle , admins , selectingAdmin  , csrfToken: req.csrfToken()});
 }
 
 // 特定のユーザーの情報を一覧表示させて、管理者管理画面へ遷移

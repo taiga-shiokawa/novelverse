@@ -59,6 +59,7 @@
                                 <p>本当に削除しますか</p>
                                 <div class="btn_box">
                                     <form action="/admin-user-management/deletion?_method=DELETE" method="POST">
+                                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                                         <input type="hidden" name="delete_user_id" value="<%= selectingUser._id %>">
                                         <input type="hidden" name="delete_user_name" value="<%= selectingUser.username %>">
                                         <label>管理者コード</label>　<input class="admin_code" type="text" name="admin_code">
