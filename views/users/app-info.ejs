@@ -1,11 +1,78 @@
 <% layout("layouts/common-template") %>
+<% head = '<link rel="stylesheet" href="/css/app_info.css" />' %> 
+<main>
+  <div class="container">
+    <div class="about">
+      <span class="yellow"></span>
+      <h1 class="page_title">ノベルバースとは</h1>
+    </div>
+    <p>ノベルバースは、書籍紹介サービスです。<br>
+    アカウントを作成することで、読みたい小説を管理したり、小説のレビューを書くことができます。</p>
+    <div class="about function_introduction">
+      <span class="yellow"></span>
+      <h1 class="page_title">機能紹介</h1>
+    </div>
+    <div class="section list">
+      <h2 class="section_title">一覧・検索</h2>
+      <p>新作やおすすめの一覧表示や、さまざまな方法での書籍検索機能ができます。<br>
+        例えば、タイトルや著者で検索をかけたり、著者ごとやジャンルごとの小説を一覧でみることができます。
+      </p>
+      <ul class="list_ul">
+        <li>
+          <p class="list_text">新作・おすすめ</p>
+          <img src="/images/1.png" alt="新作・おすすめ">
+        </li>
+        <li>
+          <p class="list_text">タイトル</p>
+          <img src="/images/2.png" alt="タイトル">
+        </li>
+        <li>
+          <p class="list_text">著者</p>
+          <img src="/images/3.png" alt="著者">
+        </li>
+        <li>
+          <p class="list_text">ジャンル</p>
+          <img src="/images/4.png" alt="ジャンル">
+        </li>
+      </ul>
+    </div>
+    <div class="section novel_info section_flex">
+      <img src="/images/novel_info.png" alt="小説情報">
+      <div>
+        <h2 class="section_title">小説情報</h2>
+        <p>タイトル・著者・ページ数・出版社など、小説の詳細な情報を掲載しています。<br>
+          <br>
+          ショッピングサイトのURLも掲載しているので、
+          そのまま小説の購入ページへ遷移することもできます。</p>
+      </div>
+    </div>
+    <div class="section bookmark section_flex">
+      <div>
+        <h2 class="section_title">読みたい</h2>
+        <p>
+          気になった小説があれば、読みたいボタンをクリックすることで
+          読みたい登録をすることができます。<br>
+          登録した小説は、マイページから確認することができます。
+          
+        </p>
+      </div>
+      <img src="/images/yomitai.png" alt="読みたい">
+    </div>
+    <div class="section keiziban section_flex">
+      <img src="/images/keiziban.png" alt="掲示板">
+      <div>
+        <h2 class="section_title">掲示板</h2>
+        <p>
+          書籍の感想を書き込んだり、他の人の感想を見ることもできます。
+          いいね数も見れるので読みたい小説選びの参考になります。
+        </p>
+      </div>
+    </div>
+  </div>
+</main>
 
-<!-- 特定のCSS -->
-<% head = '<link rel="stylesheet" href="/css/home.css" />' %> 
 
-<div>
-  <p>準備中...</p>
-</div>
 
-<!-- 特定のJavaScript -->
+
+
 <% scripts = '<script src="/js/home.js"></script>' %> 
