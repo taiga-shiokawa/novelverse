@@ -1,0 +1,81 @@
+ /* 共通 */
+.container{
+  padding: 150px 0;
+  width: 100%;
+  max-width:1200px;
+  margin: 0 auto;
+  font-family: "Noto Sans JP", sans-serif;
+  color: #332405;
+  letter-spacing: 1px;
+}
+
+/* ノベルバースとは */
+
+.about{
+  display: flex;
+  align-items: center;
+}
+
+.yellow{
+  display:inline-block;
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 20px;
+  height: 60px;
+  background-color: #E3B813;
+}
+
+/* 機能紹介 */
+.function_introduction{
+padding-top: 60px;
+}
+
+
+/* section共通 */
+
+.section{
+  width: 100%;
+  max-width:900px;
+  margin: 0 auto;
+}
+
+.section_flex{
+  display: flex;
+  justify-content: space-between;
+}
+
+.section_flex div{
+  padding: 50px 40px;  
+}
+
+.section_flex img{
+  width: 45%;
+}
+
+.section_title{
+  text-align: right;
+}
+
+.bookmark .section_title , .list .section_title{
+  text-align: left;
+}
+
+/* 一覧・検索 */
+
+.list_ul{
+  display: flex;
+  justify-content: space-between;
+  padding-top: 40px;
+}
+
+.list_ul li{
+width: 22%;
+}
+
+.list_ul li p{
+  text-align: center;
+}
+
+.list_ul li img{
+  width: 100%;
+}

@@ -93,6 +93,7 @@
 
 .bookmark-button {
   position: absolute;
+  width: 160px;
   bottom: 8%;
   right: 5%;
   left: 5%;
