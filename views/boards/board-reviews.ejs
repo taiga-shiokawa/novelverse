@@ -16,15 +16,28 @@ function getCoverUrl(novel) {
       </div>
       <div>
         <form action="/board/review-post" method="post">
-          <textarea name="review-content" id="review-content" cols="80" rows="5"></textarea><br>
+          <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+          <input type="hidden" name="review[novelId]" value="<%= novel._id %>">
+          <textarea name="review[content]" id="review-content" cols="80" rows="5"></textarea><br>
           <button type="submit">投稿</button>
         </form>
-        <textarea name="review-content" id="review-content" cols="80" rows="5"><%=  %></textarea><br>
+        <% for (let review of reviews) { %>
+        <textarea id="review-content" cols="80" rows="5" readonly><%= review.content %></textarea><br>
         <div class="review-likes-date">
           <button>いいね</button>
+          <!-- 自分が投稿したレビューにのみ, 削除ボタンを表示 -->
+          <% if (loginUser && review.user && review.user._id.toString() === loginUser._id.toString()) { %>
+          <form action="/board/review-delete" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <input type="hidden" name="reviewId" value="<%= review._id %>">
+            <input type="hidden" name="novelId" value="<%= novel._id %>">
+            <button>削除</button>
+          </form>
+          <% } %>
           <p>10</p>
           <p>2024/8/11</p>
         </div>
+        <% } %>
       </div>
     </div>
   </div>
