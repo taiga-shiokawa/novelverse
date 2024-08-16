@@ -14,28 +14,31 @@ function getCoverUrl(novel) {
       <div class="title_header">
         <h1 class="novel_title"><%= novel.title %></h1>
       </div>
-      <div>
+      <div class="review_container">
         <form action="/board/review-post" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="review[novelId]" value="<%= novel._id %>">
-          <textarea name="review[content]" id="review-content" cols="80" rows="5"></textarea><br>
+          <textarea class="summary_text" name="review[content]" id="review-content" cols="80" rows="5"></textarea><br>
           <button type="submit">投稿</button>
         </form>
         <% for (let review of reviews) { %>
-        <textarea id="review-content" cols="80" rows="5" readonly><%= review.content %></textarea><br>
+        <div class="summary_text">
+          <span><%= review.content %></span>
+        </div>
+        <!-- <textarea id="review-content" cols="80" rows="5" readonly><%= review.content %></textarea><br> -->
         <div class="review-likes-date">
-          <button>いいね</button>
+          <!-- <button>いいね</button> -->
           <!-- 自分が投稿したレビューにのみ, 削除ボタンを表示 -->
           <% if (loginUser && review.user && review.user._id.toString() === loginUser._id.toString()) { %>
           <form action="/board/review-delete" method="post">
             <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <input type="hidden" name="reviewId" value="<%= review._id %>">
             <input type="hidden" name="novelId" value="<%= novel._id %>">
-            <button>削除</button>
+            <button type="submit">削除</button>
           </form>
           <% } %>
-          <p>10</p>
-          <p>2024/8/11</p>
+          <!-- <p>10</p>
+          <p>2024/8/11</p> -->
         </div>
         <% } %>
       </div>
