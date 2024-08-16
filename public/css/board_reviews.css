@@ -56,17 +56,6 @@ hr {
   opacity: .7;
 }
 
-.summary_text {
-  text-align: left;
-  width: 100%;
-  min-height: 150px;
-  margin: 10px 0 20px;
-  padding: 10px;
-  background-color: #fff;
-  border-radius: 2px;
-  resize: vertical;
-}
-
 .info_container tr{
   font-size: 14px;
   text-align-last: left;
@@ -74,6 +63,39 @@ hr {
 
 .info_container th{
   width: 200px;
+}
+
+.review_container button {
+  padding: 5px 15px;
+  margin-left: 75%;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  background-color: #505F00;
+  color: white;
+}
+
+#review-content {
+  font-size: 15px;
+  width: 83%;
+  min-height: 100px;
+  background-color: #fff;
+  border-color: #fff;
+  resize: vertical;
+}
+
+.summary_text {
+  background-color: #fff;
+  width: 83%; 
+  margin: 10px auto; 
+  padding: 10px; 
+  box-sizing: border-box; 
+  text-align: left; 
+}
+
+.summary_text span {
+  display: inline-block;  /* spanをブロック要素のように扱う */
+  width: 100%;            /* 親要素いっぱいに広げる */
 }
 
 /* スマホ用レスポンシブデザイン */
