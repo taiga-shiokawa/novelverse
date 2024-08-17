@@ -35,7 +35,7 @@ function formatDate(date) {
         <% for (let review of reviews) { %>
         <div class="summary_text">
           <span><%= review.content %></span>
-          <p><%= loginUser.username %>　　<%= formatDate(review.postedAt) %></p>
+          <p><%= review.user.username %>　　<%= formatDate(review.postedAt) %></p>
         </div>
         <!-- <textarea id="review-content" cols="80" rows="5" readonly><%= review.content %></textarea><br> -->
         <div class="review-likes-date">
