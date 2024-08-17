@@ -98,6 +98,11 @@ hr {
   width: 100%;            /* 親要素いっぱいに広げる */
 }
 
+.summary_text p {
+  margin-bottom: 0;
+  font-size: small;
+  color: rgb(118, 121, 121);
+}
 /* スマホ用レスポンシブデザイン */
 @media screen and (max-width: 767px) {
   .container {
