@@ -34,8 +34,7 @@
 
 .yellow{
    display:inline-block;
-   margin-top: 10px;
-   margin-right: 10px;
+   margin: 10px;
    width: 20px;
    height: 60px;
    background-color: #E3B813;
@@ -121,19 +120,21 @@
 /* 例: 768px以下の画面サイズに対するスタイル */
 @media (max-width: 768px) {
 
+  /* 共通 */
+  
   main {
     margin:0;
-    
-  }
-
-  .book_info {
-    margin: auto;
   }
 
   .mobile_only{
     display: block;
   }
 
+  .more{
+    display: none;
+  }
+
+  /* レスポンシブ用のもっと見るボタン */
   .more_mobile_only{
     background-color: #fff;
     text-align: center;
@@ -155,12 +156,18 @@
     opacity: .7;
   }
 
-  .book-cover img {
-    height: 260px;
-    width: 180px;
+  /* 小説 */
+
+  .wrap_book_list{
+    margin-top: 0px;
   }
-  .more{
-    display: none;
+
+  .book-list ul{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: 0 auto;
+    flex-direction: column;
   }
   
   .book-list li{
@@ -169,28 +176,44 @@
     margin-bottom: 50px;
   }
   
-  .wrap_book_list{
-    margin-top: 0px;
-  }
-  
-  .book-list ul{
+  .book-item{
     display: flex;
-    flex-wrap: wrap;
+    width: 90%;
     padding: 0;
     margin: 0 auto;
   }
-  
+
   .book-list li a{
     display: flex;
     justify-content: center;
     color: #332405;
   }
+
+  /* 表紙側*/
+
+  .book-cover img {
+    width: 100%;
+    height: auto;
+  }
+
+  .book-cover {
+    position: static;
+    width: 45%;
+  }
   
+  /* 小説情報側*/
+
+  .book_info {
+    width: 55%;
+    margin: 0;
+  }
+
   .book-list li p { 
     margin: 0 ;  
   }
   
   .novel_name{
+    width: 95%;
     padding-top: 10px;
     font-size: 16px;
   }
@@ -199,25 +222,11 @@
     font-size: 12px;
   }
 
-  .book-cover {
-    position: static;
-  }
-
-  .book-item{
-    display: flex;
-    width: 70%;
-    padding: 0;
-    margin: 0 auto;
-  }
-
   .book-item span{
-    padding-left: 20px;
+    padding-left: 10px;
   }
 
-  .book-list ul{
-    flex-direction: column;
-  }
-
+  /* 読みたいボタン */
   .bookmark-button {
     display: none;
     margin: auto;
@@ -225,7 +234,9 @@
   
   .bookmark_button {
     padding: 10px 15px;
-    width: 160px;
+    width: 80%;
+    display: block;
+    margin: 0 auto;
     border: none;
     cursor: pointer;
     transition: opacity 0.3s ease;
@@ -241,4 +252,5 @@
     display: block;
     margin-top: 40px;
   }
+
 }
