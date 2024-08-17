@@ -2,6 +2,7 @@
 
 html, body {
   height: 100%;
+  width: 100%;
   margin: 0;
   padding: 0;
   background-color: #F6F1DE;
@@ -60,8 +61,10 @@ a{
 /* nav関係 */
 
 .wrapper{
+  width: 100%;
   background-color: #002B24;
   padding: 5px;
+  margin: 0;
 }
 
 .nav_container{
@@ -209,12 +212,10 @@ ul li .dropdown_content a ,.logout{
 /* footer */
 
 footer {
+  width: 100%;
   background-color: #002B24;
   padding: 15px;
-  margin: auto 0;
   margin-bottom:0;
-  margin-left: -10px;
-  margin-bottom: 0;
 }
 
 footer ul{
@@ -235,11 +236,12 @@ footer ul li a:hover{
 
 footer ul li {
   font-size: 12px;
-  margin-right: 40px;
+  margin-right: 60px;
 }
 
 .footer_label{
   width: 120px;
+  padding-right: 20px;
   font-size: 12px;
   color: white;
 }
@@ -253,12 +255,6 @@ footer ul li {
 
 /* レスポンシブデザイン用のスタイル */
 @media screen and (max-width: 768px) {
-
-  body {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-  }
 
   .mobile_only{
     display: inline-block;
@@ -274,6 +270,7 @@ footer ul li {
   }
 
   .wrapper{
+    padding: 0;
     background-color: transparent;
   }
 
@@ -312,7 +309,8 @@ footer ul li {
   .header_wrapper {
     flex-direction: column;
     height: auto;
-    padding: 10px;
+    padding: 0;
+    margin: 0;
   }
 
   .site_logo, .search_form {
@@ -345,7 +343,7 @@ footer ul li {
     display: block;
     position: fixed;
     top: 10px;
-    right: auto;
+    right: 10px;
     width: 30px;
     height: 20px;
     cursor: pointer;

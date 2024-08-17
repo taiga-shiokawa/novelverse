@@ -27,7 +27,7 @@
 
 /* 機能紹介 */
 .function_introduction{
-padding-top: 60px;
+padding : 100px 0 60px ;
 }
 
 
@@ -78,4 +78,10 @@ width: 22%;
 
 .list_ul li img{
   width: 100%;
+}
+
+/* 小説情報 */
+
+.novel_info{
+  padding: 100px 0 60px ;
 }
