@@ -48,6 +48,7 @@ module.exports.reviewPost = async (req, res, next) => {
       content: content,
       novel: novelId,
       user: userId,
+      postedAt: new Date(),
     });
 
     await review.save();

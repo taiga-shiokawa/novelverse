@@ -7,6 +7,17 @@ function getCoverUrl(novel) {
 } 
 %>
 
+<!-- 日付のフォーマット修正 -->
+<%
+function formatDate(date) {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}/${month}/${day}`;
+}
+%>
+
 <main>
   <div class="container">
     <img class="cover_img" src="<%= getCoverUrl(novel) %>" alt="小説画像">
@@ -24,6 +35,7 @@ function getCoverUrl(novel) {
         <% for (let review of reviews) { %>
         <div class="summary_text">
           <span><%= review.content %></span>
+          <p><%= loginUser.username %>　　<%= formatDate(review.postedAt) %></p>
         </div>
         <!-- <textarea id="review-content" cols="80" rows="5" readonly><%= review.content %></textarea><br> -->
         <div class="review-likes-date">

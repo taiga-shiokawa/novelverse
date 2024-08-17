@@ -14,6 +14,10 @@ const novelReviewSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-});
+  postedAt: {
+    type: Date,
+    default: Date.now
+  }
+}, { timestamps: true });
 
 module.exports = mongoose.model("Review", novelReviewSchema);
