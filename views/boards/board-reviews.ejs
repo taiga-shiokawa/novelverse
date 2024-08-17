@@ -29,7 +29,7 @@ function formatDate(date) {
         <form action="/board/review-post" method="post">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <input type="hidden" name="review[novelId]" value="<%= novel._id %>">
-          <textarea class="summary_text" name="review[content]" id="review-content" cols="80" rows="5"></textarea><br>
+          <textarea class="summary_text" name="review[content]" id="review-content" cols="80" rows="5" placeholder="レビュー・感想"></textarea><br>
           <button type="submit">投稿</button>
         </form>
         <% for (let review of reviews) { %>

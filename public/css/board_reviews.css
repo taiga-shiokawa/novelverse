@@ -24,8 +24,12 @@
 
 .title_header{
   display: flex;
-  width: 100%;
+  width: 94%;
   justify-content: space-between;
+}
+.title_header h1 {
+  text-align: start;
+  margin-left: 9%;
 }
 
 .novel_title {
@@ -147,6 +151,24 @@ hr {
   }
 
   .summary_text {
-    min-height: 100px;
+    width: 83%; 
+    margin: 10px auto; 
+    padding: 10px; 
+  }
+
+  .review_container button {
+    padding: 5px 15px;
+    margin-left: 70%;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+    background-color: #505F00;
+    color: white;
+  }
+
+  .summary_text p {
+    margin-bottom: 0;
+    font-size: small;
+    color: rgb(118, 121, 121);
   }
 }
