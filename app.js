@@ -7,7 +7,6 @@ if (process.env.NODE_ENV != "production") {
 const path = require("path");  // viewsフォルダのファイルパスを指定するためのモジュール
 
 // サードパーティ(外部のライブラリなど)モジュール
-const connectDB         = require("./db/connect");           // MongoDB接続のためにconnectファイルからインポート
 const csrf              = require("csurf");                  // CSRF対策
 const cookieParser      = require("cookie-parser");          // Cookie ヘッダーの解析
 const { createClient }  = require("redis");                  // Redis サーバーへの接続
@@ -28,6 +27,7 @@ const adminAuthorRouter           =   require("./routes/admins/admin-author");  
 const adminManagementRouter       =   require("./routes/admins/admin-management");        // 管理者の管理関係ルーター
 const adminUserManagementRouter   =   require("./routes/admins/admin-user-management");   // 管理者ユーザー管理関係ルーター
 const boardRouter     =   require("./routes/boards/boards");
+const connectDB         = require("./db/connect");           // MongoDB接続のためにconnectファイルからインポート
 const ExpressError    =   require("./utils/ExpressError");
 const getGenreName    =   require("./common/genres");         // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきたジャンルを表示する
 const getAuthorName   =   require("./common/authors");        // アプリ共通ヘッダーのナビゲーションにMongoDBから取得してきた作家名を表示する
@@ -41,11 +41,11 @@ const userSignupAndLogin  =   require("./routes/users/user-signup-and-login");  
 const app = express();
 const PORT = 3000;
 
-// MongoDB名（ローカル）
+// MongoDB名（ローカル用）
 const DB_URL = "mongodb://localhost:27017/novelversedb";
 
 // MongoDB接続
-const start = async () => {
+const dbConnectStart = async () => {
   try {
     await connectDB(process.env.MONGO_HEROKU_URL || process.env.MONGO_URL);
   } catch (err) {
@@ -54,14 +54,14 @@ const start = async () => {
 };
 
 // Redisクライアントの初期化
-let redisClient = createClient({
+let redisClientInitializing = createClient({
   url: process.env.REDIS_URL || "redis://localhost:6379",
 });
-redisClient.connect().catch(console.error);
+redisClientInitializing.connect().catch(console.error);
 
 // RedisStoreの初期化
-let redisStore = new RedisStore({
-  client: redisClient,
+let redisStoreInitializing = new RedisStore({
+  client: redisClientInitializing,
   prefix: "myapp:",
 });
 
@@ -111,9 +111,9 @@ app.use(
   })
 );
 
-// セッション設定
-const sessionConfig = {
-  store: redisStore,
+// セッション構成
+const SESSION_CONFIG = {
+  store: redisStoreInitializing,
   secret: process.env.SESSION_SECRET || "mysecret",
   resave: false,
   saveUninitialized: false,
@@ -129,11 +129,11 @@ const sessionConfig = {
 // 本番環境でのみ適用される追加設定
 if (process.env.NODE_ENV === "production") {
   app.set("trust proxy", 1);
-  sessionConfig.cookie.secure = true;
+  SESSION_CONFIG.cookie.secure = true;
 }
 
 app.use(cookieParser());
-app.use(session(sessionConfig));
+app.use(session(SESSION_CONFIG));
 app.use(flash());
 app.use(csrf({ cookie: true }));
 app.use(passport.initialize());   // パスポートを初期化し, ユーザー認証機能を有効にする.
@@ -188,13 +188,13 @@ passport.serializeUser((user, done) => {
  * 各リクエストでセッションからユーザーオブジェクトを取得しdeserializeUserメソッドを呼び出して, そのオブジェクトに対応するユーザーオブジェクトをデータベースから取得する
  * これにより、各リクエストに対してユーザーオブジェクトがreq.userとして利用可能になる
  */
-passport.deserializeUser(async (obj, done) => {
+passport.deserializeUser(async (userObj, done) => {
   try {
     let user;
-    if (obj.role === "admin") {
-      user = await Admin.findById(obj.id);
+    if (userObj.role === "admin") {
+      user = await Admin.findById(userObj.id);
     } else {
-      user = await User.findById(obj.id);
+      user = await User.findById(userObj.id);
     }
 
     if (!user) {
@@ -350,7 +350,7 @@ app.use((err, req, res, next) => {
 
 // サーバー起動
 async function startServer() {
-  await start();
+  await dbConnectStart();
   app.listen(process.env.PORT || PORT, () =>
     console.log(`サーバーが起動しました。ポート: ${PORT}`)
   );
@@ -361,7 +361,7 @@ startServer();
 process.on("SIGINT", async () => {
   console.log("シャットダウン中...");
   try {
-    await redisClient.quit();
+    await redisClientInitializing.quit();
     console.log("Redisを正常にシャットダウンしました");
     process.exit(0);
   } catch (err) {
