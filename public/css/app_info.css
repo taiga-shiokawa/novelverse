@@ -85,3 +85,64 @@ width: 22%;
 .novel_info{
   padding: 100px 0 60px ;
 }
+
+/* 例: 768px以下の画面サイズに対するスタイル */
+@media (max-width: 768px) {
+
+  p{
+  font-size: 12px;
+}
+
+  .container{
+    width: 95vw;
+    padding: 0 10px;
+  }
+
+  /* 機能紹介 */
+  .function_introduction{
+    padding :  40px 0;
+  }
+
+  /* section共通 */
+  .section_flex div{
+    padding: 0px 20px;  
+  }
+
+  .section_flex img{
+    width: 45%;
+    object-fit: contain;
+  }
+
+  .section_title{
+    text-align: right;
+  }
+
+  .bookmark .section_title , .list .section_title{
+    text-align: left;
+  }
+
+  /* 一覧・検索 */
+
+  .list_ul{
+    padding: 0px;
+  }
+
+  .list_ul li p{
+    font-size: 0.6rem;
+  }
+    
+  .list_ul li img{
+    width: 100%;
+  }
+    
+  /* 小説情報 */
+
+  .novel_info{
+    padding: 20px 0;
+  }
+
+  footer{
+  margin-top: 40px;
+}
+
+}
