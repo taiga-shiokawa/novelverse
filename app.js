@@ -9,7 +9,6 @@ const path = require("path");  // viewsフォルダのファイルパスを指�
 // サードパーティ(外部のライブラリなど)モジュール
 const csrf              = require("csurf");                  // CSRF対策
 const cookieParser      = require("cookie-parser");          // Cookie ヘッダーの解析
-const { createClient }  = require("redis");                  // Redis サーバーへの接続
 const express           = require("express");                // Node.jsのWEBフレームワークであるExpressパッケージをインポート
 const ejsMate           = require("ejs-mate");               // テンプレートの共通部分の管理ライブラリ
 const flash             = require("connect-flash");          // req,res間で一時的に保持されたメッセージを表示してユーザーにフィードバックを行う
@@ -17,7 +16,6 @@ const LocalStrategy     = require("passport-local");         // Passport.jsの�
 const methodOverride    = require("method-override");        // put deleteメソッドを使用できるようにする
 const mongoSanitize     = require("express-mongo-sanitize"); // MongoDBインジェクション対策
 const passport          = require("passport");               // Passportライブラリのインポート
-const RedisStore        = require("connect-redis").default;  // ッションデータを Redis データベースに保存
 const session           = require("express-session");        // アプリのセッション管理機能を追加するためのミドルウェアの設定
 
 // ローカルモジュール
@@ -52,18 +50,6 @@ const dbConnectStart = async () => {
     console.log(err);
   }
 };
-
-// Redisクライアントの初期化
-let redisClientInitializing = createClient({
-  url: process.env.REDIS_URL || "redis://localhost:6379",
-});
-redisClientInitializing.connect().catch(console.error);
-
-// RedisStoreの初期化
-let redisStoreInitializing = new RedisStore({
-  client: redisClientInitializing,
-  prefix: "myapp:",
-});
 
 // commonフォルダのgenres.jsからジャンル名を読み込み
 async function loadGenres() {
@@ -113,7 +99,6 @@ app.use(
 
 // セッション構成
 const SESSION_CONFIG = {
-  store: redisStoreInitializing,
   secret: process.env.SESSION_SECRET || "mysecret",
   resave: false,
   saveUninitialized: false,
@@ -356,16 +341,3 @@ async function startServer() {
   );
 }
 startServer();
-
-// Redisシャットダウン検出ログ
-process.on("SIGINT", async () => {
-  console.log("シャットダウン中...");
-  try {
-    await redisClientInitializing.quit();
-    console.log("Redisを正常にシャットダウンしました");
-    process.exit(0);
-  } catch (err) {
-    console.log("Redisのシャットダウン中にエラーが起きました", err);
-    process.exit(1);
-  }
-});
